@@ -40,5 +40,8 @@ jobs:
       - name: Download dgdepfixer
         run: curl -OSsf http://tkittel.web.cern.ch/tkittel/depfix/dgdepfixer && chmod +x ./dgdepfixer
         
+      - name: set shell variable for dgdepfixel
+        run: set SHELL=/bin/bash
+        
       - name: Install dgdepfixer
         run: ./dgdepfixer
