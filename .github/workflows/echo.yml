@@ -25,6 +25,8 @@ jobs:
       run:
         shell: bash
         #working-directory: todo
+    env:
+      SHELL: /usr/bin/bash
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -39,10 +41,6 @@ jobs:
 
       - name: Download dgdepfixer
         run: curl -OSsf http://tkittel.web.cern.ch/tkittel/depfix/dgdepfixer && chmod +x ./dgdepfixer
-        
-      - name: set shell variable for dgdepfixel
-        run: set SHELL=/usr/bin/bash
-             echo $SHELL 
         
       - name: Install dgdepfixer
         run: ./dgdepfixer
