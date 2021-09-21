@@ -61,11 +61,14 @@ jobs:
           ./runCreateScript.sh
       
       - name: source dgdepfixer setup
-        run: . /home/runner/dgdepfixer_install/setup.sh
+        run: |
+          env
+          . /home/runner/dgdepfixer_install/setup.sh
         
-      - name: Install Geant4
+      - name: Install NCrystal
         run: |
          cd /home/runner/dgdepfixer_install
-         dgdepfixer --instsw=Geant4
+         env
+         dgdepfixer --instsw=NCrystal
         #working-directory: ./dgdepfixer_install
     
