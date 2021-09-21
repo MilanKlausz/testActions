@@ -42,7 +42,7 @@ jobs:
         
       - name: set shell variable for dgdepfixel
         run: set SHELL=/usr/bin/bash
+             echo $SHELL 
         
       - name: Install dgdepfixer
-        run: echo $SHELL  
-             ./dgdepfixer
+        run: ./dgdepfixer
