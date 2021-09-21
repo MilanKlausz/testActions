@@ -61,5 +61,5 @@ jobs:
           ./runCreateScript.sh
       
       - name: source dgdepfixer setup
-        run: ./home/runner/dgdepfixer_install/setup.sh
+        run: . /home/runner/dgdepfixer_install/setup.sh
     
