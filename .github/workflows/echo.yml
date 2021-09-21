@@ -56,8 +56,8 @@ jobs:
       - name: dgdepfixer create
         id: dgdepfixer_create
         run: |
-          ./dgdepfixer --create
-          echo $?
+          printf "#!/bin/bash\n./dgdepfixer --create\n[ $? -eq 0 ]  || exit 0\n"  >> runCreateScript.sh
+          ./runCreateScript.sh
       
       - name: source dgdepfixer setup
         if: steps.dgdepfixer_create.conclusion == 'failure' 
