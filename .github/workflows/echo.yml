@@ -41,6 +41,13 @@ jobs:
 
       - name: Download dgdepfixer
         run: curl -OSsf http://tkittel.web.cern.ch/tkittel/depfix/dgdepfixer && chmod +x ./dgdepfixer
+    
+      - name: cat .profile
+        run: cat /home/runner/.profile
+        
+      - name: disable .profile
+        run: mv /home/runner/.profile /home/runner/.profile_DISABLED
         
       - name: Install dgdepfixer
         run: ./dgdepfixer
+    
