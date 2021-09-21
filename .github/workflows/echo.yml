@@ -55,7 +55,9 @@ jobs:
        
       - name: dgdepfixer create
         id: dgdepfixer_create
-        run: ./dgdepfixer --create
+        run: |
+          ./dgdepfixer --create
+          echo $?
       
       - name: source dgdepfixer setup
         if: steps.dgdepfixer_create.conclusion == 'failure' 
