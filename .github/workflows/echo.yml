@@ -65,7 +65,7 @@ jobs:
         
       - name: Install Geant4
         run: |
-         cd ./dgdepfixer_install
+         cd /home/runner/dgdepfixer_install
          dgdepfixer --instsw=Geant4
         #working-directory: ./dgdepfixer_install
     
