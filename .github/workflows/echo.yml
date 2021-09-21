@@ -50,7 +50,7 @@ jobs:
       - name: prevent dgdepfixer issues by mocking git config
         run: |
           git config --global user.name "James Chadwick Jr."
-          git config --global user.email "james.chadwick@ess.eu"
+          git config --global user.email "james.chadwick.jr@ess.eu"
           
       #- name: disable .profile
       #  run: mv /home/runner/.profile /home/runner/.profile_DISABLED
