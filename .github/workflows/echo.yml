@@ -56,5 +56,5 @@ jobs:
         run: ./dgdepfixer --create
       
       - name: source dgdepfixer setup
-        run: ./home/runner/dgdepfixer_install/setup.sh
+        run: ./home/runner/dgdepfixer_install/setup.sh || true
     
