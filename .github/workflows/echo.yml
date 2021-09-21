@@ -48,6 +48,12 @@ jobs:
       - name: disable .profile
         run: mv /home/runner/.profile /home/runner/.profile_DISABLED
         
+      - name: cat .profile
+        run: cat ~/.bashrc
+        
+      - name: add .bashrc to bash_profile
+        run: echo 'if [ -f $HOME/.bashrc ]; then . $HOME/.bashrc; fi' >> /home/runner/.bash_profile
+        
       - name: Install dgdepfixer
         run: ./dgdepfixer
     
