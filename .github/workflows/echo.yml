@@ -62,4 +62,7 @@ jobs:
       
       - name: source dgdepfixer setup
         run: . /home/runner/dgdepfixer_install/setup.sh
+        
+      - name: Install Geant4
+        run: dgdepfixer --instsw=Geant4
     
