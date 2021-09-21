@@ -49,9 +49,11 @@ jobs:
           git config --global user.name "Lorem Ipsum"
           git config --global user.email "dolor.sit@ess.eu"
        
+      - name: Install dgdepfixer
+        run: ./dgdepfixer
+       
       - name: dgdepfixer create
         run: dgdepfixer --create
       
-      - name: Install dgdepfixer
-        run: ./dgdepfixer
+
     
