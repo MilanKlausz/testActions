@@ -20,7 +20,7 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    continue-on-error: true
+    #continue-on-error: true
     
     defaults:
       run:
@@ -54,8 +54,10 @@ jobs:
         run: ./dgdepfixer
        
       - name: dgdepfixer create
+        id: dgdepfixer_create
         run: ./dgdepfixer --create
       
       - name: source dgdepfixer setup
+        if: steps.dgdepfixer_create.conclusion == 'failure' 
         run: ./home/runner/dgdepfixer_install/setup.sh
     
