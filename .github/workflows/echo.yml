@@ -57,6 +57,7 @@ jobs:
         id: dgdepfixer_create
         run: |
           printf "#!/bin/bash\n./dgdepfixer --create\n[ $? -eq 0 ]  || exit 0\n"  >> runCreateScript.sh
+          chmod +x ./runCreateScript.sh
           ./runCreateScript.sh
       
       - name: source dgdepfixer setup
