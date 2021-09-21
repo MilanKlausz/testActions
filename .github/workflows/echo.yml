@@ -31,5 +31,4 @@ jobs:
         
             # Runs a single command using the runners shell
       - name: Install basic prerequisites
-        run: sudo apt-get install curl g++ build-essential python3-dev cmake libxerces-c-dev libexpat1-dev gfortran libhdf5-serial-dev git python3-venv python3-pip python3-tk mesa-common-dev libglu1-mesa-dev freeglut3-
-dev cm-super
+        run: sudo apt-get install curl g++ build-essential python3-dev cmake libxerces-c-dev libexpat1-dev gfortran libhdf5-serial-dev git python3-venv python3-pip python3-tk mesa-common-dev libglu1-mesa-dev freeglut3-dev cm-super
