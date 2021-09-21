@@ -61,6 +61,5 @@ jobs:
           ./runCreateScript.sh
       
       - name: source dgdepfixer setup
-        if: steps.dgdepfixer_create.conclusion == 'failure' 
         run: ./home/runner/dgdepfixer_install/setup.sh
     
