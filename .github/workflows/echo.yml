@@ -36,3 +36,4 @@ jobs:
         
       - name: Install dgdepfixer
         run: ./dgdepfixer
+        shell: bash
