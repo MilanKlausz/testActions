@@ -41,18 +41,22 @@ jobs:
 
       - name: Download dgdepfixer
         run: curl -OSsf http://tkittel.web.cern.ch/tkittel/depfix/dgdepfixer && chmod +x ./dgdepfixer
-    
-      - name: cat .profile
-        run: cat /home/runner/.profile
         
-      - name: disable .profile
-        run: mv /home/runner/.profile /home/runner/.profile_DISABLED
+      - name: prevent dgdepfixer issues with bash profile files
+        run: |
+          mv /home/runner/.profile /home/runner/.profile_DISABLED
+          echo 'if [ -f $HOME/.bashrc ]; then . $HOME/.bashrc; fi' >> /home/runner/.bash_profile 
+          
+      - name: prevent dgdepfixer issues by mocking git config
+        run: |
+          git config --global user.name "James Chadwick"
+          git config --global user.email "james.chadwick@ess.eu"
+          
+      #- name: disable .profile
+      #  run: mv /home/runner/.profile /home/runner/.profile_DISABLED
         
-      - name: cat .profile
-        run: cat ~/.bashrc
-        
-      - name: add .bashrc to bash_profile
-        run: echo 'if [ -f $HOME/.bashrc ]; then . $HOME/.bashrc; fi' >> /home/runner/.bash_profile
+      #- name: add .bashrc to bash_profile
+      #  run: echo 'if [ -f $HOME/.bashrc ]; then . $HOME/.bashrc; fi' >> /home/runner/.bash_profile
         
       - name: Install dgdepfixer
         run: ./dgdepfixer
