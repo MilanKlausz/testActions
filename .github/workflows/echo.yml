@@ -28,9 +28,6 @@ jobs:
         #working-directory: todo
     env:
       SHELL: /bin/bash
-      DGDEPDIR: /home/runner/dgdepfixer_install
-      PYTHONSTARTUP: /home/runner/dgdepfixer_install/venv/custom_pystartup.py
-      
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -68,7 +65,9 @@ jobs:
           env
           . /home/runner/dgdepfixer_install/setup.sh
           echo "/home/runner/dgdepfixer_install:/home/runner/dgdepfixer_install/venv/bin:/home/runner/dgdepfixer_install/dgdepfixer_bin" >> $GITHUB_PATH
-
+          echo "DGDEPDIR=/home/runner/dgdepfixer_install" >> $GITHUB_ENV
+          echo "PYTHONSTARTUP=/home/runner/dgdepfixer_install/venv/custom_pystartup.py" >> $GITHUB_ENV
+          
       - name: Install NCrystal
         run: |
          env
