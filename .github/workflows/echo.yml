@@ -51,7 +51,7 @@ jobs:
           git config --global user.email "dolor.sit@ess.eu"
        
       - name: Install dgdepfixer
-        run: ./dgdepfixer
+        run: ./dgdepfixer #python3 ./dgdepfixer
        
       - name: dgdepfixer create
         id: dgdepfixer_create
@@ -74,15 +74,16 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /home/runner/dgdepfixer_install/extras
-          key: ${{ runner.os }}-dgdepfixer-extras
+          key: ${{ runner.os }}-dgdepfixer-extras-NCrystal-Geant4
           
       - name: Install NCrystal
         if: steps.cache-dgdepfixer-extras.outputs.cache-hit != 'true'
         run: dgdepfixer --instsw=NCrystal
         #working-directory: ./dgdepfixer_install
         
-     # - name: Install Geant4
-     #   run: dgdepfixer --instsw=Geant4
+      - name: Install Geant4
+        if: steps.cache-dgdepfixer-extras.outputs.cache-hit != 'true'
+        run: dgdepfixer --instsw=Geant4 --nodata
     
       - name: run dgdepfixer #source dgdepfixer setup again
         run: dgdepfixer 
