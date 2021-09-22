@@ -62,15 +62,19 @@ jobs:
       
       - name: source dgdepfixer setup
         run: |
-          env
           . /home/runner/dgdepfixer_install/setup.sh
           echo "/home/runner/dgdepfixer_install:/home/runner/dgdepfixer_install/venv/bin:/home/runner/dgdepfixer_install/dgdepfixer_bin" >> $GITHUB_PATH
           echo "DGDEPDIR=/home/runner/dgdepfixer_install" >> $GITHUB_ENV
           echo "PYTHONSTARTUP=/home/runner/dgdepfixer_install/venv/custom_pystartup.py" >> $GITHUB_ENV
+         
+       # env
           
       - name: Install NCrystal
-        run: |
-         env
-         dgdepfixer --instsw=NCrystal
+        run: dgdepfixer --instsw=NCrystal
         #working-directory: ./dgdepfixer_install
+        
+      - name: Install Geant4
+        run: dgdepfixer --instsw=Geant4
     
+      - name: source dgdepfixer setup again
+        run: . /home/runner/dgdepfixer_install/setup.sh
