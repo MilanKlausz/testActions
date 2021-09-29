@@ -89,7 +89,9 @@ jobs:
         run: dgdepfixer --instsw=Geant4 --nodata
     
       - name: source dgdepfixer setup again
-        run: . /home/runner/dgdepfixer_install/setup.sh
+        run: |
+          env
+          . /home/runner/dgdepfixer_install/setup.sh
     
 
     
