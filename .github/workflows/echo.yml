@@ -87,6 +87,9 @@ jobs:
         if: steps.cache-dgdepfixer-extras.outputs.cache-hit != 'true'
         run: dgdepfixer --instsw=Geant4 --nodata
     
+      - name: source dgdepfixer setup again
+        run: . /home/runner/dgdepfixer_install/setup.sh
+    
       - name: run dgdepfixer #source dgdepfixer setup again
         run: dgdepfixer 
         #. /home/runner/dgdepfixer_install/setup.sh
