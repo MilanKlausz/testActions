@@ -65,7 +65,8 @@ jobs:
       - name: source dgdepfixer setup
         run: |
           . /home/runner/dgdepfixer_install/setup.sh
-          echo "/home/runner/dgdepfixer_install:/home/runner/dgdepfixer_install/venv/bin:/home/runner/dgdepfixer_install/dgdepfixer_bin" >> $GITHUB_PATH
+          
+          echo "/home/runner/dgdepfixer_install/venv/bin:/home/runner/dgdepfixer_install/cmake/bin:/home/runner/dgdepfixer_install/dgdepfixer_bin" >> $GITHUB_PATH
           echo "DGDEPDIR=/home/runner/dgdepfixer_install" >> $GITHUB_ENV
           echo "PYTHONSTARTUP=/home/runner/dgdepfixer_install/venv/custom_pystartup.py" >> $GITHUB_ENV
           echo "VIRTUAL_ENV=/home/runner/dgdepfixer_install/venv" >> $GITHUB_ENV
