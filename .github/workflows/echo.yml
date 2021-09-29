@@ -89,10 +89,12 @@ jobs:
         if: steps.cache-dgdepfixer-extras.outputs.cache-hit != 'true'
         run: dgdepfixer --instsw=Geant4 --nodata
     
-      - name: source dgdepfixer setup again
+      - name: source dgdepfixer unsetup
         run: |
           env
-          . /home/runner/dgdepfixer_install/setup.sh
+          command -v deactivate
+          . /home/runner/dgdepfixer_install/unsetup.sh
+      ##. /home/runner/dgdepfixer_install/setup.sh
     
 
     
