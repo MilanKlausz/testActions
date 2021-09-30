@@ -99,7 +99,15 @@ jobs:
           curl -OSsf https://storage.googleapis.com/dgdepfixer/geant4DataProvider_download.sh && chmod +x ./geant4DataProvider_download.sh
           . geant4DataProvider_download.sh
         
+      - name: cache untarred geant4 data files
+        id: cache-untarred-geant4-data-files
+        uses: actions/cache@v2
+        with:
+           path: /home/runner/Geant4data
+           key: untarred-geant4-data-files 
+        
       - name: Untar geant4 data and create symlinks
+        if: steps.cache-untarred-geant4-data-files.outputs.cache-hit != 'true'
         run: | 
           curl -OSsf https://storage.googleapis.com/dgdepfixer/geant4DataProvider_untar.sh && chmod +x ./geant4DataProvider_untar.sh
           . geant4DataProvider_untar.sh
