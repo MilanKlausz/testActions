@@ -38,8 +38,10 @@ jobs:
         run: tail testFile
     
       - name: Install basic prerequisites
+        run: sudo apt-get update  
+    
+      - name: Install basic prerequisites
         run: |
-          sudo apt-get update  
           sudo apt-get install curl g++ build-essential python3-dev cmake libxerces-c-dev libexpat1-dev gfortran libhdf5-serial-dev git python3-venv python3-pip python3-tk mesa-common-dev libglu1-mesa-dev freeglut3-dev cm-super
 
       - name: Download dgdepfixer
@@ -78,22 +80,15 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /home/runner/dgdepfixer_install/extras
-          key: ${{ runner.os }}-dgdepfixer-extras-NCrystal-Geant4
-          
-      - name: Install NCrystal
-        if: steps.cache-dgdepfixer-extras.outputs.cache-hit != 'true'
-        run: dgdepfixer --instsw=NCrystal
-        #working-directory: ./dgdepfixer_install
+          key: ${{ runner.os }}-dgdepfixer-extras-Geant4
         
       - name: Install Geant4
         if: steps.cache-dgdepfixer-extras.outputs.cache-hit != 'true'
         run: dgdepfixer --instsw=Geant4 --nodata
         
-      - name: Create Geant4 data directory
-        run: mkdir /home/runner/dgdepfixer_install/extras/geant4-10.04.p03/share/Geant4-10.4.3/data
-        
-      - name: Download and run geant4DataProvider then setup.sh
+      - name: Download and run geant4DataProvider
         run: | 
+          mkdir /home/runner/dgdepfixer_install/extras/geant4-10.04.p03/share/Geant4-10.4.3/data
           curl -OSsf https://storage.googleapis.com/dgdepfixer/geant4DataProvider.sh && chmod +x ./geant4DataProvider.sh
           . geant4DataProvider.sh
        ## . /home/runner/dgdepfixer_install/setup.sh 
