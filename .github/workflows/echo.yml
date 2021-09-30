@@ -85,8 +85,16 @@ jobs:
       - name: Install Geant4
         if: steps.cache-dgdepfixer-extras.outputs.cache-hit != 'true'
         run: dgdepfixer --instsw=Geant4 --nodata
-        
+ 
+      - name: cache geant4 data tar files
+        id: cache-geant4-data-tar-files
+        uses: actions/cache@v2
+        with:
+           path: /home/runner/Geant4data_tar_files
+           key: geant4-data-tar-files
+ 
       - name: Download Geant4 gata
+        if: steps.cache-geant4-data-tar-files.outputs.cache-hit != 'true'
         run: | 
           curl -OSsf https://storage.googleapis.com/dgdepfixer/geant4DataProvider_download.sh && chmod +x ./geant4DataProvider_download.sh
           . geant4DataProvider_download.sh
