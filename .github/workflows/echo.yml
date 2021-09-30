@@ -93,7 +93,6 @@ jobs:
         
       - name: Untar geant4 data and create symlinks
         run: | 
-          if [[ ! -e /home/runner/dgdepfixer_install/extras/geant4-10.04.p03/share/Geant4-10.4.3/data ]]; then mkdir /home/runner/dgdepfixer_install/extras/geant4-10.04.p03/share/Geant4-10.4.3/data fi
           curl -OSsf https://storage.googleapis.com/dgdepfixer/geant4DataProvider_untar.sh && chmod +x ./geant4DataProvider_untar.sh
           . geant4DataProvider_untar.sh
        ## . /home/runner/dgdepfixer_install/setup.sh 
