@@ -42,7 +42,7 @@ jobs:
          shopt -s expand_aliases
          alias export='f(){ echo "$@"  >> $GITHUB_ENV; }; f'
          export testENV=korte
-         locVar=666
+         eval "locVar=666"
          echo $locVar
          env
 
