@@ -40,7 +40,7 @@ jobs:
       - name: Alias export
         run: |
          shopt -s expand_aliases
-         alias export="echo >> $GITHUB_ENV "
+         alias export='f(){ echo "$@"  >> $GITHUB_ENV; $@; }; f'
          export testENV=korte
          env
 
@@ -64,7 +64,7 @@ jobs:
           git config --global user.name "Lorem Ipsum"
           git config --global user.email "dolor.sit@ess.eu"
           shopt -s expand_aliases
-          alias export="echo >> $GITHUB_ENV "
+          alias export="echo >> $GITHUB_ENV && "
           export testENV_stepWithExtraCommand=szilva
        
       - name: Install dgdepfixer
@@ -80,7 +80,7 @@ jobs:
       - name: source dgdepfixer setup
         run: |
           shopt -s expand_aliases
-          alias export="echo >> $GITHUB_ENV "
+          alias export='f(){ echo "$@"  >> $GITHUB_ENV; $@; }; f'
           echo "VIRTUAL_ENV_DISABLE_PROMPT=1" >> $GITHUB_ENV
           . /home/runner/dgdepfixer_install/setup.sh
           echo "/home/runner/dgdepfixer_install/venv/bin:/home/runner/dgdepfixer_install/cmake/bin:/home/runner/dgdepfixer_install/dgdepfixer_bin" >> $GITHUB_PATH
