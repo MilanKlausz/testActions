@@ -40,11 +40,8 @@ jobs:
       - name: Alias export
         run: |
          shopt -s expand_aliases
-         alias export='f(){ echo "$@"  >> $GITHUB_ENV; }; f'
+         alias export='f(){ echo "$@"  >> $GITHUB_ENV; echo "$@"; eval "$@" }; f'
          export testENV=korte
-         eval "locVar=666"
-         echo $locVar
-         env
 
     
       - name: apt-get update
