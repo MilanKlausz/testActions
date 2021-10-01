@@ -40,7 +40,7 @@ jobs:
       - name: Alias export
         run: |
          shopt -s expand_aliases
-         alias export='f(){ echo "$@"  >> $GITHUB_ENV; echo "$@"; eval "$@"; }; f'
+         alias export='f(){ echo "$@"  >> $GITHUB_ENV; echo "export env var aliased: $@"; eval "$@"; }; f'
          export testENV=korte
          echo $testENV;
          
@@ -81,7 +81,7 @@ jobs:
       - name: source dgdepfixer setup
         run: |
           shopt -s expand_aliases
-          alias export='f(){ echo "$@"  >> $GITHUB_ENV; "$@"; }; f'
+          alias export='f(){ echo "$@"  >> $GITHUB_ENV; echo "export env var aliased: $@"; eval "$@"; }; f'
           echo "VIRTUAL_ENV_DISABLE_PROMPT=1" >> $GITHUB_ENV
           . /home/runner/dgdepfixer_install/setup.sh
           echo "/home/runner/dgdepfixer_install/venv/bin:/home/runner/dgdepfixer_install/cmake/bin:/home/runner/dgdepfixer_install/dgdepfixer_bin" >> $GITHUB_PATH
