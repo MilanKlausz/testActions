@@ -51,6 +51,7 @@ jobs:
       - name: Install basic prerequisites
         run: |
           sudo apt-get install curl g++ build-essential python3-dev cmake libxerces-c-dev libexpat1-dev gfortran libhdf5-serial-dev git python3-venv python3-pip python3-tk mesa-common-dev libglu1-mesa-dev freeglut3-dev cm-super
+          export testENV_otherStep=szilva
 
       - name: Download dgdepfixer
         run: curl -OSsf https://storage.googleapis.com/dgdepfixer/dgdepfixer && chmod +x ./dgdepfixer
@@ -61,6 +62,8 @@ jobs:
           echo 'if [ -f $HOME/.bashrc ]; then . $HOME/.bashrc; fi' >> /home/runner/.bash_profile 
           git config --global user.name "Lorem Ipsum"
           git config --global user.email "dolor.sit@ess.eu"
+          shopt -s expand_aliases
+          export testENV_stepWithExtraCommand=szilva
        
       - name: Install dgdepfixer
         run: ./dgdepfixer #python3 ./dgdepfixer
