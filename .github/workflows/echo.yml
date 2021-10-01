@@ -40,8 +40,10 @@ jobs:
       - name: Alias export
         run: |
          shopt -s expand_aliases
-         alias export='f(){ echo "$@"  >> $GITHUB_ENV; sudo -s eval "$0"; }; f'
+         alias export='f(){ echo "$@"  >> $GITHUB_ENV; }; f'
          export testENV=korte
+         locVar=666
+         echo $locVar
          env
 
     
