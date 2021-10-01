@@ -36,6 +36,14 @@ jobs:
 
       - name: Test acces to the repo
         run: tail testFile
+        
+      - name: Alias export
+        run: |
+         shopt -s expand_aliases
+         alias export="echo >> $GITHUB_ENV "
+         export testENV=korte
+         env
+
     
       - name: apt-get update
         run: sudo apt-get update  
