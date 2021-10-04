@@ -36,9 +36,9 @@ jobs:
 
       - name: Test environment
         run: |
-         if [[ -z "${GITHUB_SERVER_URL}" ]] ; then  echo "GITHUB_SERVER_URL env var exists"; else echo "GITHUB_SERVER_URL is ${GITHUB_SERVER_URL}";  fi
+         if [[ ! -z "${GITHUB_SERVER_URL}" ]] ; then  echo "GITHUB_SERVER_URL env var exists"; else echo "GITHUB_SERVER_URL is ${GITHUB_SERVER_URL}";  fi
          if [[ "$CI" = true ]]; then  echo "CI env var is true"; else echo "CI env var is NOT true"; fi
-         if [[ -z "${GITHUB_SERVER_URL}" ]] && [[ "$CI" = true ]]; then  echo "both conditions are OK"; fi
+         if [[ ! -z "${GITHUB_SERVER_URL}" ]] && [[ "$CI" = true ]]; then  echo "both conditions are OK"; fi
 
       - name: Test acces to the repo
         run: tail testFile
