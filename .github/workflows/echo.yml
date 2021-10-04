@@ -34,12 +34,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Test environment
-        run: |
-         if [[ ! -z "${GITHUB_SERVER_URL}" ]] ; then  echo "GITHUB_SERVER_URL env var exists"; else echo "GITHUB_SERVER_URL is ${GITHUB_SERVER_URL}";  fi
-         if [[ "$CI" = true ]]; then  echo "CI env var is true"; else echo "CI env var is NOT true"; fi
-         if [[ ! -z "${GITHUB_SERVER_URL}" ]] && [[ "$CI" = true ]]; then  echo "both conditions are OK"; fi
-
       - name: Test acces to the repo
         run: tail testFile
         
@@ -87,13 +81,13 @@ jobs:
       - name: source dgdepfixer setup
         run: |
           shopt -s expand_aliases
-          alias export='f(){ echo "$@"  >> $GITHUB_ENV; echo "export env var aliased: $@"; eval "$@"; }; f'
+          alias export='f(){ if [[  "$@" != "PATH=*" ]]; then echo "$@"  >> $GITHUB_ENV; echo "export env var aliased: $@"; eval "$@"; else echo ${$@##*=} >> $GITHUB_PATH; echo "export PATH env var aliased: ${$@##*=}; }; f'
           echo "VIRTUAL_ENV_DISABLE_PROMPT=1" >> $GITHUB_ENV
           . /home/runner/dgdepfixer_install/setup.sh
           echo "/home/runner/dgdepfixer_install/venv/bin:/home/runner/dgdepfixer_install/cmake/bin:/home/runner/dgdepfixer_install/dgdepfixer_bin" >> $GITHUB_PATH
-          echo "DGDEPDIR=/home/runner/dgdepfixer_install" >> $GITHUB_ENV
-          echo "PYTHONSTARTUP=/home/runner/dgdepfixer_install/venv/custom_pystartup.py" >> $GITHUB_ENV
-       ## echo "VIRTUAL_ENV=/home/runner/dgdepfixer_install/venv" >> $GITHUB_ENV
+       ##   echo "DGDEPDIR=/home/runner/dgdepfixer_install" >> $GITHUB_ENV
+       ##   echo "PYTHONSTARTUP=/home/runner/dgdepfixer_install/venv/custom_pystartup.py" >> $GITHUB_ENV
+       ##   echo "VIRTUAL_ENV=/home/runner/dgdepfixer_install/venv" >> $GITHUB_ENV
          
        # env
       
