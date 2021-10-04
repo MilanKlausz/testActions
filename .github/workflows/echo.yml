@@ -116,6 +116,5 @@ jobs:
       ## . /home/runner/dgdepfixer_install/setup.sh
 
     
-      - name: run dgdepfixer #source dgdepfixer setup again
-        run: dgdepfixer 
-        #. /home/runner/dgdepfixer_install/setup.sh
+      - name: source dgdepfixer setup again
+        run: . /home/runner/dgdepfixer_install/setup.sh
