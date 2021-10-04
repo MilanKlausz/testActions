@@ -40,7 +40,7 @@ jobs:
       - name: Alias export
         run: |
          shopt -s expand_aliases
-        alias export='f(){ if [[  "$@" != "PATH=*" ]]; then echo "$@"  >> $GITHUB_ENV; echo "export env var aliased: $@"; eval "$@"; else echo ${$@##*=} >> $GITHUB_PATH; echo "export PATH env var aliased: ${$@##*=}"; fi }; f'
+         alias export='f(){ if [[  "$@" != "PATH=*" ]]; then echo "$@"  >> $GITHUB_ENV; echo "export env var aliased: $@"; eval "$@"; else echo ${$@##*=} >> $GITHUB_PATH; echo "export PATH env var aliased: ${$@##*=}"; fi }; f'
          export testENV=korte
          echo $testENV;
          
