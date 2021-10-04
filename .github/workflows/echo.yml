@@ -37,23 +37,11 @@ jobs:
       - name: Test acces to the repo
         run: tail testFile
         
-      - name: Alias export
-        run: |
-         shopt -s expand_aliases
-         alias export='f(){ if [[  "$@" != "PATH="* ]]; then echo "$@"  >> $GITHUB_ENV; echo "export env var aliased: $@"; eval "$@"; else echo ${@##*=} >> $GITHUB_PATH; echo "export PATH env var aliased: ${@##*=}"; fi }; f'
-         export testENV=korte
-         echo $testENV;
-         
-
-    
       - name: apt-get update
         run: sudo apt-get update  
     
       - name: Install basic prerequisites
-        run: |
-          sudo apt-get install curl g++ build-essential python3-dev cmake libxerces-c-dev libexpat1-dev gfortran libhdf5-serial-dev git python3-venv python3-pip python3-tk mesa-common-dev libglu1-mesa-dev freeglut3-dev cm-super
-          alias export="echo >> $GITHUB_ENV "
-          export testENV_otherStep=szilva
+        run: sudo apt-get install curl g++ build-essential python3-dev cmake libxerces-c-dev libexpat1-dev gfortran libhdf5-serial-dev git python3-venv python3-pip python3-tk mesa-common-dev libglu1-mesa-dev freeglut3-dev cm-super
 
       - name: Download dgdepfixer
         run: curl -OSsf https://storage.googleapis.com/dgdepfixer/dgdepfixer && chmod +x ./dgdepfixer
@@ -64,9 +52,6 @@ jobs:
           echo 'if [ -f $HOME/.bashrc ]; then . $HOME/.bashrc; fi' >> /home/runner/.bash_profile 
           git config --global user.name "Lorem Ipsum"
           git config --global user.email "dolor.sit@ess.eu"
-          shopt -s expand_aliases
-          alias export="echo >> $GITHUB_ENV && "
-          export testENV_stepWithExtraCommand=szilva
        
       - name: Install dgdepfixer
         run: ./dgdepfixer #python3 ./dgdepfixer
@@ -82,9 +67,9 @@ jobs:
         run: |
           shopt -s expand_aliases
           alias export='f(){ if [[  "$@" != "PATH="* ]]; then echo "$@"  >> $GITHUB_ENV; echo "export env var aliased: $@"; eval "$@"; else echo ${@##*=} >> $GITHUB_PATH; echo "export PATH env var aliased: ${@##*=}"; fi }; f'
-          echo "VIRTUAL_ENV_DISABLE_PROMPT=1" >> $GITHUB_ENV
-          . /home/runner/dgdepfixer_install/setup.sh
           echo "/home/runner/dgdepfixer_install/venv/bin:/home/runner/dgdepfixer_install/cmake/bin:/home/runner/dgdepfixer_install/dgdepfixer_bin" >> $GITHUB_PATH
+          . /home/runner/dgdepfixer_install/setup.sh
+       ##   echo "VIRTUAL_ENV_DISABLE_PROMPT=1" >> $GITHUB_ENV   
        ##   echo "DGDEPDIR=/home/runner/dgdepfixer_install" >> $GITHUB_ENV
        ##   echo "PYTHONSTARTUP=/home/runner/dgdepfixer_install/venv/custom_pystartup.py" >> $GITHUB_ENV
        ##   echo "VIRTUAL_ENV=/home/runner/dgdepfixer_install/venv" >> $GITHUB_ENV
