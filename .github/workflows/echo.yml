@@ -67,10 +67,12 @@ jobs:
           
       - name: source dgdepfixer setup
         run: |
+          which python
           shopt -s expand_aliases
           alias export='f(){ if [[  "$@" == "PATH="* ]]; then echo "export PATH env var aliased: PATH=${@##*=}"; echo ${@##*=} >> $GITHUB_PATH; elif [[  "$@" == "PATH" ]]; then echo "export PATH env var aliased: PATH=${!@}"; echo ${!@} >> $GITHUB_PATH; elif [[  "$@" == *"="* ]]; then echo "export env var aliased: $@"; echo "$@"  >> $GITHUB_ENV; eval "$@"; else echo "export env var aliased: $@=${!@}"; echo $@=${!@}  >> $GITHUB_ENV; fi }; f'        
           alias unset='f(){  gawk -i inplace "!/^$@=/" $GITHUB_ENV;  }; f'
           . /home/runner/dgdepfixer_install/setup.sh
+          which python
        ## echo "/home/runner/dgdepfixer_install/venv/bin:/home/runner/dgdepfixer_install/cmake/bin:/home/runner/dgdepfixer_install/dgdepfixer_bin" >> $GITHUB_PATH
        ##   echo "VIRTUAL_ENV_DISABLE_PROMPT=1" >> $GITHUB_ENV   
        ##   echo "DGDEPDIR=/home/runner/dgdepfixer_install" >> $GITHUB_ENV
@@ -123,5 +125,6 @@ jobs:
           shopt -s expand_aliases
           alias export='f(){ if [[  "$@" == "PATH="* ]]; then echo "export PATH env var aliased: PATH=${@##*=}"; echo ${@##*=} >> $GITHUB_PATH; elif [[  "$@" == "PATH" ]]; then echo "export PATH env var aliased: PATH=${!@}"; echo ${!@} >> $GITHUB_PATH; elif [[  "$@" == *"="* ]]; then echo "export env var aliased: $@"; echo "$@"  >> $GITHUB_ENV; eval "$@"; else echo "export env var aliased: $@=${!@}"; echo $@=${!@}  >> $GITHUB_ENV; fi }; f'        
           alias unset='f(){  gawk -i inplace "!/^$@=/" $GITHUB_ENV;  }; f'
+          which python
           . /home/runner/dgdepfixer_install/setup.sh
           
