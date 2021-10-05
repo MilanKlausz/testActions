@@ -5,10 +5,10 @@ name: CI
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-  #push:
-  #  branches: [ main ]
-  #pull_request:
-  #  branches: [ main ]
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
   
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -37,22 +37,6 @@ jobs:
       - name: Test acces to the repo
         run: tail testFile
         
-      - name: test unset 1
-        run: | 
-          shopt -s expand_aliases
-          alias export='f(){ if [[  "$@" == "PATH="* ]]; then echo "export PATH env var aliased: PATH=${@##*=}"; echo ${@##*=} >> $GITHUB_PATH; elif [[  "$@" == "PATH" ]]; then echo "export PATH env var aliased: PATH=${!@}"; echo ${!@} >> $GITHUB_PATH; elif [[  "$@" == *"="* ]]; then echo "export env var aliased: $@"; echo "$@"  >> $GITHUB_ENV; eval "$@"; else echo "export env var aliased: $@=${!@}"; echo $@=${!@}  >> $GITHUB_ENV; fi }; f'  
-          alias unset='f(){  gawk -i inplace "!/^$@=/" $GITHUB_ENV;  }; f'
-          export apple=123
-          export NOTapple=321
-          export applePie=333
-          
-      - name: test unset 2
-        run: | 
-          shopt -s expand_aliases
-          alias export='f(){ if [[  "$@" == "PATH="* ]]; then echo "export PATH env var aliased: PATH=${@##*=}"; echo ${@##*=} >> $GITHUB_PATH; elif [[  "$@" == "PATH" ]]; then echo "export PATH env var aliased: PATH=${!@}"; echo ${!@} >> $GITHUB_PATH; elif [[  "$@" == *"="* ]]; then echo "export env var aliased: $@"; echo "$@"  >> $GITHUB_ENV; eval "$@"; else echo "export env var aliased: $@=${!@}"; echo $@=${!@}  >> $GITHUB_ENV; fi }; f'  
-          alias unset='f(){  gawk -i inplace "!/^$@=/" $GITHUB_ENV;  }; f'
-          unset apple
-        
       - name: apt-get update
         run: sudo apt-get update            
     
@@ -75,6 +59,9 @@ jobs:
       - name: dgdepfixer create
         id: dgdepfixer_create
         run: |
+          shopt -s expand_aliases
+          alias export='f(){ if [[  "$@" == "PATH="* ]]; then echo "export PATH env var aliased: PATH=${@##*=}"; echo ${@##*=} >> $GITHUB_PATH; elif [[  "$@" == "PATH" ]]; then echo "export PATH env var aliased: PATH=${!@}"; echo ${!@} >> $GITHUB_PATH; elif [[  "$@" == *"="* ]]; then echo "export env var aliased: $@"; echo "$@"  >> $GITHUB_ENV; eval "$@"; else echo "export env var aliased: $@=${!@}"; echo $@=${!@}  >> $GITHUB_ENV; fi }; f'        
+          alias unset='f(){  gawk -i inplace "!/^$@=/" $GITHUB_ENV;  }; f'
           printf "#!/bin/bash\n./dgdepfixer --create\n[ $? -eq 0 ]  || exit 0\n"  >> runCreateScript.sh
           chmod +x ./runCreateScript.sh
           ./runCreateScript.sh
