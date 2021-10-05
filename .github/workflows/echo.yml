@@ -37,8 +37,24 @@ jobs:
       - name: Test acces to the repo
         run: tail testFile
         
+      - name: test unset 1
+        run: | 
+          shopt -s expand_aliases
+          alias export='f(){ if [[  "$@" == "PATH="* ]]; then echo "export PATH env var aliased: PATH=${@##*=}"; echo ${@##*=} >> $GITHUB_PATH; elif [[  "$@" == "PATH" ]]; then echo "export PATH env var aliased: PATH=${!@}"; echo ${!@} >> $GITHUB_PATH; elif [[  "$@" == *"="* ]]; then echo "export env var aliased: $@"; echo "$@"  >> $GITHUB_ENV; eval "$@"; else echo "export env var aliased: $@=${!@}"; echo $@=${!@}  >> $GITHUB_ENV; fi }; f'  
+          alias unset='f(){  gawk -i inplace "!/^$@=/" $GITHUB_ENV;  }; f'
+          export apple=123
+          export NOTapple=321
+          export applePie=333
+          
+      - name: test unset 2
+        run: | 
+          shopt -s expand_aliases
+          alias export='f(){ if [[  "$@" == "PATH="* ]]; then echo "export PATH env var aliased: PATH=${@##*=}"; echo ${@##*=} >> $GITHUB_PATH; elif [[  "$@" == "PATH" ]]; then echo "export PATH env var aliased: PATH=${!@}"; echo ${!@} >> $GITHUB_PATH; elif [[  "$@" == *"="* ]]; then echo "export env var aliased: $@"; echo "$@"  >> $GITHUB_ENV; eval "$@"; else echo "export env var aliased: $@=${!@}"; echo $@=${!@}  >> $GITHUB_ENV; fi }; f'  
+          alias unset='f(){  gawk -i inplace "!/^$@=/" $GITHUB_ENV;  }; f'
+          unset apple
+        
       - name: apt-get update
-        run: sudo apt-get update  
+        run: sudo apt-get update            
     
       - name: Install basic prerequisites
         run: sudo apt-get install curl g++ build-essential python3-dev cmake libxerces-c-dev libexpat1-dev gfortran libhdf5-serial-dev git python3-venv python3-pip python3-tk mesa-common-dev libglu1-mesa-dev freeglut3-dev cm-super
@@ -69,6 +85,7 @@ jobs:
         run: |
           shopt -s expand_aliases
           alias export='f(){ if [[  "$@" == "PATH="* ]]; then echo "export PATH env var aliased: PATH=${@##*=}"; echo ${@##*=} >> $GITHUB_PATH; elif [[  "$@" == "PATH" ]]; then echo "export PATH env var aliased: PATH=${!@}"; echo ${!@} >> $GITHUB_PATH; elif [[  "$@" == *"="* ]]; then echo "export env var aliased: $@"; echo "$@"  >> $GITHUB_ENV; eval "$@"; else echo "export env var aliased: $@=${!@}"; echo $@=${!@}  >> $GITHUB_ENV; fi }; f'        
+          alias unset='f(){  gawk -i inplace "!/^$@=/" $GITHUB_ENV;  }; f'
           . /home/runner/dgdepfixer_install/setup.sh
        ## echo "/home/runner/dgdepfixer_install/venv/bin:/home/runner/dgdepfixer_install/cmake/bin:/home/runner/dgdepfixer_install/dgdepfixer_bin" >> $GITHUB_PATH
        ##   echo "VIRTUAL_ENV_DISABLE_PROMPT=1" >> $GITHUB_ENV   
