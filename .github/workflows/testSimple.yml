@@ -41,6 +41,7 @@ jobs:
           shopt -s expand_aliases
           alias export='f(){ if [[  "$@" == "PATH="* ]]; then echo "export PATH env var aliased: PATH=${@##*=}"; echo ${@##*=} >> $GITHUB_PATH; elif [[  "$@" == "PATH" ]]; then echo "export PATH env var aliased: PATH=${!@}"; echo ${!@} >> $GITHUB_PATH; elif [[  "$@" == *"="* ]]; then echo "export env var aliased: $@"; echo "$@"  >> $GITHUB_ENV; eval "$@"; else echo "export env var aliased: $@=${!@}"; echo $@=${!@}  >> $GITHUB_ENV; fi }; f'  
           alias unset='f(){  gawk -i inplace "!/^$@=/" $GITHUB_ENV;  }; f'
+          cat $GITHUB_ENV
           gawk -i inplace "!/^apple=/" $GITHUB_ENV;
       # unset apple
 
