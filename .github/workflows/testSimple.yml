@@ -37,6 +37,7 @@ jobs:
           export applePie=333
           cat $GITHUB_ENV
           unset apple
+          export NOTapple=
           
       - name: test unset 2
         run: | 
