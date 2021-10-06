@@ -58,7 +58,9 @@ jobs:
         
       - name: Install Geant4
         if: steps.cache-dgdepfixer-extras.outputs.cache-hit != 'true'
-        run: dgdepfixer --instsw=Geant4 --nodata
+        run: |
+          . /home/runner/dgdepfixer_install/setup.sh 
+          dgdepfixer --instsw=Geant4 --nodata
  
  
       - name: cache untarred geant4 data files
