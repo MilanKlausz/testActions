@@ -35,7 +35,7 @@ jobs:
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
-      - name: Run a one-line script
+      - name: Run a one-line script to create dgdepfixer
         run: |
           sudo apt-get update 
           sudo apt-get install curl g++ build-essential python3-dev cmake libxerces-c-dev libexpat1-dev gfortran libhdf5-serial-dev git python3-venv python3-pip python3-tk mesa-common-dev libglu1-mesa-dev freeglut3-dev cm-super 
@@ -48,9 +48,34 @@ jobs:
           ./dgdepfixer --create 
           . /home/runner/dgdepfixer_install/setup.sh 
           env 
+    
+      - name: cache dgdepfixer extras
+        id: cache-dgdepfixer-extras
+        uses: actions/cache@v2
+        with:
+          path: /home/runner/dgdepfixer_install/extras
+          key: ${{ runner.os }}-dgdepfixer-extras-Geant4--nodata
+        
+      - name: Install Geant4
+        if: steps.cache-dgdepfixer-extras.outputs.cache-hit != 'true'
+        run: dgdepfixer --instsw=Geant4 --nodata
+ 
+ 
+      - name: cache untarred geant4 data files
+        id: cache-untarred-geant4-data-files
+        uses: actions/cache@v2
+        with:
+           path: /home/runner/Geant4data
+           key: untarred-geant4-data-files 
+ 
+      - name: Download Geant4 gata and create symlinks
+        if: steps.cache-untarred-geant4-data-files.outputs.cache-hit != 'true'
+        run: | 
+          curl -OSsf https://storage.googleapis.com/dgdepfixer/geant4DataProvider.sh && chmod +x ./geant4DataProvider.sh
+          . geant4DataProvider.sh
+
 
       # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Setup again
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          . /home/runner/dgdepfixer_install/setup.sh 
