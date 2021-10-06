@@ -54,7 +54,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /home/runner/dgdepfixer_install/extras
-          key: ${{ runner.os }}-dgdepfixer-extras-Geant4--nodata_new
+          key: ${{ runner.os }}-dgdepfixer-extras-Geant4--nodata_temp
         
       - name: Install Geant4
         if: steps.cache-dgdepfixer-extras.outputs.cache-hit != 'true'
