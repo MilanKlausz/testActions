@@ -81,4 +81,5 @@ jobs:
       - name: Setup again
         run: |
           ls ~/dgdepfixer_install/extras/geant4-10.04.p03/share/Geant4-10.4.3/data
+          file ~/dgdepfixer_install/extras/geant4-10.04.p03/share/Geant4-10.4.3/data/G4ABLA3.1
           . /home/runner/dgdepfixer_install/setup.sh 
