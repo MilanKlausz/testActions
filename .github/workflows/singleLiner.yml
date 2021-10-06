@@ -37,18 +37,17 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: |
-          sudo apt-get update \
-          && sudo apt-get install curl g++ build-essential python3-dev cmake libxerces-c-dev libexpat1-dev gfortran libhdf5-serial-dev git python3-venv python3-pip python3-tk mesa-common-dev libglu1-mesa-dev freeglut3-dev cm-super \
-          && curl -OSsf https://storage.googleapis.com/dgdepfixer/dgdepfixer \
-          && chmod +x ./dgdepfixer \
-          && mv /home/runner/.profile /home/runner/.profile_DISABLED \ 
-          && echo 'if [ -f $HOME/.bashrc ]; then . $HOME/.bashrc; fi' >> /home/runner/.bash_profile \ 
-          && git config --global user.name "Lorem Ipsum" \ 
-          && git config --global user.email "dolor.sit@ess.eu" \
-          && ./dgdepfixer \
-          && ./dgdepfixer --create \
-          && . /home/runner/dgdepfixer_install/setup.sh \
-          && env 
+          sudo apt-get update 
+          sudo apt-get install curl g++ build-essential python3-dev cmake libxerces-c-dev libexpat1-dev gfortran libhdf5-serial-dev git python3-venv python3-pip python3-tk mesa-common-dev libglu1-mesa-dev freeglut3-dev cm-super 
+          curl -OSsf https://storage.googleapis.com/dgdepfixer/dgdepfixer && chmod +x ./dgdepfixer
+          mv /home/runner/.profile /home/runner/.profile_DISABLED 
+          echo 'if [ -f $HOME/.bashrc ]; then . $HOME/.bashrc; fi' >> /home/runner/.bash_profile 
+          git config --global user.name "Lorem Ipsum" 
+          git config --global user.email "dolor.sit@ess.eu"
+          ./dgdepfixer 
+          ./dgdepfixer --create 
+          . /home/runner/dgdepfixer_install/setup.sh 
+          env 
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
