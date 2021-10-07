@@ -47,7 +47,6 @@ jobs:
           ./dgdepfixer 
           ./dgdepfixer --create 
           . /home/runner/dgdepfixer_install/setup.sh 
-          env 
     
       - name: cache dgdepfixer extras
         id: cache-dgdepfixer-extras
@@ -80,6 +79,7 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Setup again
         run: |
-          ls ~/dgdepfixer_install/extras/geant4-10.04.p03/share/Geant4-10.4.3/data
-          file ~/dgdepfixer_install/extras/geant4-10.04.p03/share/Geant4-10.4.3/data/G4ABLA3.1
-          . /home/runner/dgdepfixer_install/setup.sh 
+          . /home/runner/dgdepfixer_install/setup.sh
+        # ls ~/dgdepfixer_install/extras/geant4-10.04.p03/share/Geant4-10.4.3/data
+        # file ~/dgdepfixer_install/extras/geant4-10.04.p03/share/Geant4-10.4.3/data/G4ABLA3.1
+           
