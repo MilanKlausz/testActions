@@ -86,10 +86,7 @@ jobs:
       - name: test dgcode
         run: |
           ls
-          cd dg_dgcode
-          ls
-          cd /home/runner/dg_dgcode
-          ls
           . bootstrap.sh
           dgbuild -a
           dgbuild -t
+        working-directory: dg_dgcode
