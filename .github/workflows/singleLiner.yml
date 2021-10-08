@@ -83,3 +83,9 @@ jobs:
         # ls ~/dgdepfixer_install/extras/geant4-10.04.p03/share/Geant4-10.4.3/data
         # file ~/dgdepfixer_install/extras/geant4-10.04.p03/share/Geant4-10.4.3/data/G4ABLA3.1
            
+      - name: test dgcode
+        run: |
+          cd dg_dgcode
+          . bootstrap.sh
+          dgbuild -a
+          dgbuild -t
