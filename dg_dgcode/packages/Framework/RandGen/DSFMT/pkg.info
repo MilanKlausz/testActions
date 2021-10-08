@@ -1,0 +1,17 @@
+package(USEPKG Utils)
+
+######################################################################
+
+Package providing a very good and fast random number generator: The
+SIMD-oriented Fast Mersenne Twister (SFMT) from
+http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/SFMT/
+
+Primary author: thomas.kittelmann@ess.eu
+
+Detailed information:
+
+Current version dumped here is version 2.2 (downloaded Dec 7 2012), and a line
+in the header file dSFMT has been edited to ensure that DSFMT_MEXP=19937 will be
+picked without warnings or need for compilation flags (look for the line with
+"TK - commented"). The compilation flags applied in non-DEBUG mode were those
+recommended in the documentation.

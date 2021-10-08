@@ -1,0 +1,89 @@
+#!/usr/bin/env python3
+import os,sys,pathlib,multiprocessing,pathlib
+import Core.System as Sys
+
+_cmd='futurize-3'
+assert Sys.which(_cmd)
+
+pn=os.path.basename(sys.argv[0])
+usage="""
+Run the %s command on all pure python scripts and modules in all or some packages.
+
+%s <dirs> [ -- <flags> ]
+
+If one or more directories are specified, only packages located under these directories will be affected.
+If flags are specified, these will be passed along to futurize-3 in addition to -wn. If no flags are specified, the default will be --stage1'
+
+Examples:
+
+1) Run --stage1 on all packages:
+
+%s --
+
+2) Run --stage2 except division_safe on Framework packages:
+
+%s $DGCODE_DIR/packages/Framework -- --stage2 -x division_safe
+"""%(_cmd,pn,pn,pn)
+
+dgdir=pathlib.Path(os.environ['DGCODE_DIR'])
+assert dgdir.is_dir() and dgdir.exists() and len(str(dgdir))>5
+
+def parse_args():
+    args=sys.argv[1:]
+    if not args or '-h' in args or '--help' in args:
+        print(usage)
+        sys.exit(0)
+    if '--' in args:
+        dirs,flags = args[0:args.index('--')],args[args.index('--')+1:]
+    else:
+        dirs,flags=args,[]
+    if not dirs:
+        dirs=[dgdir.joinpath('packages/')]
+    dirs=[pathlib.Path(d).resolve().absolute() for d in dirs]
+    for d in dirs:
+        if not d.is_dir() or not d.exists() or not dgdir in d.parents:
+            raise SystemExit('Not an acceptable directory: %s'%d)
+    if not flags:
+        flags=['--stage1']
+    return dirs,flags
+
+def package_paths():
+    for i in pathlib.Path(os.environ['DGCODE_DIR'],'packages').glob('**/pkg.info'):
+        yield i.parent
+
+def pyfiles(pkgpath):
+    for f in pkgpath.glob('python/*.py'):
+        if '#' in f.name or '~' in f.name:
+            continue
+        yield f
+    for f in pkgpath.glob('scripts/*'):
+        if '#' in f.name or '~' in f.name or f.suffix=='.log':#FIXME: ignore .log as well!!
+            continue
+        try:
+            with f.open() as fh:
+                if fh.readline().split()[0:2]!=['#!/usr/bin/env','python']:
+                    continue
+        except UnicodeDecodeError:
+            continue
+        yield f
+
+def futurize_pyfile(filepath,flags=['--stage1']):
+    Sys.system_throw(Sys.quote_cmd([_cmd,'-w','-n']+flags+[str(filepath.resolve().absolute())]))
+def futurize_pyfile_stage2nodiv(filepath):
+    futurize_pyfile(filepath,['--stage2','-x','division_safe'])
+
+def get_pyfiles(filterdirs=[]):
+    dirs=[d.resolve().absolute() for d in filterdirs]
+    for pkg in (p.resolve().absolute() for p in package_paths()):
+        if dirs and not any(d in pkg.parents for d in dirs):
+            continue
+        for pf in pyfiles(pkg):
+            yield pf.resolve().absolute()
+
+
+if __name__=='__main__':
+    dirs,flags=parse_args()
+    def futurize_pyfile(filepath):
+        Sys.system_throw(Sys.quote_cmd(['futurize-3','-w','-n']+flags+[str(filepath.resolve().absolute())]))
+    with multiprocessing.Pool() as p:
+        p.map(futurize_pyfile, list(get_pyfiles(dirs)))

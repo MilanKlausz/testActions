@@ -1,0 +1,12 @@
+
+
+inline double RandUtils::Rand::shoot()
+{
+  return dsfmt_genrand_open_close(m_state);
+}
+
+inline uint32_t RandUtils::Rand::shootUInt32()
+{
+  return dsfmt_genrand_uint32(m_state);
+}
+

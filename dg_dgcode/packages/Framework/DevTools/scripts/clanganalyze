@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+from __future__ import print_function
+import sys,os,time
+import Core.System as Sys
+from Core.py23compat import pickle
+
+dgcode_dir=os.path.abspath(os.path.realpath(os.environ.get('DGCODE_DIR')))
+if not os.path.isdir(dgcode_dir):
+    print('ERROR: DGCODE_DIR not found')
+    sys.exit(1)
+
+dgbuild_cmd=os.path.join(dgcode_dir,'.system/bin/dgbuild')
+if not os.path.exists(dgbuild_cmd):
+    print('ERROR: real dgbuild command not found')
+    sys.exit(1)
+
+envcache_file=os.path.join(dgcode_dir,'.bld/env.cache')
+if not os.path.exists(envcache_file):
+    print('ERROR: env.cache file not found. Rerun dgbuild first?')
+    sys.exit(1)
+
+scan_bld_cmd = Sys.which('scan-build')
+if not scan_bld_cmd:
+    print('ERROR: scan-build command not found. Did you install clang-analyze on your system?')
+    if sys.platform=='darwin':
+        print()
+        print('   For OSX you might get it from http://clang-analyzer.llvm.org/installation')
+        print('   After download, untar and add the bin/ dir inside to your PATH')
+        print()
+    sys.exit(1)
+
+envinfo = pickle.load(open(envcache_file,'rb'))
+
+scan_bld_cmd=['LC_ALL=C',scan_bld_cmd]
+scan_bld_cmd+=['--use-cc=%s'%(envinfo['system']['volatile']['c']['compiler'])]
+scan_bld_cmd+=['--use-c++=%s'%(envinfo['system']['volatile']['cxx']['compiler'])]
+#too heavy? scan_bld_cmd+=['-analyze-headers']
+scan_bld_cmd+=['-o','/tmp/clangana']
+scan_bld_cmd+=[dgbuild_cmd]
+scan_bld_cmd+=['--insist']
+scan_bld_cmd+=sys.argv[1:]
+
+cmd=' '.join(Sys.quote(a) for a in scan_bld_cmd)
+
+print('Will launch the following command in 10 seconds (CTRL-C to abort):')
+print()
+print(cmd)
+print()
+time.sleep(10)
+os.system(cmd)

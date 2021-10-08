@@ -1,0 +1,107 @@
+#!/usr/bin/env python3
+from __future__ import print_function
+import sys,os
+from Core.System import mkdir_p,chmod_x
+op=os.path
+
+def usage(ec=0):
+    print("Usage:")
+    print()
+    print("  %s [-h|--help] SOURCE TARGET NAME [NAMEORIG]"%op.basename(sys.argv[0]))
+    print()
+    print("Copies a skeleton tree at SOURCE into the location TARGET/NAME. The")
+    print("string NAMEORIG will be replaced in both file paths and contents with")
+    print("the string NAME (including in all lower/upper casing). If NAMEORIG is ")
+    print("not specified, it will be set to the basename of SOURCE.")
+    print()
+    print("Example usage:")
+    print()
+    print("  %s Examples/Skeletons/SkeletonSP Projects MySimProject"%op.basename(sys.argv[0]))
+    print()
+    sys.exit(ec)
+
+args=sys.argv[1:]
+if '-h' in args or '--help' in args:
+    usage(0)
+if not len(args) in (3,4):
+    usage(1)
+pkgdir=op.realpath(op.join(os.getenv('DGCODE_DIR'),'packages'))
+assert op.isdir(pkgdir)
+source,target,name = args[0],args[1],args[2]
+nameorig = args[3] if len(args)==4 else op.basename(args[0])
+if not source.startswith(os.sep): source = op.join(pkgdir,source)
+if not target.startswith(os.sep): target = op.join(pkgdir,target)
+if not op.isdir(source):
+    usage(1)
+if not op.isdir(target):
+    usage(1)
+
+def badname(reason):
+    print("ERROR: Invalid NAME (%s)"%reason)
+    sys.exit(1)
+if not (name[0].isupper() and name[0].isalpha()): badname('must start with upper case letter')
+if len(name) < 3: badname('too short')
+if name.lower() in ['ex','val','framework','projects']: badname('reserved name')
+if len(name) > 20: badname('too long')
+if not name.isalnum(): badname('only alphanumeric characters allowed')
+
+if not op.realpath(source).startswith(pkgdir):
+    print("ERROR: SOURCE is not inside $DGCODE_DIR/packages")
+    sys.exit(1)
+if not op.realpath(target).startswith(pkgdir):
+    print("ERROR: TARGET is not inside $DGCODE_DIR/packages")
+    sys.exit(1)
+
+#If needed this next function could go to a separate module:
+def copy_dir(source,target,filter_func,exec_dirs=[],report_rel_to_dir=None):
+    """Copies files from source dir to a directory in target dir,
+       filtering contents and path names through filter_func
+       and optionally making files in certain dirs executable"""
+    assert op.isdir(source)
+    n=0
+    for subdir, dirs, files in os.walk(source):
+        reldir=op.relpath(subdir,op.join(source,'..'))
+        for f in files:
+            srcfile=op.join(subdir, f)
+            destfile=filter_func(op.join(target, reldir, f))
+            if op.exists(destfile):
+                print("ERROR: File already exists at:\n       %s"%destfile)
+                sys.exit(1)
+            mkdir_p(op.dirname(destfile))
+            n+=1
+            dfh = open(destfile,'w')
+            for l in open(srcfile):
+                dfh.write(filter_func(l))
+            dfh.close()
+            if report_rel_to_dir:
+                print('Created file:',op.relpath(destfile,report_rel_to_dir))
+            if op.basename(op.dirname(destfile)) in exec_dirs:
+                chmod_x(destfile)
+    return n,op.join(target,filter_func(op.basename(source)))
+
+def filter_strings(s):
+    s=s.replace(nameorig,name)
+    s=s.replace(nameorig.upper(),name.upper())
+    s=s.replace(nameorig.lower(),name.lower())
+    s=s.replace('<SKEL_MUST_MODIFY_FILE>',
+                'After you have modified this file as needed for your '
+                +'project you can remove this line and commit <NOCOMMIT>')
+    return s
+
+n,d=copy_dir( source,
+              target,
+              filter_strings,
+              exec_dirs=['scripts'],
+              report_rel_to_dir=pkgdir)
+
+print()
+print("Created %i new files from the %s skeleton under:\n\n         %s"%(n,
+                                                                         op.relpath(source,pkgdir),
+                                                                         op.relpath(d,pkgdir)))
+print()
+print("Now you can go through them and replace their contents as needed for your project.")
+print("\nDo not forget to update documentation in comments and pkg.info files and make sure")
+flag='p%s'%name if op.relpath(d,pkgdir).startswith('Projects') else 'a'
+print("that everything is tested with at least \"dgbuild -t%s\" before"%flag)
+print("committing anything to the repository!")
+print()
