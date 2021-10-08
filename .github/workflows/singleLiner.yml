@@ -87,6 +87,7 @@ jobs:
         run: |
           ls
           . bootstrap.sh
-          dgbuild -a
-          dgbuild -t
+          echo "end"
+        ## dgbuild -a
+        ## dgbuild -t
         working-directory: dg_dgcode
