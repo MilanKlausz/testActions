@@ -44,25 +44,36 @@ jobs:
           git config --global user.name "Lorem Ipsum" 
           git config --global user.email "dolor.sit@ess.eu"
 
+      - name: cache dgdepfixer install
+        id: cache-dgdepfixer
+        uses: actions/cache@v2
+        with:
+          path: /home/runner/dgdepfixer_install
+          key: ${{ runner.os }}-dgdepfixer
+
       - name: Create dgdepfixer
+        if: steps.cache-dgdepfixer.cache-hit != 'true'
         run: |
           curl -OSsf https://storage.googleapis.com/dgdepfixer/dgdepfixer && chmod +x ./dgdepfixer
           ./dgdepfixer 
           ./dgdepfixer --create 
           . /home/runner/dgdepfixer_install/setup.sh 
     
-      - name: cache dgdepfixer extras
-        id: cache-dgdepfixer-extras
+      - name: cache Geant4
+        id: cache-geant4
         uses: actions/cache@v2
         with:
-          path: /home/runner/dgdepfixer_install/extras
-          key: ${{ runner.os }}-dgdepfixer-extras-Geant4--nodata_temp
+          path: /home/runner/geant4-10.04.p03
+          key: ${{ runner.os }}-Geant4--nodata
         
       - name: Install Geant4
-        if: steps.cache-dgdepfixer-extras.outputs.cache-hit != 'true'
+        if: steps.cache-geant4.outputs.cache-hit != 'true'
         run: |
           . /home/runner/dgdepfixer_install/setup.sh 
           dgdepfixer --instsw=Geant4 --nodata
+          mv /home/runner/dgdepfixer_install/extras/geant4-10.04.p03 /home/runner/
+          ln -s /home/runner/geant4-10.04.p03 /home/runner/dgdepfixer_install/extras/geant4-10.04.p03
+          ls /home/runner/dgdepfixer_install/extras
  
  
       - name: cache untarred geant4 data files
@@ -73,7 +84,7 @@ jobs:
            key: untarred-geant4-data-files 
  
       - name: Download Geant4 gata and create symlinks
-        if: steps.cache-dgdepfixer-extras.outputs.cache-hit != 'true' || steps.cache-untarred-geant4-data-files.outputs.cache-hit != 'true'
+        if: steps.cache-geant4.outputs.cache-hit != 'true' || steps.cache-untarred-geant4-data-files.outputs.cache-hit != 'true'
         run: | 
           curl -OSsf https://storage.googleapis.com/dgdepfixer/geant4DataProvider.sh && chmod +x ./geant4DataProvider.sh
           . geant4DataProvider.sh
@@ -81,7 +92,7 @@ jobs:
       - name: Setup again
         run: |
           . /home/runner/dgdepfixer_install/setup.sh
-        # ls ~/dgdepfixer_install/extras/geant4-10.04.p03/share/Geant4-10.4.3/data
+          ls ~/dgdepfixer_install/extras/geant4-10.04.p03/share/Geant4-10.4.3/data
         # file ~/dgdepfixer_install/extras/geant4-10.04.p03/share/Geant4-10.4.3/data/G4ABLA3.1
            
       - name: test dgcode
