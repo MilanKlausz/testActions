@@ -48,11 +48,11 @@ jobs:
         id: cache-dgdepfixer
         uses: actions/cache@v2
         with:
-          path: /home/runner/dgdepfixer_install
+          path: /home/runner/dgdepfixer_installff
           key: ${{ runner.os }}-dgdepfixer
 
       - name: Create dgdepfixer
-        if: steps.cache-dgdepfixer.cache-hit != 'true'
+        if: steps.cache-dgdepfixer.outputs.cache-hit != 'true'
         run: |
           curl -OSsf https://storage.googleapis.com/dgdepfixer/dgdepfixer && chmod +x ./dgdepfixer
           ./dgdepfixer 
