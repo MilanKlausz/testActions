@@ -1,0 +1,25 @@
+Test output of executable script
+Testing file with drwx = 0000
+Testing file with drwx = 0001
+Testing file with drwx = 0010
+Testing file with drwx = 0011
+Testing file with drwx = 0100
+Testing file with drwx = 0101
+Testing file with drwx = 0110
+Testing file with drwx = 0111
+Testing file with drwx = 1000
+  => skipping r/w/x test on dir (since chmod does not change directory perms on AFS)
+Testing file with drwx = 1001
+  => skipping r/w/x test on dir (since chmod does not change directory perms on AFS)
+Testing file with drwx = 1010
+  => skipping r/w/x test on dir (since chmod does not change directory perms on AFS)
+Testing file with drwx = 1011
+  => skipping r/w/x test on dir (since chmod does not change directory perms on AFS)
+Testing file with drwx = 1100
+  => skipping r/w/x test on dir (since chmod does not change directory perms on AFS)
+Testing file with drwx = 1101
+  => skipping r/w/x test on dir (since chmod does not change directory perms on AFS)
+Testing file with drwx = 1110
+  => skipping r/w/x test on dir (since chmod does not change directory perms on AFS)
+Testing file with drwx = 1111
+  => skipping r/w/x test on dir (since chmod does not change directory perms on AFS)

@@ -1,0 +1,24 @@
+---- test default values ----
+  [dbl] some_dbl_par = 17
+  [dbl] some_dbl_par_0to1 = 5e-11
+  [int] some_int_par = -5
+  [int] some_int_par_-100to100 = 10
+  [flg] some_bool_par = yes
+  [str] some_string_par = "some string"
+  [str] some_string_with_allowed_values = "YES"
+---- test changed values ----
+  [dbl] some_dbl_par = 1
+  [dbl] some_dbl_par_0to1 = 0.1
+  [int] some_int_par = -500
+  [int] some_int_par_-100to100 = -100
+  [flg] some_bool_par = no
+  [str] some_string_par = "yihaa"
+  [str] some_string_with_allowed_values = "MAYBE"
+---- test serialise/deserialise [186 bytes] ----
+  [dbl] some_dbl_par = 1
+  [dbl] some_dbl_par_0to1 = 0.1
+  [int] some_int_par = -500
+  [int] some_int_par_-100to100 = -100
+  [flg] some_bool_par = no
+  [str] some_string_par = "yihaa"
+  [str] some_string_with_allowed_values = "MAYBE"

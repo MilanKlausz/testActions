@@ -1,0 +1,10 @@
+Test unsigned:            4000000000
+Test      int:           -2000000000
+Test  uint8_t:                   250
+Test   int8_t:                  -100
+Test uint16_t:                 60000
+Test  int16_t:                -10000
+Test uint32_t:            4000000000
+Test  int32_t:           -2000000000
+Test uint64_t:  18000000000000000000
+Test  int64_t:  -9000000000000000000

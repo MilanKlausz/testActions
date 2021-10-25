@@ -1,0 +1,28 @@
+Core::split         "lala;bla" on ";" yields 2 parts: "lala" "bla"
+Core::split_noempty "lala;bla" on ";" yields 2 parts: "lala" "bla"
+Core::split         "lala;/bla" on ";/" yields 3 parts: "lala" "" "bla"
+Core::split_noempty "lala;/bla" on ";/" yields 2 parts: "lala" "bla"
+Core::split         "lala bla" on " " yields 2 parts: "lala" "bla"
+Core::split_noempty "lala bla" on " " yields 2 parts: "lala" "bla"
+Core::split         "" on " " yields 1 parts: ""
+Core::split_noempty "" on " " yields 0 parts:
+Core::split         "lala;bla;" on ";" yields 3 parts: "lala" "bla" ""
+Core::split_noempty "lala;bla;" on ";" yields 2 parts: "lala" "bla"
+Core::split         ";;" on ";" yields 3 parts: "" "" ""
+Core::split_noempty ";;" on ";" yields 0 parts:
+endswith("b",".txt") = 0
+endswith("",".txt") = 0
+endswith(".txt",".txt") = 1
+endswith("bla.txt",".txt") = 1
+endswith("bla.txt.png",".txt") = 0
+endswith(".txt.bla.txt",".txt") = 1
+endswith(".txtbla",".txt") = 0
+endswith(".png.txt.bla",".txt") = 0
+startswith("b",".txt") = 0
+startswith("",".txt") = 0
+startswith(".txt",".txt") = 1
+startswith("bla.txt",".txt") = 0
+startswith("bla.txt.png",".txt") = 0
+startswith(".txt.bla.txt",".txt") = 1
+startswith(".txtbla",".txt") = 1
+startswith(".png.txt.bla",".txt") = 0
