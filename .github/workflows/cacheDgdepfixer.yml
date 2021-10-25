@@ -48,7 +48,7 @@ jobs:
         id: cache-dgdepfixer
         uses: actions/cache@v2
         with:
-          path: /home/runner/dgdepfixer_installff
+          path: /home/runner/dgdepfixer_install
           key: ${{ runner.os }}-dgdepfixer
 
       - name: Create dgdepfixer
