@@ -96,7 +96,7 @@ jobs:
           . /home/runner/dgdepfixerInstall/setup.sh
           . /home/runner/geant4-10.04.p03/setup.sh
           curl -OSsf https://storage.googleapis.com/dgdepfixer/geant4DataSetup.sh
-          . /geant4DataSetup.sh
+          . geant4DataSetup.sh
           . bootstrap.sh
           dgbuild -a
           dgbuild -t
