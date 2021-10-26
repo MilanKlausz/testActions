@@ -64,7 +64,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /home/runner/geant4-10.04.p03
-          key: ${{ runner.os }}-Geant4--nodata
+          key: ${{ runner.os }}-Geant4--nodata-20211026
         
       - name: Install Geant4
         if: steps.cache-geant4.outputs.cache-hit != 'true'
