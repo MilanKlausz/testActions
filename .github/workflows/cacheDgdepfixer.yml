@@ -56,7 +56,7 @@ jobs:
         run: |
           curl -OSsf https://storage.googleapis.com/dgdepfixer/dgdepfixer && chmod +x ./dgdepfixer
           ./dgdepfixer 
-          ./dgdepfixer --create -d dgdepfixerInstall
+          ./dgdepfixer --create -d /home/runner/dgdepfixerInstall
           . /home/runner/dgdepfixerInstall/setup.sh 
     
       - name: cache Geant4
@@ -70,7 +70,7 @@ jobs:
         if: steps.cache-geant4.outputs.cache-hit != 'true'
         run: |
           . /home/runner/dgdepfixerInstall/setup.sh 
-          dgdepfixer --instsw=Geant4 --nodata -d geant4-10.04.p03
+          dgdepfixer --instsw=Geant4 --nodata -d /home/runner/geant4-10.04.p03
  
       - name: cache untarred geant4 data files
         id: cache-untarred-geant4-data-files
