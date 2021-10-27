@@ -59,8 +59,8 @@ jobs:
       - name: Bypass dgdepfixers problems - Ubuntu
         if: runner.os == 'Linux'
         run: |
-          mv /home/runner/.profile /home/runner/.profile_DISABLED  
-          echo 'if [ -f $HOME/.bashrc ]; then . $HOME/.bashrc; fi' >> /home/runner/.bash_profile 
+          mv $HOME/.profile $HOME/.profile_DISABLED  
+          echo 'if [ -f $HOME/.bashrc ]; then . $HOME/.bashrc; fi' >> $HOME/.bash_profile 
         
       - name: Bypass dgdepfixers problems
         run: |
@@ -72,7 +72,7 @@ jobs:
         id: cache-dgdepfixer
         uses: actions/cache@v2
         with:
-          path: /home/runner/dgdepfixerInstall
+          path: $HOME/dgdepfixerInstall
           key: ${{ matrix.os }}-dgdepfixer-install
 
       - name: Create dgdepfixer
@@ -82,28 +82,26 @@ jobs:
           ./dgdepfixer 
           ./dgdepfixer --create -d $HOME/dgdepfixerInstall
           . $HOME/dgdepfixerInstall/setup.sh 
-          
-        #./dgdepfixer --create -d home/runner/dgdepfixerInstall
-        #. /home/runner/dgdepfixerInstall/setup.sh 
+      
     
       - name: cache Geant4
         id: cache-geant4
         uses: actions/cache@v2
         with:
-          path: /home/runner/geant4-10.04.p03
+          path: $HOME/geant4-10.04.p03
           key: ${{ matrix.os }}-Geant4--nodata-20211026
         
       - name: Install Geant4
         if: steps.cache-geant4.outputs.cache-hit != 'true'
         run: |
-          . /home/runner/dgdepfixerInstall/setup.sh 
-          dgdepfixer --instsw=Geant4 --nodata -d /home/runner/geant4-10.04.p03
+          . $HOME/dgdepfixerInstall/setup.sh 
+          dgdepfixer --instsw=Geant4 --nodata -d $HOME/geant4-10.04.p03
  
       - name: cache untarred geant4 data files
         id: cache-untarred-geant4-data-files
         uses: actions/cache@v2
         with:
-           path: /home/runner/Geant4data
+           path: $HOME/Geant4data
            key: untarred-geant4-data-files 
  
       - name: Download Geant4 data
@@ -114,14 +112,14 @@ jobs:
 
       #- name: Setup again
       #  run: |
-      #    . /home/runner/dgdepfixerInstall/setup.sh
+      #    . $HOME/dgdepfixerInstall/setup.sh
         #  ls ~/dgdepfixer_install/extras/geant4-10.04.p03/share/Geant4-10.4.3/data
         # file ~/dgdepfixer_install/extras/geant4-10.04.p03/share/Geant4-10.4.3/data/G4ABLA3.1
            
       - name: test dgcode
         run: |
-          . /home/runner/dgdepfixerInstall/setup.sh
-          . /home/runner/geant4-10.04.p03/setup.sh
+          . $HOME/dgdepfixerInstall/setup.sh
+          . $HOME/geant4-10.04.p03/setup.sh
           curl -OSsf https://storage.googleapis.com/dgdepfixer/geant4DataSetup.sh
           . geant4DataSetup.sh
           . bootstrap.sh
@@ -133,19 +131,19 @@ jobs:
         uses: mikepenz/action-junit-report@v2
         if: always() # always run even if the previous step fails
         with: 
-            report_paths: '/home/runner/work/testActions/testActions/dg_dgcode/.bld/testresults/dgtest_results_junitformat.xml'
+            report_paths: '$GITHUB_WORKSPACE/dg_dgcode/.bld/testresults/dgtest_results_junitformat.xml'
 
       - name: Test Report
         uses: dorny/test-reporter@v1
         if:  always() # always run even if the previous step fails
         with:
           name: JEST Tests            # Name of the check run which will be created
-          path: /home/runner/work/testActions/testActions/dg_dgcode/.bld/testresults/dgtest_results_junitformat.xml    # Path to test results
+          path: $GITHUB_WORKSPACE/dg_dgcode/.bld/testresults/dgtest_results_junitformat.xml    # Path to test results
           reporter: jest-junit        # Format of test results
 
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action/composite@v1
         if: always()
         with:
-          files: /home/runner/work/testActions/testActions/dg_dgcode/.bld/testresults/dgtest_results_junitformat.xml
+          files: $GITHUB_WORKSPACE/dg_dgcode/.bld/testresults/dgtest_results_junitformat.xml
     
