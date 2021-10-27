@@ -35,20 +35,22 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      #- name: echo variables
-      #  run: |
-      #    echo ${{ matrix.os }}
-      #    echo ${{ runner.os }}
-      #    echo ${{ runner.build }}
+      - name: echo variables
+        run: |
+          echo ${{ matrix.os }}
+          echo ${{ runner.os }}
+          echo $HOME
+          echo $GITHUB_WORKSPACE
+        #echo ${{ runner.build }}
 
 
-      - name: apt-get pre-reqs Ubuntu
+      - name: apt-get pre-reqs for Ubuntu
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update 
           sudo apt-get install curl g++ build-essential python3-dev cmake libxerces-c-dev libexpat1-dev gfortran libhdf5-serial-dev git python3-venv python3-pip python3-tk mesa-common-dev libglu1-mesa-dev freeglut3-dev cm-super 
       
-      - name: apt-get pre-reqs MacOS
+      - name: brew pre-reqs for MacOS
         if: runner.os == 'macOS'
         run: |
           brew install cmake python python-tk expat xerces-c git hdf5 freetype
@@ -78,8 +80,11 @@ jobs:
         run: |
           curl -OSsf https://storage.googleapis.com/dgdepfixer/dgdepfixer && chmod +x ./dgdepfixer
           ./dgdepfixer 
-          ./dgdepfixer --create -d /home/runner/dgdepfixerInstall
-          . /home/runner/dgdepfixerInstall/setup.sh 
+          ./dgdepfixer --create -d $HOME/dgdepfixerInstall
+          . $HOME/dgdepfixerInstall/setup.sh 
+          
+        #./dgdepfixer --create -d home/runner/dgdepfixerInstall
+        #. /home/runner/dgdepfixerInstall/setup.sh 
     
       - name: cache Geant4
         id: cache-geant4
