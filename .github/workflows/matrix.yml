@@ -41,15 +41,15 @@ jobs:
           echo ${{ runner.build }}
 
       - name: apt-get pre-reqs Ubuntu
-        if: matrix.os == 'ubuntu-20.04'
+        if: runner.os == 'Linux'
         run: |
           sudo apt-get update 
           sudo apt-get install curl g++ build-essential python3-dev cmake libxerces-c-dev libexpat1-dev gfortran libhdf5-serial-dev git python3-venv python3-pip python3-tk mesa-common-dev libglu1-mesa-dev freeglut3-dev cm-super 
       
       - name: apt-get pre-reqs MacOS
-        if: matrix.os == 'macos-10.15'
+        if: runner.os == 'macOS'
         run: |
-          sudo brew install cmake python python-tk expat xerces-c git hdf5 freetype
+          brew install cmake python python-tk expat xerces-c git hdf5 freetype
       
         
       - name: Bypass dgdepfixers problems
