@@ -34,11 +34,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: echo variables
-        run: |
-          echo ${{ matrix.os }}
-          echo ${{ runner.os }}
-          echo ${{ runner.build }}
+      #- name: echo variables
+      #  run: |
+      #    echo ${{ matrix.os }}
+      #    echo ${{ runner.os }}
+      #    echo ${{ runner.build }}
+
 
       - name: apt-get pre-reqs Ubuntu
         if: runner.os == 'Linux'
@@ -51,16 +52,18 @@ jobs:
         run: |
           brew install cmake python python-tk expat xerces-c git hdf5 freetype
       
+      
       - name: Bypass dgdepfixers problems - Ubuntu
         if: runner.os == 'Linux'
         run: |
           mv /home/runner/.profile /home/runner/.profile_DISABLED  
+          echo 'if [ -f $HOME/.bashrc ]; then . $HOME/.bashrc; fi' >> /home/runner/.bash_profile 
         
       - name: Bypass dgdepfixers problems
         run: |
-          echo 'if [ -f $HOME/.bashrc ]; then . $HOME/.bashrc; fi' >> /home/runner/.bash_profile 
           git config --global user.name "Lorem Ipsum" 
           git config --global user.email "dolor.sit@ess.eu"
+
 
       - name: cache dgdepfixer install
         id: cache-dgdepfixer
@@ -97,7 +100,7 @@ jobs:
            path: /home/runner/Geant4data
            key: untarred-geant4-data-files 
  
-      - name: Download Geant4 gata
+      - name: Download Geant4 data
         if: steps.cache-geant4.outputs.cache-hit != 'true' || steps.cache-untarred-geant4-data-files.outputs.cache-hit != 'true'
         run: | 
           curl -OSsf https://storage.googleapis.com/dgdepfixer/geant4DataProvider.sh && chmod +x ./geant4DataProvider.sh
