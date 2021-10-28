@@ -116,6 +116,9 @@ jobs:
           dgbuild -a
           dgbuild -t
         working-directory: dg_dgcode
+        
+      - name: list home dir
+        run: ls ~
        
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v2
@@ -137,3 +140,22 @@ jobs:
      #   with:
      #     files: ${{github.workspace}}/dg_dgcode/.bld/testresults/dgtest_results_junitformat.xml
     
+  list:
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix: 
+        os: [ubuntu-20.04, macos-10.15]
+    runs-on: ${{ matrix.os }}
+    
+    defaults:
+      run:
+        shell: bash
+        #working-directory: todo
+    env:
+      SHELL: /bin/bash
+      DGDEP_IGNOREBADSHEBANG: 1
+    
+    steps:
+      - name: list home dir
+        run: ls ~
