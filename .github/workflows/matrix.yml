@@ -24,25 +24,15 @@ jobs:
     defaults:
       run:
         shell: bash
-        #working-directory: todo
+        
     env:
       SHELL: /bin/bash
       DGDEP_IGNOREBADSHEBANG: 1
 
-
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # Checks-out your repository under $GITHUB_WORKSPACE
       - uses: actions/checkout@v2
-
-      - name: echo variables
-        run: |
-          echo ${{ matrix.os }}
-          echo ${{ runner.os }}
-          echo $HOME
-          echo $GITHUB_WORKSPACE
-        #echo ${{ runner.build }}
-
 
       - name: apt-get pre-reqs for Ubuntu
         if: runner.os == 'Linux'
@@ -52,9 +42,7 @@ jobs:
       
       - name: brew pre-reqs for MacOS
         if: runner.os == 'macOS'
-        run: |
-          brew install cmake python python-tk expat xerces-c git hdf5 freetype
-      
+        run: brew install cmake python python-tk expat xerces-c git hdf5 freetype
       
       - name: Bypass dgdepfixers problems - Ubuntu
         if: runner.os == 'Linux'
@@ -77,12 +65,8 @@ jobs:
 
       - name: Create dgdepfixer
         if: steps.cache-dgdepfixer.outputs.cache-hit != 'true'
-        run: |
-          ./$GITHUB_WORKSPACE/.github/scripts/dgdepfixer.sh
-          ./$GITHUB_WORKSPACE/.github/scripts/dgdepfixer.sh --create -d $HOME/dgdepfixerInstall
-          . $HOME/dgdepfixerInstall/setup.sh 
+        run: ./$GITHUB_WORKSPACE/.github/scripts/dgdepfixer.sh --create -d $HOME/dgdepfixerInstall
       
-    
       - name: cache Geant4
         id: cache-geant4
         uses: actions/cache@v2
@@ -117,9 +101,6 @@ jobs:
           dgbuild -t
         working-directory: dg_dgcode
         
-      - name: list home dir
-        run: ls ~
-       
       - name: Publish Test Report
         uses: mikepenz/action-junit-report@v2
         if: always() # always run even if the previous step fails
@@ -130,7 +111,7 @@ jobs:
         uses: dorny/test-reporter@v1
         if:  always() # always run even if the previous step fails
         with:
-          name: JEST Tests            # Name of the check run which will be created
+          name: JEST Tests - ${{ runner.os }}            # Name of the check run which will be created
           path: ${{github.workspace}}/dg_dgcode/.bld/testresults/dgtest_results_junitformat.xml    # Path to test results
           reporter: jest-junit        # Format of test results
 
@@ -140,22 +121,3 @@ jobs:
      #   with:
      #     files: ${{github.workspace}}/dg_dgcode/.bld/testresults/dgtest_results_junitformat.xml
     
-  list:
-    needs: build
-    strategy:
-      fail-fast: false
-      matrix: 
-        os: [ubuntu-20.04, macos-10.15]
-    runs-on: ${{ matrix.os }}
-    
-    defaults:
-      run:
-        shell: bash
-        #working-directory: todo
-    env:
-      SHELL: /bin/bash
-      DGDEP_IGNOREBADSHEBANG: 1
-    
-    steps:
-      - name: list home dir
-        run: ls ~
