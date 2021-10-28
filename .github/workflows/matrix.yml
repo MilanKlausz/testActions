@@ -78,9 +78,8 @@ jobs:
       - name: Create dgdepfixer
         if: steps.cache-dgdepfixer.outputs.cache-hit != 'true'
         run: |
-          curl -OSsf https://storage.googleapis.com/dgdepfixer/dgdepfixer && chmod +x ./dgdepfixer
-          ./dgdepfixer 
-          ./dgdepfixer --create -d $HOME/dgdepfixerInstall
+          ./$GITHUB_WORKSPACE/.github/scripts/dgdepfixer.sh
+          ./$GITHUB_WORKSPACE/.github/scripts/dgdepfixer.sh --create -d $HOME/dgdepfixerInstall
           . $HOME/dgdepfixerInstall/setup.sh 
       
     
@@ -106,15 +105,7 @@ jobs:
  
       - name: Download Geant4 data
         if: steps.cache-geant4.outputs.cache-hit != 'true' || steps.cache-untarred-geant4-data-files.outputs.cache-hit != 'true'
-        run: | 
-          curl -OSsf https://storage.googleapis.com/dgdepfixer/geant4DataProvider.sh && chmod +x ./geant4DataProvider.sh
-          ./geant4DataProvider.sh
-
-      #- name: Setup again
-      #  run: |
-      #    . $HOME/dgdepfixerInstall/setup.sh
-        #  ls ~/dgdepfixer_install/extras/geant4-10.04.p03/share/Geant4-10.4.3/data
-        # file ~/dgdepfixer_install/extras/geant4-10.04.p03/share/Geant4-10.4.3/data/G4ABLA3.1
+        run: ./$GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh
            
       - name: test dgcode
         run: |
