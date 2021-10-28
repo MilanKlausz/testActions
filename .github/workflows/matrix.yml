@@ -131,9 +131,9 @@ jobs:
           path: ${{github.workspace}}/dg_dgcode/.bld/testresults/dgtest_results_junitformat.xml    # Path to test results
           reporter: jest-junit        # Format of test results
 
-      - name: Publish Unit Test Results
-        uses: EnricoMi/publish-unit-test-result-action/composite@v1
-        if: always()
-        with:
-          files: ${{github.workspace}}/dg_dgcode/.bld/testresults/dgtest_results_junitformat.xml
+     # - name: Publish Unit Test Results
+     #   uses: EnricoMi/publish-unit-test-result-action/composite@v1
+     #   if: always()
+     #   with:
+     #     files: ${{github.workspace}}/dg_dgcode/.bld/testresults/dgtest_results_junitformat.xml
     
