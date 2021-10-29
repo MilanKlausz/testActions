@@ -42,7 +42,6 @@ runs:
       with:
         path: ~/dgdepfixerInstall
         key: ${{ inputs.runs-on }}-dgdepfixer-install
-      shell: bash
         
     - name: Create dgdepfixer
       run: [ ! -d $HOME/dgdepfixerInstall ] && ./$GITHUB_WORKSPACE/.github/scripts/dgdepfixer.sh --create -d $HOME/dgdepfixerInstall
