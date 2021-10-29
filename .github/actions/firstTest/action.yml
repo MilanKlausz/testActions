@@ -28,9 +28,21 @@ runs:
         sudo apt-get install curl g++ build-essential python3-dev cmake libxerces-c-dev libexpat1-dev gfortran libhdf5-serial-dev git python3-venv python3-pip python3-tk mesa-common-dev libglu1-mesa-dev freeglut3-dev cm-super 
       shell: bash
     
+    - name: Bypass dgdepfixers problems - Ubuntu
+      run: |
+        mv $HOME/.profile $HOME/.profile_DISABLED  
+        echo 'if [ -f $HOME/.bashrc ]; then . $HOME/.bashrc; fi' >> $HOME/.bash_profile
+        git config --global user.name "Lorem Ipsum" 
+        git config --global user.email "dolor.sit@ess.eu"
+    
     - name: cache dgdepfixer install
       id: cache-dgdepfixer
       uses: actions/cache@v2
       with:
         path: ~/dgdepfixerInstall
         key: ubuntu-20.04-dgdepfixer-install
+        
+    - name: Create dgdepfixer
+      run: [ ! -d $HOME/dgdepfixerInstall ] && ./$GITHUB_WORKSPACE/.github/scripts/dgdepfixer.sh --create -d $HOME/dgdepfixerInstall
+      
+      
