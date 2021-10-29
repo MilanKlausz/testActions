@@ -14,13 +14,10 @@ runs:
   using: "composite"
   steps:
     - run: echo Will run on ${{ inputs.runs-on }}.
-      shell: bash
       env:
         DGDEP_IGNOREBADSHEBANG: 1
     - run: mkdir $HOME/actionCreatedDirectoryInHome
-      shell: bash
     - run: mkdir $GITHUB_WORKSPACE/actionCreatedDirectoryInGHWS
-      shell: bash
     #- id: random-number-generator
     #  run: echo "::set-output name=random-id::$(echo $RANDOM)"
     #  shell: bash
