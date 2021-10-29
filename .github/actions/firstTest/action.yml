@@ -1,5 +1,5 @@
-name: 'Hello World'
-description: 'Greet someone'
+name: 'dgbuild'
+description: 'Builds dgcode'
 inputs:
   who-to-greet:  # id of input
     description: 'Who to greet'
@@ -14,6 +14,12 @@ runs:
   steps:
     - run: echo Hello ${{ inputs.who-to-greet }}.
       shell: bash
+    - run: mkdir $HOME/actionCreatedDirectoryInHome
+      shell: bash
+    - run: mkdir $GITHUB_WORKSPACE/actionCreatedDirectoryInGHWS
+      shell: bash
     - id: random-number-generator
       run: echo "::set-output name=random-id::$(echo $RANDOM)"
       shell: bash
+    #- run: ${{ github.action_path }}/goodbye.sh
+    #  shell: bash
