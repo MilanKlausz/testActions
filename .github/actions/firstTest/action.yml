@@ -45,7 +45,7 @@ runs:
       
    - name: test cache hit
      shell: bash
-     run: echo ${{steps.cache-dgdepfixer.outputs.cache-hit}}
+     run: echo steps.cache-dgdepfixer.outputs.cache-hit
      
     - name: Create dgdepfixer
       shell: bash
