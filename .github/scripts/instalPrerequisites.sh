@@ -4,17 +4,15 @@
 
 if [[ $@ == *"ubuntu"* ]]; then
   #Linux
-  echo "Linux"
   sudo apt-get update 
   sudo apt-get install curl g++ build-essential python3-dev cmake libxerces-c-dev libexpat1-dev gfortran libhdf5-serial-dev git python3-venv python3-pip python3-tk mesa-common-dev libglu1-mesa-dev freeglut3-dev cm-super 
 elif [[ $@ == *"macos"*  ]]; then
   #MacOS
-  echo "macOS"
   brew install cmake python python-tk expat xerces-c git hdf5 freetype
 else
   echo "Wrong value for 'runs-on' parameter"
   exit 1 
-  # TODO echo the problem
+  # TODO echo problem along with the exit
 fi
 
 
