@@ -44,7 +44,7 @@ runs:
         key: ${{ inputs.runs-on }}-dgdepfixer-install
         
     - name: Create dgdepfixer
-      run: echo "alma"
+      run: [ ! -d $HOME/dgdepfixerInstall ] &&  echo "alma"
       shell: bash
       env:
         DGDEP_IGNOREBADSHEBANG: 1
