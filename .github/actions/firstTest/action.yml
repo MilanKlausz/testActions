@@ -55,7 +55,6 @@ runs:
       with:
         path: ~/geant4-10.04.p03
         key: ${{ inputs.runs-on }}-Geant4--nodata-20211026
-      shell: bash
         
     - name: Install Geant4
       run: |
