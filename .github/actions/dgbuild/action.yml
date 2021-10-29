@@ -58,4 +58,6 @@ runs:
         dgbuild -a
       working-directory: dg_dgcode
       shell: bash
+      env:
+        DGDEP_IGNOREBADSHEBANG: 1
 
