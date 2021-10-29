@@ -44,11 +44,12 @@ runs:
         key: ${{ inputs.runs-on }}-dgdepfixer-install
         
     - name: Create dgdepfixer
-      run: touch tempDgdepfixerScript.sh && echo "[ ! -d $HOME/dgdepfixerInstall ] &&  echo 'alma' " > tempDgdepfixerScript.sh && . tempDgdepfixerScript.sh
       shell: bash
+      run: eval "[[ -d $HOME/dgdepfixerInstall ]] &&  echo 'it exists' "
       env:
         DGDEP_IGNOREBADSHEBANG: 1
         
+    # run: touch tempDgdepfixerScript.sh && echo "[ ! -d $HOME/dgdepfixerInstall ] &&  echo 'alma' " > tempDgdepfixerScript.sh && . tempDgdepfixerScript.sh
     #run: [ ! -d $HOME/dgdepfixerInstall ] && ./$GITHUB_WORKSPACE/.github/scripts/dgdepfixer.sh --create -d $HOME/dgdepfixerInstall
         
   #  - name: cache Geant4
