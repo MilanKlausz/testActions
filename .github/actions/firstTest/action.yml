@@ -49,17 +49,17 @@ runs:
       env:
         DGDEP_IGNOREBADSHEBANG: 1
     
-    - name: cache Geant4
-      id: cache-geant4
-      uses: actions/cache@v2
-      with:
-        path: ~/geant4-10.04.p03
-        key: ${{ inputs.runs-on }}-Geant4--nodata-20211026
-        
-    - name: Install Geant4
-      run: |
-        eval "[ ! -d $HOME/geant4-10.04.p03 ] && . $HOME/dgdepfixerInstall/setup.sh "
-        eval "[ ! -d $HOME/geant4-10.04.p03 ] && dgdepfixer --instsw=Geant4 --nodata -d $HOME/geant4-10.04.p03"
-      shell: bash
+   # - name: cache Geant4
+   #   id: cache-geant4
+   #   uses: actions/cache@v2
+   #   with:
+   #     path: ~/geant4-10.04.p03
+   #     key: ${{ inputs.runs-on }}-Geant4--nodata-20211026
+   #     
+   # - name: Install Geant4
+   #   run: |
+   #     eval "[ ! -d $HOME/geant4-10.04.p03 ] && . $HOME/dgdepfixerInstall/setup.sh "
+   #     eval "[ ! -d $HOME/geant4-10.04.p03 ] && dgdepfixer --instsw=Geant4 --nodata -d $HOME/geant4-10.04.p03"
+   #   shell: bash
       
       
