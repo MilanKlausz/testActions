@@ -11,13 +11,12 @@ inputs:
 #    value: ${{ steps.random-number-generator.outputs.random-id }}
 
 runs:
-  env:
-    SHELL: /bin/bash
-    DGDEP_IGNOREBADSHEBANG: 1
   using: "composite"
   steps:
     - run: echo Will run on ${{ inputs.runs-on }}.
       shell: bash
+      env:
+        DGDEP_IGNOREBADSHEBANG: 1
     - run: mkdir $HOME/actionCreatedDirectoryInHome
       shell: bash
     - run: mkdir $GITHUB_WORKSPACE/actionCreatedDirectoryInGHWS
