@@ -5,23 +5,11 @@ inputs:
     description: Platform to execute on
     type: string
     default: ubuntu-20.04
-#outputs:
-#  random-number:
-#    description: "Random number"
-#    value: ${{ steps.random-number-generator.outputs.random-id }}
 
 runs:
   using: "composite"
   steps:
-    - run: echo Will run on ${{ inputs.runs-on }}.
-      shell: bash
-      env:
-        DGDEP_IGNOREBADSHEBANG: 1
-    - run: mkdir $HOME/actionCreatedDirectoryInHome
-      shell: bash
-    - run: mkdir $GITHUB_WORKSPACE/actionCreatedDirectoryInGHWS
-      shell: bash
-      
+  
     - name: apt-get pre-reqs for Ubuntu
       run: |
         sudo apt-get update 
@@ -46,8 +34,8 @@ runs:
     - name: Create dgdepfixer
       shell: bash
       run: eval 'if [ ! -d $HOME/dgdepfixerInstall ]; then ./$GITHUB_WORKSPACE/.github/scripts/dgdepfixer.sh --create -d $HOME/dgdepfixerInstall; fi'
-      env:
-        DGDEP_IGNOREBADSHEBANG: 1
+      #env:
+      #  DGDEP_IGNOREBADSHEBANG: 1
     
     - name: cache Geant4
       id: cache-geant4
