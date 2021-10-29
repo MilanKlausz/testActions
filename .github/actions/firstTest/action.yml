@@ -42,7 +42,11 @@ runs:
       with:
         path: ~/dgdepfixerInstall
         key: ${{ inputs.runs-on }}-dgdepfixer-install
-        
+      
+   - name: test cache hit
+     shell: bash
+     run: echo ${{steps.cache-dgdepfixer.outputs.cache-hit}}
+     
     - name: Create dgdepfixer
       shell: bash
       run: eval 'if [ ! -d $HOME/dgdepfixerInstall ]; then ./$GITHUB_WORKSPACE/.github/scripts/dgdepfixer.sh --create -d $HOME/dgdepfixerInstall; fi'
