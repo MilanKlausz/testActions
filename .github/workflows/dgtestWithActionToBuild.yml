@@ -45,3 +45,5 @@ jobs:
           . bootstrap.sh
           dgbuild -t
         working-directory: dg_dgcode
+        env:
+          DGDEP_IGNOREBADSHEBANG: 1
