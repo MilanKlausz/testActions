@@ -45,7 +45,7 @@ runs:
         
     - name: Create dgdepfixer
       shell: bash
-      run: eval "[ ! -d $HOME/dgdepfixerInstall ] && ./$GITHUB_WORKSPACE/.github/scripts/dgdepfixer.sh --create -d $HOME/dgdepfixerInstall "
+      run: eval '[ ! -d $HOME/dgdepfixerInstall ] && ./$GITHUB_WORKSPACE/.github/scripts/dgdepfixer.sh --create -d $HOME/dgdepfixerInstall '
       env:
         DGDEP_IGNOREBADSHEBANG: 1
     
