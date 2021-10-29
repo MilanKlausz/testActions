@@ -62,4 +62,13 @@ runs:
         eval 'if [ ! -d $HOME/geant4-10.04.p03 ]; then dgdepfixer --instsw=Geant4 --nodata -d $HOME/geant4-10.04.p03; fi'
       shell: bash
       
-      
+    - name: cache untarred geant4 data files
+      id: cache-untarred-geant4-data-files
+      uses: actions/cache@v2
+      with:
+        path: ~/Geant4data
+        key: untarred-geant4-data-files 
+ 
+    - name: Download Geant4 data
+      run: eval 'if [ ! -d $HOME/Geant4data ]; then ./$GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh; fi '
+
