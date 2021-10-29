@@ -43,12 +43,13 @@ runs:
         path: ~/dgdepfixerInstall
         key: ${{ inputs.runs-on }}-dgdepfixer-install
         
-   # - name: Create dgdepfixer
-   #   run: [ ! -d $HOME/dgdepfixerInstall ] && ./$GITHUB_WORKSPACE/.github/scripts/dgdepfixer.sh --create -d $HOME/dgdepfixerInstall
-   #   shell: bash
-   #   env:
-   #     DGDEP_IGNOREBADSHEBANG: 1
-      
+    - name: Create dgdepfixer
+      run: echo "alma"
+      shell: bash
+      env:
+        DGDEP_IGNOREBADSHEBANG: 1
+        
+    #run: [ ! -d $HOME/dgdepfixerInstall ] && ./$GITHUB_WORKSPACE/.github/scripts/dgdepfixer.sh --create -d $HOME/dgdepfixerInstall
         
   #  - name: cache Geant4
   #    id: cache-geant4
