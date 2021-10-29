@@ -43,7 +43,7 @@ jobs:
 
       - id: foo
         name: use the Action
-        uses: $GITHUB_WORKSPACE/.github/actions/firstTest@v1
+        uses: ${{github.workspace}}/.github/actions/firstTest@v1
         with:
           who-to-greet: 'Mona the Octocat'
 
