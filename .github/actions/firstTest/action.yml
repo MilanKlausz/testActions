@@ -1,10 +1,10 @@
 name: 'dgbuild'
 description: 'Builds dgcode'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
+  runs-on:
+    description: Platform to execute on
+    type: string
+    default: ubuntu-latest
 #outputs:
 #  random-number:
 #    description: "Random number"
@@ -12,7 +12,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: echo Hello ${{ inputs.who-to-greet }}.
+    - run: echo Will run on ${{ inputs.runs-on }}.
       shell: bash
     - run: mkdir $HOME/actionCreatedDirectoryInHome
       shell: bash
