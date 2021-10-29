@@ -74,12 +74,12 @@ runs:
       shell: bash
       
     - name: build dgcode
-        run: |
-          . $HOME/dgdepfixerInstall/setup.sh
-          . $HOME/geant4-10.04.p03/setup.sh
-          . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
-          . bootstrap.sh
-          dgbuild -a
-        working-directory: dg_dgcode
-        shell: bash
+      run: |
+        . $HOME/dgdepfixerInstall/setup.sh
+        . $HOME/geant4-10.04.p03/setup.sh
+        . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
+        . bootstrap.sh
+        dgbuild -a
+      working-directory: dg_dgcode
+      shell: bash
 
