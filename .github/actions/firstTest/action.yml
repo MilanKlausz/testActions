@@ -72,4 +72,14 @@ runs:
     - name: Download Geant4 data
       run: eval 'if [ ! -d $HOME/Geant4data ]; then ./$GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh; fi '
       shell: bash
+      
+    - name: build dgcode
+        run: |
+          . $HOME/dgdepfixerInstall/setup.sh
+          . $HOME/geant4-10.04.p03/setup.sh
+          . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
+          . bootstrap.sh
+          dgbuild -a
+        working-directory: dg_dgcode
+        shell: bash
 
