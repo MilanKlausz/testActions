@@ -45,7 +45,7 @@ jobs:
         name: use the Action
         uses: ./.github/actions/firstTest
         with:
-          who-to-greet: 'Mona the Octocat'
+          runs-on: ${{ runner.os }}
 
       - name: ls HOME and GITHUB_WORKSPACE
         run: |
