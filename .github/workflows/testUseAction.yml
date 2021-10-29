@@ -15,7 +15,11 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   jobs1:
-    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix: 
+        os: [ubuntu-20.04]
+    runs-on: ${{ matrix.os }}
     
     defaults:
       run:
@@ -46,7 +50,7 @@ jobs:
         name: use the Action
         uses: ./.github/actions/firstTest
         with:
-          runs-on: ${{ runner.os }}
+          runs-on: ${{ matrix.os }}
 
       - name: ls HOME and GITHUB_WORKSPACE
         run: |
