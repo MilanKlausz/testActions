@@ -14,12 +14,24 @@ runs:
   using: "composite"
   steps:
     - run: echo Will run on ${{ inputs.runs-on }}.
+      shell: bash
       env:
         DGDEP_IGNOREBADSHEBANG: 1
     - run: mkdir $HOME/actionCreatedDirectoryInHome
+      shell: bash
     - run: mkdir $GITHUB_WORKSPACE/actionCreatedDirectoryInGHWS
-    #- id: random-number-generator
-    #  run: echo "::set-output name=random-id::$(echo $RANDOM)"
-    #  shell: bash
-    #- run: ${{ github.action_path }}/goodbye.sh
-    #  shell: bash
+      shell: bash
+    - run: echo ${{ runner.os }}
+      shell: bash
+      
+    - name: apt-get pre-reqs for Ubuntu
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update 
+        sudo apt-get install curl g++ build-essential python3-dev cmake libxerces-c-dev libexpat1-dev gfortran libhdf5-serial-dev git python3-venv python3-pip python3-tk mesa-common-dev libglu1-mesa-dev freeglut3-dev cm-super 
+      
+    - name: brew pre-reqs for MacOS
+      if: runner.os == 'macOS'
+      run: brew install cmake python python-tk expat xerces-c git hdf5 freetype
+    
+    
