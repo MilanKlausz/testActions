@@ -9,11 +9,12 @@ inputs:
 #  random-number:
 #    description: "Random number"
 #    value: ${{ steps.random-number-generator.outputs.random-id }}
-env:
-  SHELL: /bin/bash
-  DGDEP_IGNOREBADSHEBANG: 1
+
 runs:
   using: "composite"
+  env:
+    SHELL: /bin/bash
+    DGDEP_IGNOREBADSHEBANG: 1
   steps:
     - run: echo Will run on ${{ inputs.runs-on }}.
       shell: bash
