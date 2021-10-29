@@ -71,4 +71,5 @@ runs:
  
     - name: Download Geant4 data
       run: eval 'if [ ! -d $HOME/Geant4data ]; then ./$GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh; fi '
+      shell: bash
 
