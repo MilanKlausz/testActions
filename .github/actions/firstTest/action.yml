@@ -44,7 +44,7 @@ runs:
         key: ${{ inputs.runs-on }}-dgdepfixer-install
         
     - name: Create dgdepfixer
-      run: touch alma.sh && echo "[ ! -d $HOME/dgdepfixerInstall ] &&  echo 'alma' " && . alma.sh
+      run: touch tempDgdepfixerScript.sh && echo "[ ! -d $HOME/dgdepfixerInstall ] &&  echo 'alma' " > tempDgdepfixerScript.sh && . tempDgdepfixerScript.sh
       shell: bash
       env:
         DGDEP_IGNOREBADSHEBANG: 1
