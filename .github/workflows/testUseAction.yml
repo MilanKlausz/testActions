@@ -26,34 +26,23 @@ jobs:
         shell: bash
     env:
       SHELL: /bin/bash
-      DGDEP_IGNOREBADSHEBANG: 0
+     # DGDEP_IGNOREBADSHEBANG: 0
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: echo variables
-        run: |
-          echo ${{ matrix.os }}
-          echo ${{ runner.os }}
-          echo $HOME
-          echo $GITHUB_WORKSPACE
-
-      - name: ls HOME and GITHUB_WORKSPACE
-        run: |
-          ls $HOME
-          echo "----------------"
-          ls $GITHUB_WORKSPACE
-
-      - id: foo
-        name: use the Action
+      - name: dgbuild framework action
         uses: ./.github/actions/firstTest
         with:
           runs-on: ${{ matrix.os }}
 
-      - name: ls HOME and GITHUB_WORKSPACE
+      - name: test dgcode
         run: |
-          ls $HOME
-          echo "----------------"
-          ls $GITHUB_WORKSPACE
+          . $HOME/dgdepfixerInstall/setup.sh
+          . $HOME/geant4-10.04.p03/setup.sh
+          . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
+          . bootstrap.sh
+          dgbuild -t
+        working-directory: dg_dgcode
