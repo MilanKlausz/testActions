@@ -4,7 +4,7 @@ inputs:
   runs-on:
     description: Platform to execute on
     type: string
-    default: ubuntu-latest
+    default: ubuntu-20.04
 #outputs:
 #  random-number:
 #    description: "Random number"
@@ -34,15 +34,33 @@ runs:
         echo 'if [ -f $HOME/.bashrc ]; then . $HOME/.bashrc; fi' >> $HOME/.bash_profile
         git config --global user.name "Lorem Ipsum" 
         git config --global user.email "dolor.sit@ess.eu"
+      shell: bash
     
     - name: cache dgdepfixer install
       id: cache-dgdepfixer
       uses: actions/cache@v2
       with:
         path: ~/dgdepfixerInstall
-        key: ubuntu-20.04-dgdepfixer-install
+        key: ${{ inputs.runs-on }}-dgdepfixer-install
+      shell: bash
         
     - name: Create dgdepfixer
       run: [ ! -d $HOME/dgdepfixerInstall ] && ./$GITHUB_WORKSPACE/.github/scripts/dgdepfixer.sh --create -d $HOME/dgdepfixerInstall
-      
+      env:
+        DGDEP_IGNOREBADSHEBANG: 1
+      shell: bash
+        
+  #  - name: cache Geant4
+  #    id: cache-geant4
+  #    uses: actions/cache@v2
+  #    with:
+  #      path: ~/geant4-10.04.p03
+  #      key: ${{ matrix.os }}-Geant4--nodata-20211026
+  #    shell: bash
+  #      
+  #  - name: Install Geant4
+  #    run: |
+  #      [ ! -d $HOME/geant4-10.04.p03 ] && . $HOME/dgdepfixerInstall/setup.sh 
+  #      [ ! -d $HOME/geant4-10.04.p03 ] && dgdepfixer --instsw=Geant4 --nodata -d $HOME/geant4-10.04.p03
+  #    shell: bash
       
