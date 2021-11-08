@@ -15,7 +15,7 @@ runs:
     
     - name: Create dgdepfixer
       shell: bash
-      run: eval 'if [ ! -d $HOME/dgdepfixerInstall ]; then ./$GITHUB_WORKSPACE/.github/scripts/dgdepfixer.sh --create -d $HOME/dgdepfixerInstall; fi'
+      run: eval 'if [ ! -d $HOME/dgdepfixerInstall ]; then .$GITHUB_WORKSPACE/.github/scripts/dgdepfixer.sh --create -d $HOME/dgdepfixerInstall; fi'
         
     - name: build dgcode
       run: |
