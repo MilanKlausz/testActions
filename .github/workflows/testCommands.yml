@@ -14,8 +14,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: get number of cpu-s
       run: sysctl -n hw.ncpu
-    #- name: make
-    #  run: make
+    - name: env
+      run: env
     #- name: make check
     #  run: make check
     #- name: make distcheck
