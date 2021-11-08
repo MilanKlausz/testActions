@@ -17,8 +17,8 @@ runs:
       shell: bash
       run: |
         ls $GITHUB_WORKSPACE/.github/scripts
-        chmod +x $GITHUB_WORKSPACE/.github/scripts/dgdepfixer.sh
-        $GITHUB_WORKSPACE/.github/scripts/dgdepfixer.sh --create -d $HOME/dgdepfixerInstall
+        chmod +x $GITHUB_WORKSPACE/.github/scripts/dgdepfixer
+        $GITHUB_WORKSPACE/.github/scripts/dgdepfixer --create -d $HOME/dgdepfixerInstall
         
     - name: build dgcode
       run: |
