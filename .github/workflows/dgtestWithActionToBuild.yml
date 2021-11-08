@@ -30,8 +30,8 @@ jobs:
         shell: bash
     env:
       SHELL: /bin/bash
-      CC: ${{ matrix.compiler }}
-      CXX: ${{ matrix.compiler }}
+      #CC: ${{ matrix.compiler }}
+      #CXX: ${{ matrix.compiler }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
