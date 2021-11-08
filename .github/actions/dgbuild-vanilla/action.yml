@@ -1,0 +1,29 @@
+name: 'dgbuild'
+description: 'Builds dgcode'
+inputs:
+  runs-on:
+    description: Platform to execute on
+    type: string
+    required: true
+runs:
+  using: "composite"
+  steps:
+  
+    - name: Install basic Prerequisites
+      run: . $GITHUB_WORKSPACE/.github/scripts/instalPrerequisites.sh ${{ inputs.runs-on }}
+      shell: bash
+    
+    - name: Create dgdepfixer
+      shell: bash
+      run: eval 'if [ ! -d $HOME/dgdepfixerInstall ]; then ./$GITHUB_WORKSPACE/.github/scripts/dgdepfixer.sh --create -d $HOME/dgdepfixerInstall; fi'
+        
+    - name: build dgcode
+      run: |
+        . $HOME/dgdepfixerInstall/setup.sh
+        . bootstrap.sh
+        dgbuild -a
+      working-directory: dg_dgcode
+      shell: bash
+      env:
+        DGDEP_IGNOREBADSHEBANG: 1
+
