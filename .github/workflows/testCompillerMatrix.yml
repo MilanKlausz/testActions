@@ -21,7 +21,7 @@ jobs:
         include:
           - { os: ubuntu-20.04, compiler: GNU, CC: gcc-10, CXX: g++-10, GCOV: gcov-10 }
           - { os: ubuntu-20.04, compiler: LLVM, CC: clang-10, CXX: clang++-10 }
-          - { os: macos-10.15, compiler: LLVM, CC: clang-10, CXX: clang++-10 }
+          - { os: macos-10.15, compiler: GNU, CC: gcc-10, CXX: g++-10 }
         #os: [ubuntu-20.04, macos-10.15]
         #compiler: [gcc-10]
         #os: [ubuntu-20.04]
