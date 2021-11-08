@@ -33,7 +33,7 @@ jobs:
     env:
       SHELL: /bin/bash
       CC: ${{ matrix.CC }}
-      CXX: ${{ matrix.CCX }}
+      CXX: ${{ matrix.CXX }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
