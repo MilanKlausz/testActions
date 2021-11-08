@@ -19,6 +19,8 @@ runs:
         ls $GITHUB_WORKSPACE/.github/scripts
         chmod +x $GITHUB_WORKSPACE/.github/scripts/dgdepfixer
         $GITHUB_WORKSPACE/.github/scripts/dgdepfixer --create -d $HOME/dgdepfixerInstall
+      env:
+        DGDEP_IGNOREBADSHEBANG: 1
         
     - name: build dgcode
       run: |
