@@ -22,15 +22,6 @@ jobs:
           - { os: ubuntu-20.04, compiler: GNU, CC: gcc-10, CXX: g++-10, GCOV: gcov-10 }
           - { os: ubuntu-20.04, compiler: LLVM, CC: clang-10, CXX: clang++-10 }
           - { os: macos-10.15 }
-          #- { os: macos-10.15, compiler: LLVM, CC: clang-12, CXX: clang++-12 }
-        #os: [ubuntu-20.04, macos-10.15]
-        #compiler: [gcc-10]
-        #os: [ubuntu-20.04]
-        #include:
-        #  - { os: ubuntu-20.04, compiler: GNU, CC: gcc-10, CXX: g++-10, GCOV: gcov-10 }
-        #  - { os: ubuntu-20.04, compiler: LLVM, CC: clang-10, CXX: clang++-10 }
-        #  - { os: macos-10.15, compiler: LLVM, CC: clang-10, CXX: clang++-10 }
-    #runs-on: ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     
     defaults:
@@ -40,6 +31,38 @@ jobs:
       SHELL: /bin/bash
       CC: ${{ matrix.CC }}
       CXX: ${{ matrix.CXX }}
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: dgbuild framework action
+        uses: ./.github/actions/dgbuild-vanilla
+        with:
+          runs-on: ${{ matrix.os }}
+
+      - name: test dgcode
+        run: |
+          . $HOME/dgdepfixerInstall/setup.sh
+          . bootstrap.sh
+          dgbuild -t
+        working-directory: dg_dgcode
+        env:
+          DGDEP_IGNOREBADSHEBANG: 1
+  testFrameworkMacOS:
+    strategy:
+      fail-fast: false
+      matrix: 
+        include:
+          - { os: macos-10.15 }
+    runs-on: ${{ matrix.os }}
+    
+    defaults:
+      run:
+        shell: bash
+    env:
+      SHELL: /bin/bash
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
