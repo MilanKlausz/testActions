@@ -12,16 +12,16 @@ inputs:
 runs:
   using: "composite"
   steps:
-  
+    - run: echo $PATH
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
         python-version: ${{ inputs.python-version }}
-  
+    - run: echo $PATH
     - name: Install basic Prerequisites
       run: . $GITHUB_WORKSPACE/.github/scripts/instalPrerequisites.sh ${{ inputs.runs-on }}
       shell: bash
-    
+    - run: echo $PATH
     - name: Create dgdepfixer
       shell: bash
       run: |
