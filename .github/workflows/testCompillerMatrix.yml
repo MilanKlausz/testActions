@@ -47,6 +47,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - run: echo $PATH
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
@@ -55,7 +56,7 @@ jobs:
         run: |
            python -c "import sys; print(sys.version)"
            python3 -c "import sys; print(sys.version)"
-  
+      - run: echo $PATH
 
       - name: dgbuild framework action
         uses: ./.github/actions/dgbuild-vanilla
