@@ -5,9 +5,18 @@ inputs:
     description: Platform to execute on
     type: string
     required: true
+  python-version:
+    description: Python version to install
+    type: string
+    required: true
 runs:
   using: "composite"
   steps:
+  
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ inputs.python-version }}
   
     - name: Install basic Prerequisites
       run: . $GITHUB_WORKSPACE/.github/scripts/instalPrerequisites.sh ${{ inputs.runs-on }}
