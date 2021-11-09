@@ -62,7 +62,9 @@ jobs:
         uses: ./.github/actions/dgbuild-vanilla
         with:
           runs-on: ${{ matrix.os }}
-
+      
+      - run: echo $PATH
+       
       - name: test dgcode
         run: |
           . $HOME/dgdepfixerInstall/setup.sh
