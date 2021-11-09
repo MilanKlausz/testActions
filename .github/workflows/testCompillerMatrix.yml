@@ -8,7 +8,7 @@ on:
 jobs:
 
   Linux:
-    name: ${{ matrix.os }}.${{ matrix.CC }.python-${{ matrix.CC }}
+    name: ${{ matrix.os }}.${{ matrix.CC }}.python-${{ matrix.python }}
     strategy:
       fail-fast: false
       matrix: 
