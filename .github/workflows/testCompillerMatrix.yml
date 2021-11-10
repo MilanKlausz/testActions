@@ -54,9 +54,12 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python }}
-      #- name: solve setup-python macOS bug
-      #  if: runner.os == 'macOS'
-      #  run: export PATH=`cygpath "${pythonLocation}"`:$PATH
+      - name: solve setup-python macOS bug
+        if: runner.os == 'macOS'
+        run: |
+          export PYTHON_INCLUDE_DIR=$pythonLocation
+          export PYTHON_LIBRARY=$LD_LIBRARY_PATH
+        
       - name: Display Python version
         run: |
            python -c "import sys; print(sys.version)"
