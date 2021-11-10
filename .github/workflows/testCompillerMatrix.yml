@@ -47,22 +47,22 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python }}
-      - name: Display Python version
-        run: |
-           python -c "import sys; print(sys.version)"
-           python3 -c "import sys; print(sys.version)"
-      - run: echo $PATH
+      #- name: Set up Python
+      #  uses: actions/setup-python@v2
+      #  with:
+      #    python-version: ${{ matrix.python }}
+      #- name: Display Python version
+      #  run: |
+      #     python -c "import sys; print(sys.version)"
+      #     python3 -c "import sys; print(sys.version)"
+      #- run: echo $PATH
 
       - name: dgbuild framework action
         uses: ./.github/actions/dgbuild-vanilla
         with:
           runs-on: ${{ matrix.os }}
       
-      - run: echo $PATH
+      #- run: echo $PATH
        
       - name: test dgcode
         run: |
