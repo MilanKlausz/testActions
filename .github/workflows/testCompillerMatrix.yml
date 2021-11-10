@@ -57,8 +57,8 @@ jobs:
       - name: solve setup-python macOS bug
         if: runner.os == 'macOS'
         run: |
-          echo "{PYTHON_INCLUDE_DIR}={$pythonLocation}" >> $GITHUB_ENV
-          echo "{PYTHON_LIBRARY}={$LD_LIBRARY_PATH}" >> $GITHUB_ENV
+          echo "PYTHON_INCLUDE_DIR=$pythonLocation" >> $GITHUB_ENV
+          echo "PYTHON_LIBRARY=$LD_LIBRARY_PATH" >> $GITHUB_ENV
         
       - name: Display Python version
         run: |
