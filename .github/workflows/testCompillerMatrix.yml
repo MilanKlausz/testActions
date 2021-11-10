@@ -84,8 +84,8 @@ jobs:
       fail-fast: false
       matrix: 
         include:
-          - { os: macos-10.15 }
-          - { os: macos-11 }
+          - { os: macos-10.15, build-flag: debug }
+          - { os: macos-11,    build-flag: release }
     runs-on: ${{ matrix.os }}
     defaults:
       run:
@@ -99,6 +99,7 @@ jobs:
         uses: ./.github/actions/dgbuild-vanilla
         with:
           runs-on: ${{ matrix.os }}
+          build-flag: ${{ matrix.build-flag }}
 
       - name: test dgcode
         run: |
