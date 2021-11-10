@@ -13,34 +13,27 @@ jobs:
       fail-fast: false
       matrix: 
         include:
-          - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: 3.9.7 }
-          - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: 3.8.12 }
-          - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: 3.7.12 }
-          - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: 3.6.15 }
+          - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: 3.9,}
+          - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: 3.8 }
+
+          - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: 3.9 }
+          - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: 3.8 }
           
-          #- { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: 3.7 }
-          #
-          #- { os: ubuntu-20.04, CC: gcc-9,   CXX: g++-9,     python: 3.9 }
-          #- { os: ubuntu-20.04, CC: gcc-9,   CXX: g++-9,     python: 3.7 }
-         # 
-         # - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: 3.9 }
-         # - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: 3.7 }
-        # 
-        #  - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: 3.9 }
-         # - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: 3.7 }
+          - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: 3.9 }
+          - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: 3.8 }
+         
+          - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: 3.9 }
+          - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: 3.8 }
           
-          - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: 3.9.7 }
-          #- { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: 3.8.12 }
-          #- { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: 3.7.12 }
-          - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: 3.6.15 }
+          - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: 3.9 }
+          - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: 3.6 }
           
-          - { os: ubuntu-18.04, CC: gcc-7,  CXX: g++-7,  python: 3.9.7 }
-          - { os: ubuntu-18.04, CC: gcc-7,  CXX: g++-7,  python: 3.6.15 }
+          - { os: ubuntu-18.04, CC: gcc-7,    CXX: g++-7,      python: 3.9 }
+          - { os: ubuntu-18.04, CC: gcc-7,    CXX: g++-7,      python: 3.6 }
           
-          - { os: ubuntu-18.04, CC: gcc-10,  CXX: g++-10,  python: 3.9.7 }
-          - { os: ubuntu-18.04, CC: gcc-10,  CXX: g++-10,  python: 3.6.15 }
+          - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: 3.9 }
+          - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: 3.6 }
           
-          #- { os: macos-10.15, CC: AppleXcode, CXX: AppleXcode, python: 3.8 }
     runs-on: ${{ matrix.os }}
     defaults:
       run:
