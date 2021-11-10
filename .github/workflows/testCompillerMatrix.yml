@@ -90,6 +90,10 @@ jobs:
       
     steps:
       - uses: actions/checkout@v2
+      - run: which clang
+      - run: which clang++
+      - run: ls /usr/bin/c*
+      - run: ls /usr/bin/
       - name: dgbuild framework action
         uses: ./.github/actions/dgbuild-vanilla
         with:
