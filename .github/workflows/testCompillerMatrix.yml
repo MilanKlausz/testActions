@@ -41,7 +41,7 @@ jobs:
     env:
       SHELL: /bin/bash
       CC: ${{ matrix.CC }}
-      CXX: ${{ matrix.CXX }}
+      #CXX: ${{ matrix.CXX }}
 
     steps:
       - uses: actions/checkout@v2
