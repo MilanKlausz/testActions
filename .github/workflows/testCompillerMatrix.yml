@@ -34,6 +34,8 @@ jobs:
           - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: 3.9 }
           - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: 3.6 }
           
+          - { os: macos-10.15, CC: clang,   CXX: clang++,     python: 3.9 }
+          
     runs-on: ${{ matrix.os }}
     defaults:
       run:
@@ -41,7 +43,7 @@ jobs:
     env:
       SHELL: /bin/bash
       CC: ${{ matrix.CC }}
-      #CXX: ${{ matrix.CXX }}
+      CXX: ${{ matrix.CXX }}
 
     steps:
       - uses: actions/checkout@v2
