@@ -79,7 +79,7 @@ jobs:
           DGDEP_IGNOREBADSHEBANG: 1
           
   macOS:
-    name: ${{ matrix.os }}
+    name: ${{ matrix.os }}.${{ matrix.build-flag }}
     strategy:
       fail-fast: false
       matrix: 
