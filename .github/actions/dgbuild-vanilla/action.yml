@@ -5,6 +5,10 @@ inputs:
     description: Platform to execute on
     type: string
     required: true
+  build-flag:
+    description: build flag (e.g. 'debug' or 'release')
+    type: string
+    default: examine
 runs:
   using: "composite"
   steps:
@@ -25,7 +29,7 @@ runs:
       run: |
         . $HOME/dgdepfixerInstall/setup.sh
         . bootstrap.sh
-        dgbuild -a
+        dgbuild -a --${{ inputs.build-flag }}
       working-directory: dg_dgcode
       shell: bash
       env:
