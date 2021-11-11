@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix: 
         include:
-          #- { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: 3.9, build-flag: debug}
+          - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: 3.9, build-flag: debug}
           #- { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: 3.8, build-flag: debug }
           #
           #- { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: 3.9, build-flag: debug }
