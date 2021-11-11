@@ -17,9 +17,10 @@ runs:
       uses: sersoft-gmbh/os-version-action@v1
       
     - name: print os version
-       run: echo ${{ inputs.runs-on }}
+      run: echo "alma" 
+      shell: bash
+         #${{ inputs.runs-on }}
          #echo ${{runner.os}}-${{steps.os-version.outputs.version}}
-       shell: bash
       
     - name: Install basic Prerequisites
       run: . $GITHUB_WORKSPACE/.github/scripts/instalPrerequisites.sh ${{ inputs.runs-on }}
