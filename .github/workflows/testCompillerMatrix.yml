@@ -50,7 +50,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: echo $PATH
       - name: Set up Python (on Linux)
-        #if: runner.os == 'Linux'
+        if: runner.os == 'Linux'
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python }}
