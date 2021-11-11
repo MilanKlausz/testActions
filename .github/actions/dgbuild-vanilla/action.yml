@@ -17,7 +17,7 @@ runs:
       uses: sersoft-gmbh/os-version-action@v1
       
     - name: print os version
-      run: echo "alma" 
+      run: echo ${{ inputs.runs-on }}
       shell: bash
          #${{ inputs.runs-on }}
          #echo ${{runner.os}}-${{steps.os-version.outputs.version}}
