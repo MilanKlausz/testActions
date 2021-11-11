@@ -12,17 +12,27 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: get OS version for caches
+      id: os-version
+      uses: sersoft-gmbh/os-version-action@v1
+      
+    - name: print os version
+       run: |
+         echo "${{ inputs.runs-on }}"
+         echo "${{runner.os}}-${{steps.os-version.outputs.version}}"
+       shell: bash
+      
     - name: Install basic Prerequisites
       run: . $GITHUB_WORKSPACE/.github/scripts/instalPrerequisites.sh ${{ inputs.runs-on }}
       shell: bash
       
     - name: Create dgdepfixer
-      shell: bash
       run: |
         chmod +x $GITHUB_WORKSPACE/.github/scripts/dgdepfixer
         $GITHUB_WORKSPACE/.github/scripts/dgdepfixer --create -d $HOME/dgdepfixerInstall
       env:
         DGDEP_IGNOREBADSHEBANG: 1
+      shell: bash
         
     - name: build dgcode
       run: |
@@ -30,7 +40,7 @@ runs:
         . bootstrap.sh
         dgbuild -a --${{ inputs.build-flag }}
       working-directory: dg_dgcode
-      shell: bash
       env:
         DGDEP_IGNOREBADSHEBANG: 1
+      shell: bash
 
