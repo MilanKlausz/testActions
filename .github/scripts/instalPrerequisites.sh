@@ -2,17 +2,14 @@
 
 # $@ is the operating sytem
 
-if [[ $@ == *"ubuntu"* ]]; then
-  #Linux
+if [[ $@ == "Linux" ]]; then
   sudo apt-get update 
   sudo apt-get install curl g++ build-essential python3-dev cmake libxerces-c-dev libexpat1-dev gfortran libhdf5-serial-dev git python3-venv python3-pip python3-tk mesa-common-dev libglu1-mesa-dev freeglut3-dev cm-super 
-elif [[ $@ == *"macos"*  ]]; then
-  #MacOS
+elif [[ $@ == "macOS"  ]]; then
   brew install cmake python python-tk expat xerces-c git hdf5 freetype
 else
-  echo "Wrong value for 'runs-on' parameter"
+  echo "Wrong operating system"
   exit 1 
-  # TODO echo problem along with the exit
 fi
 
 
@@ -22,8 +19,8 @@ fi
 git config --global user.name "Lorem Ipsum" 
 git config --global user.email "dolor.sit@ess.eu"
 
-#Linux only
-if [[ $@ == *"ubuntu"* ]]; then
+#Linux only part
+if [[ $@ == "Linux" ]]; then
   mv $HOME/.profile $HOME/.profile_DISABLED  
   echo 'if [ -f $HOME/.bashrc ]; then . $HOME/.bashrc; fi' >> $HOME/.bash_profile   
 fi
