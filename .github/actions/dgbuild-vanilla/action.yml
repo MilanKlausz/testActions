@@ -12,13 +12,6 @@ runs:
       id: os-version
       uses: sersoft-gmbh/os-version-action@v1
       
-    - name: Download Geant4 data
-      run: |
-        eval 'if [ ! -d $HOME/Geant4data ]; then chmod +x $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh; fi '
-        eval 'if [ ! -d $HOME/Geant4data ]; then $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh; fi '
-        ls $HOME/Geant4data
-      shell: bash
-      
     - name: print os version
       run: |
         echo ${{ runner.os }}-${{ steps.os-version.outputs.version }}-#{{env.CC}}
