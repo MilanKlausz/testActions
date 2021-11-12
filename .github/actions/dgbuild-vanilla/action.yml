@@ -23,8 +23,9 @@ runs:
       shell: bash
       
     - name: Create dgdepfixer
-      run: eval 'if [ ! -d $HOME/dgdepfixerInstall ]; then chmod +x $GITHUB_WORKSPACE/.github/scripts/dgdepfixer && .$GITHUB_WORKSPACE/.github/scripts/dgdepfixer --create -d $HOME/dgdepfixerInstall; fi'
-
+      run: | 
+        eval 'if [ ! -d $HOME/dgdepfixerInstall ]; then chmod +x $GITHUB_WORKSPACE/.github/scripts/dgdepfixer ; fi'
+        eval 'if [ ! -d $HOME/dgdepfixerInstall ]; then $GITHUB_WORKSPACE/.github/scripts/dgdepfixer --create -d $HOME/dgdepfixerInstall ; fi'
       env:
         DGDEP_IGNOREBADSHEBANG: 1
       shell: bash
