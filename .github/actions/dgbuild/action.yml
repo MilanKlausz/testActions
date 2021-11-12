@@ -13,7 +13,7 @@ runs:
       id: os-version
       uses: sersoft-gmbh/os-version-action@v1
       
-    - name: Get Python version
+    - name: Get Python version for caches
       id: python-version
       run: echo "::set-output name=version::$(python3 -V | sed -e 's/ /-/g')"
       shell: bash
