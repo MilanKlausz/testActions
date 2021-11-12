@@ -14,7 +14,7 @@ runs:
       
     - name: print os version
       run: |
-        echo ${{ runner.os }}-${{ steps.os-version.outputs.version }}-#{{env.CC}}
+        echo ${{ runner.os }}-${{ steps.os-version.outputs.version }}-${{env.CC}}
       shell: bash
       
     - name: Install basic Prerequisites
