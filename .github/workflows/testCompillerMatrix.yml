@@ -14,24 +14,24 @@ jobs:
       matrix: 
         include:
           - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: 3.9, build-flag: debug}
-          #- { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: 3.8, build-flag: debug }
-          #
-          #- { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: 3.9, build-flag: debug }
-          #- { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: 3.8, build-flag: debug }
-          # 
-          #- { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: 3.9, build-flag: debug }
-          #- { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: 3.8, build-flag: debug }
-          # 
-          #- { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: 3.9, build-flag: debug }
-          #- { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: 3.8, build-flag: debug }
-          # 
-          #- { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: 3.9, build-flag: debug }
-          #- { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: 3.6, build-flag: debug }
-          # 
-          #- { os: ubuntu-18.04, CC: gcc-7,    CXX: g++-7,      python: 3.9, build-flag: debug }
-          #- { os: ubuntu-18.04, CC: gcc-7,    CXX: g++-7,      python: 3.6, build-flag: debug }
-          #
-          #- { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: 3.9, build-flag: debug }
+          - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: 3.8, build-flag: debug }
+          
+          - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: 3.9, build-flag: debug }
+          - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: 3.8, build-flag: debug }
+           
+          - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: 3.9, build-flag: debug }
+          - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: 3.8, build-flag: debug }
+           
+          - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: 3.9, build-flag: debug }
+          - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: 3.8, build-flag: debug }
+           
+          - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: 3.9, build-flag: debug }
+          - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: 3.6, build-flag: debug }
+           
+          - { os: ubuntu-18.04, CC: gcc-7,    CXX: g++-7,      python: 3.9, build-flag: debug }
+          - { os: ubuntu-18.04, CC: gcc-7,    CXX: g++-7,      python: 3.6, build-flag: debug }
+          
+          - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: 3.9, build-flag: debug }
           - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: 3.6, build-flag: debug }
           
           - { os: macos-10.15,  CC: clang,    CXX: clang++,    python: 3.9, build-flag: debug }
@@ -48,35 +48,23 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: echo $PATH
+      
       - name: Set up Python (on Linux)
         if: runner.os == 'Linux'
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python }}
-      - name: solve setup-python macOS bug
-        if: runner.os == 'macOS'
-        run: |
-          echo "PYTHON_INCLUDE_DIR=$pythonLocation" >> $GITHUB_ENV
-          #echo "PYTHON_LIBRARY=$LD_LIBRARY_PATH" >> $GITHUB_ENV
-        
-      - name: Display Python version
-        run: |
-           python -c "import sys; print(sys.version)"
-           python3 -c "import sys; print(sys.version)"
-      - run: echo $PATH
 
       - name: dgbuild framework action
-        uses: ./.github/actions/dgbuild-vanilla
+        uses: ./.github/actions/dgbuild
         with:
-          runs-on: ${{ matrix.os }}
           build-flag: ${{ matrix.build-flag }}
-      
-      #- run: echo $PATH
-       
+
       - name: test dgcode
         run: |
           . $HOME/dgdepfixerInstall/setup.sh
+          . $HOME/geant4-10.04.p03/setup.sh
+          . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
           . bootstrap.sh
           dgbuild -t
         working-directory: dg_dgcode
