@@ -12,6 +12,10 @@ runs:
     - name: get OS version for caches
       id: os-version
       uses: sersoft-gmbh/os-version-action@v1
+      
+    - name: which Python
+      run: python3 -V
+      shell: bash
   
     - name: Install basic Prerequisites
       run: . $GITHUB_WORKSPACE/.github/scripts/instalPrerequisites.sh ${{ runner.os }}
