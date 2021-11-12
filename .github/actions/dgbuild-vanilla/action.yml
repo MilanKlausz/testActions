@@ -21,8 +21,7 @@ runs:
       
     - name: print os version
       run: |
-        echo ${{ inputs.runs-on }}
-        echo ${{ runner.os }}-${{ steps.os-version.outputs.version }}
+        echo ${{ runner.os }}-${{ steps.os-version.outputs.version }}-#{{env.CC}}
       shell: bash
       
     - name: Install basic Prerequisites
