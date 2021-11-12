@@ -1,17 +1,20 @@
 name: 'dgbuild'
 description: 'Builds dgcode'
 inputs:
-  runs-on:
-    description: Platform to execute on
+  build-flag:
+    description: build flag (e.g. 'debug' or 'release')
     type: string
-    required: true
+    default: examine
 
 runs:
   using: "composite"
   steps:
+    - name: get OS version for caches
+      id: os-version
+      uses: sersoft-gmbh/os-version-action@v1
   
     - name: Install basic Prerequisites
-      run: . $GITHUB_WORKSPACE/.github/scripts/instalPrerequisites.sh ${{ inputs.runs-on }}
+      run: . $GITHUB_WORKSPACE/.github/scripts/instalPrerequisites.sh ${{ runner.os }}
       shell: bash
     
     - name: cache dgdepfixer install
@@ -19,18 +22,20 @@ runs:
       uses: actions/cache@v2
       with:
         path: ~/dgdepfixerInstall
-        key: ${{ inputs.runs-on }}-dgdepfixer-install
+        key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-dgdepfixer-install
      
     - name: Create dgdepfixer
+      run: | 
+        eval 'if [ ! -d $HOME/dgdepfixerInstall ]; then chmod +x $GITHUB_WORKSPACE/.github/scripts/dgdepfixer ; fi'
+        eval 'if [ ! -d $HOME/dgdepfixerInstall ]; then .$GITHUB_WORKSPACE/.github/scripts/dgdepfixer --create -d $HOME/dgdepfixerInstall ; fi'
       shell: bash
-      run: eval 'if [ ! -d $HOME/dgdepfixerInstall ]; then ./$GITHUB_WORKSPACE/.github/scripts/dgdepfixer.sh --create -d $HOME/dgdepfixerInstall; fi'
-    
+      
     - name: cache Geant4
       id: cache-geant4
       uses: actions/cache@v2
       with:
         path: ~/geant4-10.04.p03
-        key: ${{ inputs.runs-on }}-Geant4--nodata-20211026
+        key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-Geant4--nodata
         
     - name: Install Geant4
       run: |
@@ -46,7 +51,9 @@ runs:
         key: untarred-geant4-data-files 
  
     - name: Download Geant4 data
-      run: eval 'if [ ! -d $HOME/Geant4data ]; then ./$GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh; fi '
+      run: |
+        eval 'if [ ! -d $HOME/Geant4data ]; then chmod +x $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh; fi '
+        eval 'if [ ! -d $HOME/Geant4data ]; then $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh; fi '
       shell: bash
       
     - name: build dgcode
@@ -55,7 +62,7 @@ runs:
         . $HOME/geant4-10.04.p03/setup.sh
         . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
         . bootstrap.sh
-        dgbuild -a
+        dgbuild -a --${{ inputs.build-flag }}
       working-directory: dg_dgcode
       shell: bash
       env:
