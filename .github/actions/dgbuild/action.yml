@@ -22,12 +22,12 @@ runs:
       uses: actions/cache@v2
       with:
         path: ~/dgdepfixerInstall
-        key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-dgdepfixer-install
+        key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-${{env.CC}}-dgdepfixer-install
      
     - name: Create dgdepfixer
       run: | 
         eval 'if [ ! -d $HOME/dgdepfixerInstall ]; then chmod +x $GITHUB_WORKSPACE/.github/scripts/dgdepfixer ; fi'
-        eval 'if [ ! -d $HOME/dgdepfixerInstall ]; then .$GITHUB_WORKSPACE/.github/scripts/dgdepfixer --create -d $HOME/dgdepfixerInstall ; fi'
+        eval 'if [ ! -d $HOME/dgdepfixerInstall ]; then $GITHUB_WORKSPACE/.github/scripts/dgdepfixer --create -d $HOME/dgdepfixerInstall ; fi'
       shell: bash
       
     - name: cache Geant4
@@ -35,7 +35,7 @@ runs:
       uses: actions/cache@v2
       with:
         path: ~/geant4-10.04.p03
-        key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-Geant4--nodata
+        key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-${{env.CC}}-Geant4--nodata
         
     - name: Install Geant4
       run: |
