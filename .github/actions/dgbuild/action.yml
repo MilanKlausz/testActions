@@ -17,10 +17,6 @@ runs:
       id: python-version
       run: echo "::set-output name=version::$(python3 -V | sed -e 's/ /-/g')"
       shell: bash
-    
-    - name: echo py version
-      run: echo ${{steps.python-version.outputs.version}}
-      shell: bash
   
     - name: Install basic Prerequisites
       run: . $GITHUB_WORKSPACE/.github/scripts/instalPrerequisites.sh ${{ runner.os }}
@@ -31,7 +27,7 @@ runs:
       uses: actions/cache@v2
       with:
         path: ~/dgdepfixerInstall
-        key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-${{env.CC}}-dgdepfixer-install
+        key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-${{env.CC}}-${{steps.python-version.outputs.version}}-dgdepfixer-install
      
     - name: Create dgdepfixer
       run: | 
