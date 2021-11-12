@@ -9,12 +9,17 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: get OS version for caches
+    - name: Get OS version for caches
       id: os-version
       uses: sersoft-gmbh/os-version-action@v1
       
-    - name: which Python
-      run: python3 -V
+    - name: Get Python version
+      id: python-version
+      run: echo "::set-output name=version::$(python3 -V | sed -e 's/ /-/g')"
+      shell: bash
+    
+    - name: echo py version
+      run: echo ${{steps.python-version.outputs.version}}
       shell: bash
   
     - name: Install basic Prerequisites
