@@ -80,7 +80,7 @@ jobs:
           repository: MilanKlausz/testDgcode
           path: './dgcode-repo'
       
-      - name: ls after checkout
+      - name: mv dgcode folder in place
         run: | 
           mv ./dgcode-repo/dg_dgcode .
           rm -r dgcode-repo
