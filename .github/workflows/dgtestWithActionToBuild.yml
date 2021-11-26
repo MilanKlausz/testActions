@@ -85,10 +85,13 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: MilanKlausz/testDgcode
-          path: '.'
+          path: './dgcode-repo'
       
       - name: ls after checkout
-        run: ls
+        run: | 
+          ls
+          mv ./dgcode-repo/dg_dgcode .
+          ls
           
       - name: Set up Python (on Linux)
         if: runner.os == 'Linux'
