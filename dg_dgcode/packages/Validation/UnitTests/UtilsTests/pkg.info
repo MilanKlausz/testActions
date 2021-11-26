@@ -1,7 +1,0 @@
-package(USEPKG Utils)
-
-#############################################################
-
-Unit tests for Utils package.
-
-primary author: thomas.kittelmann@ess.eu
