@@ -55,12 +55,12 @@ jobs:
           - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: 3.6, build-flag: release }
           
           # macOS 10.15
-          - { os: macos-10.15,  CC: clang,    CXX: clang++,    python: 3.9, build-flag: debug }
-          - { os: macos-10.15,  CC: clang,    CXX: clang++,    python: 3.9, build-flag: release }
+          - { os: macos-10.15,  CC: clang,    CXX: clang++,    python: default, build-flag: debug }
+          - { os: macos-10.15,  CC: clang,    CXX: clang++,    python: default, build-flag: release }
           
           # macOS 11
-          - { os: macos-11,     CC: clang,    CXX: clang++,    python: 3.8, build-flag: debug }
-          - { os: macos-11,     CC: clang,    CXX: clang++,    python: 3.8, build-flag: release }
+          - { os: macos-11,     CC: clang,    CXX: clang++,    python: default, build-flag: debug }
+          - { os: macos-11,     CC: clang,    CXX: clang++,    python: default, build-flag: release }
           
     runs-on: ${{ matrix.os }}
     defaults:
