@@ -73,25 +73,41 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+     
+      - name: temp remove dgcode 
+        run: |
+          ls
+          rm -r dg_dgcode
+          echo "** after **"
+          ls 
       
+      - name: Checkout dgcode
+        uses: actions/checkout@v2
+        with:
+          repository: MilanKlausz/testDgcode
+          path: '.'
+      
+      - name: ls after checkout
+        run: ls
+          
       - name: Set up Python (on Linux)
         if: runner.os == 'Linux'
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python }}
 
-      - name: dgbuild framework action
-        uses: ./.github/actions/dgbuild
-        with:
-          build-flag: ${{ matrix.build-flag }}
-
-      - name: test dgcode
-        run: |
-          . $HOME/dgdepfixerInstall/setup.sh
-          . $HOME/geant4-10.04.p03/setup.sh
-          . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
-          . bootstrap.sh
-          dgbuild -t
-        working-directory: dg_dgcode
-        env:
-          DGDEP_IGNOREBADSHEBANG: 1
+  #    - name: dgbuild framework action
+  #    uses: ./.github/actions/dgbuild
+  #      with:
+  #        build-flag: ${{ matrix.build-flag }}
+  #
+  #    - name: test dgcode
+  #      run: |
+  #        . $HOME/dgdepfixerInstall/setup.sh
+  #        . $HOME/geant4-10.04.p03/setup.sh
+  #        . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
+  #        . bootstrap.sh
+  #        dgbuild -t
+  #      working-directory: dg_dgcode
+  #      env:
+  #        DGDEP_IGNOREBADSHEBANG: 1
