@@ -1,8 +1,0 @@
-package(USEPKG DSFMT)
-
-###############################################################
-
-Package providing C++/python encapsulation of a good standalone random generator
-(currently DSFMT, could change if something significantly better came along).
-
-primary author : thomas.kittelmann@ess.eu

@@ -1,7 +1,0 @@
-package(USEEXT ROOT)
-
-######################################################################
-
-Package holding utilities related to ROOT.
-
-Primary author: thomas.kittelmann@ess.eu
