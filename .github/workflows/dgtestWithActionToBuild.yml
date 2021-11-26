@@ -73,13 +73,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-     
-      - name: temp remove dgcode 
-        run: |
-          ls
-          rm -r dg_dgcode
-          echo "** after **"
-          ls 
       
       - name: Checkout dgcode
         uses: actions/checkout@v2
@@ -89,9 +82,8 @@ jobs:
       
       - name: ls after checkout
         run: | 
-          ls
           mv ./dgcode-repo/dg_dgcode .
-          ls
+          rm -r dgcode-repo
           
       - name: Set up Python (on Linux)
         if: runner.os == 'Linux'
