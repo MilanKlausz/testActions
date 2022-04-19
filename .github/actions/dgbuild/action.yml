@@ -68,6 +68,7 @@ runs:
     - name: build dgcode
       run: |
         . $HOME/dgdepfixerInstall/setup.sh
+        python3 -c "import matplotlib as m;print(m.__version__)"
         python3 -mpip install matplotlib==3.1.3
         . $HOME/geant4-10.04.p03/setup.sh
         . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
