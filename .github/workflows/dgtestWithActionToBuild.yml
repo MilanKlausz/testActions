@@ -83,17 +83,17 @@ jobs:
           repository: MilanKlausz/devDgcode
           path: './dgcode-repo'
           #path: './dgcode_framework'
+
+      - name: mv dgcode folder in place
+        run: | 
+          mv ./dgcode-repo ./dgcode_framework
       
-      - name: debug - check dir
+      - name: debug - check dir 1
         run: |
           pwd -P
           ls
           ls dgcode_framework
-
-       - name: mv dgcode folder in place
-         run: | 
-           mv ./dgcode-repo ./dgcode_framework
-          
+      
       - name: Set up Python (on Linux)
         if: runner.os == 'Linux'
         uses: actions/setup-python@v3
