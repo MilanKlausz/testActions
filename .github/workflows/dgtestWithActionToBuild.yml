@@ -89,8 +89,8 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
 
-      - name: dgbuild framework action
-        uses: ./.github/actions/dgbuild
+      - name: setup framework action
+        uses: ./.github/actions/setup
         with:
           BUILD_FLAG: ${{ matrix.build-flag }}
   
