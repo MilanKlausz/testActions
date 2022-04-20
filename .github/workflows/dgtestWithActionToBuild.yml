@@ -86,8 +86,9 @@ jobs:
       
       - name: debug - check dir
         run: |
-            pwd -P
-            ls
+          pwd -P
+          ls
+
       # - name: mv dgcode folder in place
       #   run: | 
       #     mv ./dgcode-repo/dg_dgcode ./dgcode_framework
