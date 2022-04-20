@@ -1,11 +1,14 @@
 name: 'dgbuild'
 description: 'Builds dgcode'
 inputs:
-  build-flag:
+  BUILD_FLAG:
     description: build flag (e.g. 'debug' or 'release')
     type: string
     default: examine
-
+  PROJ_DIR:
+    description: projects directory (must include the bootstrap.sh script)
+    type: string
+    default: test
 runs:
   using: "composite"
   steps:
@@ -75,8 +78,8 @@ runs:
         . $HOME/geant4-10.04.p03/setup.sh
         . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
         . bootstrap.sh
-        dgbuild -a --${{ inputs.build-flag }}
-      working-directory: dg_dgcode
+        dgbuild -a --${{ inputs.BUILD_FLAG }}
+      working-directory: ${{ inputs.PROJ_DIR }}
       shell: bash
       env:
         DGDEP_IGNOREBADSHEBANG: 1

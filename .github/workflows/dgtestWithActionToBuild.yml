@@ -72,6 +72,7 @@ jobs:
       SHELL: /bin/bash
       CC: ${{ matrix.CC }}
       CXX: ${{ matrix.CXX }}
+      PROJ_DIR: projects
 
     steps:
       - uses: actions/checkout@v2
@@ -79,12 +80,12 @@ jobs:
       - name: Checkout dgcode
         uses: actions/checkout@v2
         with:
-          repository: MilanKlausz/testDgcode
+          repository: MilanKlausz/devDgcode
           path: './dgcode-repo'
       
       - name: mv dgcode folder in place
         run: | 
-          mv ./dgcode-repo/dg_dgcode .
+          mv ./dgcode-repo/dg_dgcode ./dgcode_framework
           rm -r dgcode-repo
           
       - name: Set up Python (on Linux)
@@ -96,7 +97,8 @@ jobs:
       - name: dgbuild framework action
         uses: ./.github/actions/dgbuild
         with:
-          build-flag: ${{ matrix.build-flag }}
+          BUILD_FLAG: ${{ matrix.build-flag }}
+          PROJ_DIR: ${{ inputs.PROJ_DIR }}
   
       - name: test dgcode
         run: |
@@ -105,6 +107,6 @@ jobs:
           . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
           . bootstrap.sh
           dgbuild -t
-        working-directory: dg_dgcode
+        working-directory: ${{ inputs.PROJ_DIR }}
         env:
           DGDEP_IGNOREBADSHEBANG: 1
