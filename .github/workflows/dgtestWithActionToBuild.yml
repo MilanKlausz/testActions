@@ -84,6 +84,10 @@ jobs:
           #path: './dgcode-repo'
           path: './dgcode_framework'
       
+      - name: debug - check dir
+        run: |
+            pwd -P
+            ll
       # - name: mv dgcode folder in place
       #   run: | 
       #     mv ./dgcode-repo/dg_dgcode ./dgcode_framework

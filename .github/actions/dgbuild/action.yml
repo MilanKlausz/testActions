@@ -68,8 +68,15 @@ runs:
         eval 'if [ ! -d $HOME/Geant4data ]; then $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh; fi '
       shell: bash
       
+    - name: debug - check dir
+      run: |
+          pwd -P
+          ll
+
     - name: build dgcode
       run: |
+        pwd -P
+        ll
         . $HOME/dgdepfixerInstall/setup.sh
         which python
         which python3
