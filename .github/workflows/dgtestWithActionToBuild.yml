@@ -89,7 +89,7 @@ jobs:
           
       - name: Set up Python (on Linux)
         if: runner.os == 'Linux'
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python }}
 
