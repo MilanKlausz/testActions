@@ -84,9 +84,7 @@ jobs:
           path: './dgcode'
       
       - name: Move dgcode framework 
-        run: |
-            mv ./dgcode $HOME/dgcode_framework
-            rm -r ./dgcode
+        run: mv ./dgcode $HOME/dgcode_framework
 
       - name: Set up Python (on Linux)
         if: runner.os == 'Linux'
