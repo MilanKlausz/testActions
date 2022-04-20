@@ -81,8 +81,13 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: MilanKlausz/devDgcode
-          path: './dgcode_framework'
+          path: './dgcode'
       
+      - name: Move dgcode framework 
+        run: |
+            mv ./dgcode $HOME/dgcode_framework
+            rm -r ./dgcode
+
       - name: Set up Python (on Linux)
         if: runner.os == 'Linux'
         uses: actions/setup-python@v3
