@@ -18,9 +18,9 @@ jobs:
       matrix: 
         include:
           # Ubuntu-20.04
-          - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.9.7' , build-flag: debug }
+          #- { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.9.7' , build-flag: debug }
           
-          - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: 3.9, build-flag: debug }
+          #- { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: 3.9, build-flag: debug }
           #- { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: 3.9, build-flag: release }
           - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: 3.8, build-flag: debug }
           #- { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: 3.8, build-flag: release }
@@ -81,18 +81,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: MilanKlausz/devDgcode
-          path: './dgcode-repo'
-          #path: './dgcode_framework'
-
-      - name: mv dgcode folder in place
-        run: | 
-          mv ./dgcode-repo ./dgcode_framework
-      
-      - name: debug - check dir 1
-        run: |
-          pwd -P
-          ls
-          ls dgcode_framework
+          path: './dgcode_framework'
       
       - name: Set up Python (on Linux)
         if: runner.os == 'Linux'
@@ -104,7 +93,6 @@ jobs:
         uses: ./.github/actions/dgbuild
         with:
           BUILD_FLAG: ${{ matrix.build-flag }}
-          PROJ_DIR: ${{ env.PROJ_DIR }}
   
       - name: test dgcode
         run: |
