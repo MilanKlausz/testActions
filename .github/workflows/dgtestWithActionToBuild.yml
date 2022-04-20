@@ -81,8 +81,8 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: MilanKlausz/devDgcode
-          #path: './dgcode-repo'
-          path: './dgcode_framework'
+          path: './dgcode-repo'
+          #path: './dgcode_framework'
       
       - name: debug - check dir
         run: |
@@ -90,10 +90,9 @@ jobs:
           ls
           ls dgcode_framework
 
-      # - name: mv dgcode folder in place
-      #   run: | 
-      #     mv ./dgcode-repo/dg_dgcode ./dgcode_framework
-      #     rm -r dgcode-repo
+       - name: mv dgcode folder in place
+         run: | 
+           mv ./dgcode-repo ./dgcode_framework
           
       - name: Set up Python (on Linux)
         if: runner.os == 'Linux'
