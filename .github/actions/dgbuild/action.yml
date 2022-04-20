@@ -71,12 +71,12 @@ runs:
     - name: debug - check dir
       run: |
           pwd -P
-          ll
+          ls
 
     - name: build dgcode
       run: |
         pwd -P
-        ll
+        ls
         . $HOME/dgdepfixerInstall/setup.sh
         which python
         which python3
