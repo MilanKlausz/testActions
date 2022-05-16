@@ -98,8 +98,8 @@ jobs:
 
       - name: setup framework action
         uses: ./.github/actions/setup
-        #with:
-        #  BUILD_FLAG: ${{ matrix.build-flag }}
+        with:
+          BUILD_FLAG: ${{ matrix.build-flag }}
         #  # PYTHON_VERSION: ${{ matrix.python }}
   
       - name: test dgcode
@@ -108,7 +108,7 @@ jobs:
           . $GITHUB_WORKSPACE/geant4-10.04.p03/setup.sh
           . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
           . bootstrap.sh
-         # dgbuild -t
+          dgbuild -t
         working-directory: ${{ env.PROJ_DIR }}
         env:
           DGDEP_IGNOREBADSHEBANG: 1

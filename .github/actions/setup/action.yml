@@ -14,10 +14,6 @@ runs:
         repository: MilanKlausz/devDgcode
         path: './dgcode_framework'
     
-    #- name: Move dgcode framework to $HOME
-    #  run: mv ./dgcode $HOME/dgcode_framework
-    #  shell: bash
-    
     #- name: Set up Python (on Linux)
     #    if: runner.os == 'Linux'
     #    uses: actions/setup-python@v3
@@ -78,14 +74,14 @@ runs:
         eval 'if [ ! -d $GITHUB_WORKSPACE/Geant4data ]; then $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh; fi '
       shell: bash
 
-   # - name: build framework
-   #     run: |
-   #       . $GITHUB_WORKSPACE/dgdepfixerInstall/setup.sh
-   #       . $GITHUB_WORKSPACE/geant4-10.04.p03/setup.sh
-   #       . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
-   #       . bootstrap.sh
-   #       dgbuild -a --${{ inputs.BUILD_FLAG }}
-   #     working-directory: ${{ env.PROJ_DIR }}
-   #     env:
-   #       DGDEP_IGNOREBADSHEBANG: 1
-   #     shell: bash
+    - name: build framework
+        run: |
+          . $GITHUB_WORKSPACE/dgdepfixerInstall/setup.sh
+          . $GITHUB_WORKSPACE/geant4-10.04.p03/setup.sh
+          . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
+          . bootstrap.sh
+          dgbuild -a --${{ inputs.BUILD_FLAG }}
+        working-directory: projects
+        env:
+          DGDEP_IGNOREBADSHEBANG: 1
+        shell: bash
