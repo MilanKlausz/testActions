@@ -12,11 +12,11 @@ runs:
       uses: actions/checkout@v2
       with:
         repository: MilanKlausz/devDgcode
-        path: './dgcode'
+        path: './dgcode_framework'
     
-    - name: Move dgcode framework to $HOME
-      run: mv ./dgcode $HOME/dgcode_framework
-      shell: bash
+    #- name: Move dgcode framework to $HOME
+    #  run: mv ./dgcode $HOME/dgcode_framework
+    #  shell: bash
     
     #- name: Set up Python (on Linux)
     #    if: runner.os == 'Linux'
@@ -41,11 +41,11 @@ runs:
       id: cache-dgdepfixer
       uses: actions/cache@v2
       with:
-        path: ~/dgdepfixerInstall
-        key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-${{env.CC}}-${{steps.python-version.outputs.version}}-dgdepfixer-install-new
+        path: $GITHUB_WORKSPACE/dgdepfixerInstall
+        key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-${{env.CC}}-${{steps.python-version.outputs.version}}-dgdepfixer-install
      
     - name: Create dgdepfixer
-      run: eval 'if [ ! -d $HOME/dgdepfixerInstall ]; then python $HOME/dgcode_framework/.system/depfix/src/__main__.py --create -d $HOME/dgdepfixerInstall ; fi'
+      run: eval 'if [ ! -d $GITHUB_WORKSPACE/dgdepfixerInstall ]; then python $GITHUB_WORKSPACE/dgcode_framework/.system/depfix/src/__main__.py --create -d $GITHUB_WORKSPACE/dgdepfixerInstall ; fi'
       env:
         DGDEP_IGNOREBADSHEBANG: 1
       shell: bash
@@ -54,13 +54,13 @@ runs:
       id: cache-geant4
       uses: actions/cache@v2
       with:
-        path: ~/geant4-10.04.p03
+        path: $GITHUB_WORKSPACE/geant4-10.04.p03
         key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-${{env.CC}}-Geant4--nodata
         
     - name: Install Geant4
       run: |
-        eval 'if [ ! -d $HOME/geant4-10.04.p03 ]; then . $HOME/dgdepfixerInstall/setup.sh; fi '
-        eval 'if [ ! -d $HOME/geant4-10.04.p03 ]; then dgdepfixer --instsw=Geant4 --nodata -d $HOME/geant4-10.04.p03; fi'
+        eval 'if [ ! -d $GITHUB_WORKSPACE/geant4-10.04.p03 ]; then . $GITHUB_WORKSPACE/dgdepfixerInstall/setup.sh; fi '
+        eval 'if [ ! -d $GITHUB_WORKSPACE/geant4-10.04.p03 ]; then dgdepfixer --instsw=Geant4 --nodata -d $GITHUB_WORKSPACE/geant4-10.04.p03; fi'
       env:
         DGDEP_IGNOREBADSHEBANG: 1
       shell: bash
@@ -69,25 +69,19 @@ runs:
       id: cache-untarred-geant4-data-files
       uses: actions/cache@v2
       with:
-        path: ~/Geant4data
+        path: $GITHUB_WORKSPACE/Geant4data
         key: untarred-geant4-data-files 
  
     - name: Download Geant4 data
       run: |
-        eval 'if [ ! -d $HOME/Geant4data ]; then chmod +x $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh; fi '
-        eval 'if [ ! -d $HOME/Geant4data ]; then $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh; fi '
-      shell: bash
-
-    - name: list projects dir
-      run: |
-        ls $GITHUB_WORKSPACE/projects
-        ls projects
+        eval 'if [ ! -d $GITHUB_WORKSPACE/Geant4data ]; then chmod +x $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh; fi '
+        eval 'if [ ! -d $GITHUB_WORKSPACE/Geant4data ]; then $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh; fi '
       shell: bash
 
    # - name: build framework
    #     run: |
-   #       . $HOME/dgdepfixerInstall/setup.sh
-   #       . $HOME/geant4-10.04.p03/setup.sh
+   #       . $GITHUB_WORKSPACE/dgdepfixerInstall/setup.sh
+   #       . $GITHUB_WORKSPACE/geant4-10.04.p03/setup.sh
    #       . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
    #       . bootstrap.sh
    #       dgbuild -a --${{ inputs.BUILD_FLAG }}

@@ -42,28 +42,28 @@ BASE_URL="https://cern.ch/geant4-data/datasets/"
 TRUE_DATA_DIR="Geant4data"
 TAR_FILE_DIR="Geant4data_tar_files"
 
-if [[ ! -e "$HOME/$TAR_FILE_DIR" ]]; then 
-   mkdir "$HOME/$TAR_FILE_DIR" 
+if [[ ! -e "$GITHUB_WORKSPACE/$TAR_FILE_DIR" ]]; then 
+   mkdir "$GITHUB_WORKSPACE/$TAR_FILE_DIR" 
 fi
 
-if [[ ! -e "$HOME/$TRUE_DATA_DIR" ]]; then 
-   mkdir "$HOME/$TRUE_DATA_DIR" 
+if [[ ! -e "$GITHUB_WORKSPACE/$TRUE_DATA_DIR" ]]; then 
+   mkdir "$GITHUB_WORKSPACE/$TRUE_DATA_DIR" 
 fi
 
-#if [[ ! -e "$HOME/$DATA_DIR" ]]; then 
-#   mkdir "$HOME/$DATA_DIR" 
+#if [[ ! -e "$GITHUB_WORKSPACE/$DATA_DIR" ]]; then 
+#   mkdir "$GITHUB_WORKSPACE/$DATA_DIR" 
 #fi
 
 for i in "${!arrName[@]}"
 do
-   if [[ ! -d "$HOME/$TRUE_DATA_DIR/${unTarName[i]}" ]]; then 
+   if [[ ! -d "$GITHUB_WORKSPACE/$TRUE_DATA_DIR/${unTarName[i]}" ]]; then 
       echo "$BASE_URL${arrName[i]}.tar.gz"
-      curl -L "$BASE_URL${arrName[i]}.tar.gz" > "$HOME/$TAR_FILE_DIR/${arrName[i]}.tar.gz"
-      tar -xf "$HOME/$TAR_FILE_DIR/${arrName[i]}.tar.gz" -C "$HOME/$TRUE_DATA_DIR"
+      curl -L "$BASE_URL${arrName[i]}.tar.gz" > "$GITHUB_WORKSPACE/$TAR_FILE_DIR/${arrName[i]}.tar.gz"
+      tar -xf "$GITHUB_WORKSPACE/$TAR_FILE_DIR/${arrName[i]}.tar.gz" -C "$GITHUB_WORKSPACE/$TRUE_DATA_DIR"
    else 
-      echo "$HOME/$TRUE_DATA_DIR/${unTarName[i]} exists"
+      echo "$GITHUB_WORKSPACE/$TRUE_DATA_DIR/${unTarName[i]} exists"
    fi
 done
 
-#ln -s -f "$HOME/$TRUE_DATA_DIR/"* "$HOME/$DATA_DIR/"
+#ln -s -f "$GITHUB_WORKSPACE/$TRUE_DATA_DIR/"* "$GITHUB_WORKSPACE/$DATA_DIR/"
 

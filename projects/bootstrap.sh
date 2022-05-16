@@ -2,7 +2,7 @@
 
 #Location where dg_code_framework is checked out (modify it if you use a
 #different location):
-DGCODE_FMWK_DIR="$HOME/dgcode_framework"
+DGCODE_FMWK_DIR="$GITHUB_WORKSPACE/dgcode_framework"
 
 #Setup locations for where to keep your own project packages (the magic code
 #below defaults this to being below the directory of this bootstrap file):
@@ -17,7 +17,7 @@ export DGCODE_BUILD_DIR="auto"
 #List paths to directories containing packages you want to be built along with
 #the Framework and Project packages. (This may be useful for e.g., dependencies
 #in large legacy repositories) 
-export DGCODE_PKG_PATH="$HOME/dgcode_validation"
+export DGCODE_PKG_PATH="$GITHUB_WORKSPACE/dgcode_validation"
 
 #Finish up by sourcing the main bootstrap.sh file from the dgcode framework:
 . $DGCODE_FMWK_DIR/bootstrap.sh
