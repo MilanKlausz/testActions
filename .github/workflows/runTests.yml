@@ -81,22 +81,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - name: Checkout dgcode
-        uses: actions/checkout@v2
-        with:
-          repository: MilanKlausz/devDgcode
-          path: './dgcode'
-
       - name: Checkout dgcode_validation
         uses: actions/checkout@v2
         with:
           repository: MilanKlausz/dgcode_validation
           path: './dgcode_validation'
 
-      - name: Move dgcode framework and validation to $HOME
-        run: |
-            mv ./dgcode $HOME/dgcode_framework
-            mv ./dgcode_validation $HOME/dgcode_validation
+      - name: Move validation packages to $HOME
+        run: mv ./dgcode_validation $HOME/dgcode_validation
 
       - name: Set up Python (on Linux)
         if: runner.os == 'Linux'
@@ -106,14 +98,15 @@ jobs:
 
       - name: setup framework action
         uses: ./.github/actions/setup
-        with:
-          BUILD_FLAG: ${{ matrix.build-flag }}
+        #with:
+        #  BUILD_FLAG: ${{ matrix.build-flag }}
+        #  # PYTHON_VERSION: ${{ matrix.python }}
   
       - name: test dgcode
         run: |
           . $HOME/dgdepfixerInstall/setup.sh
           . $HOME/geant4-10.04.p03/setup.sh
-          . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh 
+          . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
           . bootstrap.sh
           dgbuild -t
         working-directory: ${{ env.PROJ_DIR }}

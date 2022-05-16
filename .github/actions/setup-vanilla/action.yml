@@ -8,21 +8,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Checkout dgcode framework
-      uses: actions/checkout@v2
-      with:
-        repository: MilanKlausz/devDgcode
-        path: './dgcode'
-    
-    - name: Move dgcode framework to $HOME
-      run: mv ./dgcode $HOME/dgcode_framework
-    
-    #- name: Set up Python (on Linux)
-    #    if: runner.os == 'Linux'
-    #    uses: actions/setup-python@v3
-    #    with:
-    #      python-version: ${{ matrix.python }}
-
     - name: Get OS version for caches
       id: os-version
       uses: sersoft-gmbh/os-version-action@v1
@@ -78,14 +63,3 @@ runs:
         eval 'if [ ! -d $HOME/Geant4data ]; then chmod +x $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh; fi '
         eval 'if [ ! -d $HOME/Geant4data ]; then $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh; fi '
       shell: bash
-
-   # - name: build framework
-   #     run: |
-   #       . $HOME/dgdepfixerInstall/setup.sh
-   #       . $HOME/geant4-10.04.p03/setup.sh
-   #       . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
-   #       . bootstrap.sh
-   #       dgbuild -a --${{ inputs.BUILD_FLAG }}
-   #     working-directory: ${{ env.PROJ_DIR }}
-   #     env:
-   #       DGDEP_IGNOREBADSHEBANG: 1
