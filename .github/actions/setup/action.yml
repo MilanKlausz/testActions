@@ -44,14 +44,6 @@ runs:
         path: ~/dgdepfixerInstall
         key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-${{env.CC}}-${{steps.python-version.outputs.version}}-dgdepfixer-install-new
      
-    # - name: Create dgdepfixer
-    #   run: | 
-    #     eval 'if [ ! -d $HOME/dgdepfixerInstall ]; then chmod +x $GITHUB_WORKSPACE/.github/scripts/dgdepfixer ; fi'
-    #     eval 'if [ ! -d $HOME/dgdepfixerInstall ]; then $GITHUB_WORKSPACE/.github/scripts/dgdepfixer --create -d $HOME/dgdepfixerInstall ; fi'
-    #   env:
-    #     DGDEP_IGNOREBADSHEBANG: 1
-    #   shell: bash
-
     - name: Create dgdepfixer
       run: eval 'if [ ! -d $HOME/dgdepfixerInstall ]; then python $HOME/dgcode_framework/.system/depfix/src/__main__.py --create -d $HOME/dgdepfixerInstall ; fi'
       env:
@@ -84,6 +76,12 @@ runs:
       run: |
         eval 'if [ ! -d $HOME/Geant4data ]; then chmod +x $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh; fi '
         eval 'if [ ! -d $HOME/Geant4data ]; then $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh; fi '
+      shell: bash
+
+    - name: list projects dir
+      run: |
+        ls $GITHUB_WORKSPACE/projects
+        ls projects
       shell: bash
 
    # - name: build framework
