@@ -75,13 +75,13 @@ runs:
       shell: bash
 
     - name: build framework
-        run: |
-          . $GITHUB_WORKSPACE/dgdepfixerInstall/setup.sh
-          . $GITHUB_WORKSPACE/geant4-10.04.p03/setup.sh
-          . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
-          . bootstrap.sh
-          dgbuild -a --${{ inputs.BUILD_FLAG }}
-        working-directory: projects
-        env:
-          DGDEP_IGNOREBADSHEBANG: 1
-        shell: bash
+      run: |
+        . $GITHUB_WORKSPACE/dgdepfixerInstall/setup.sh
+        . $GITHUB_WORKSPACE/geant4-10.04.p03/setup.sh
+        . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
+        . bootstrap.sh
+        dgbuild -a --${{ inputs.BUILD_FLAG }}
+      working-directory: projects
+      env:
+        DGDEP_IGNOREBADSHEBANG: 1
+      shell: bash
