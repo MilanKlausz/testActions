@@ -42,7 +42,7 @@ runs:
       uses: actions/cache@v2
       with:
         path: ~/dgdepfixerInstall
-        key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-${{env.CC}}-${{steps.python-version.outputs.version}}-dgdepfixer-install
+        key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-${{env.CC}}-${{steps.python-version.outputs.version}}-dgdepfixer-install-new
      
     # - name: Create dgdepfixer
     #   run: | 
@@ -53,7 +53,7 @@ runs:
     #   shell: bash
 
     - name: Create dgdepfixer
-      run:  python $HOME/dgcode_framework/.system/depfix/src/__main__.py --create -d $HOME/dgdepfixerInstall 
+      run: eval 'if [ ! -d $HOME/dgdepfixerInstall ]; then python $HOME/dgcode_framework/.system/depfix/src/__main__.py --create -d $HOME/dgdepfixerInstall ; fi'
       env:
         DGDEP_IGNOREBADSHEBANG: 1
       shell: bash
