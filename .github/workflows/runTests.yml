@@ -1,4 +1,4 @@
-name: Framework Build
+name: Run tests
 
 on:
   workflow_dispatch:
