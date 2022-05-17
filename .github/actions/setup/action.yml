@@ -45,7 +45,8 @@ runs:
         key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-${{env.CC}}-${{steps.python-version.outputs.version}}-dgdepfixer-install
      
     - name: Create dgdepfixer
-      run: eval 'if [ ! -d $GITHUB_WORKSPACE/dgdepfixerInstall ]; then python $GITHUB_WORKSPACE/dgcode_framework/.system/depfix/src/__main__.py --create -d $GITHUB_WORKSPACE/dgdepfixerInstall ; fi'
+      if: steps.cache-dgdepfixer.outputs.cache-hit != 'true'
+      run: python $GITHUB_WORKSPACE/dgcode_framework/.system/depfix/src/__main__.py --create -d $GITHUB_WORKSPACE/dgdepfixerInstall
       env:
         DGDEP_IGNOREBADSHEBANG: 1
       shell: bash
@@ -58,9 +59,10 @@ runs:
         key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-${{env.CC}}-Geant4--nodata
         
     - name: Install Geant4
+      if: steps.cache-geant4.outputs.cache-hit != 'true'
       run: |
-        eval 'if [ ! -d $GITHUB_WORKSPACE/geant4-10.04.p03 ]; then . $GITHUB_WORKSPACE/dgdepfixerInstall/setup.sh; fi '
-        eval 'if [ ! -d $GITHUB_WORKSPACE/geant4-10.04.p03 ]; then dgdepfixer --instsw=Geant4 --nodata -d $GITHUB_WORKSPACE/geant4-10.04.p03; fi'
+        . $GITHUB_WORKSPACE/dgdepfixerInstall/setup.sh
+        dgdepfixer --instsw=Geant4 --nodata -d $GITHUB_WORKSPACE/geant4-10.04.p03
       env:
         DGDEP_IGNOREBADSHEBANG: 1
       shell: bash
@@ -73,9 +75,10 @@ runs:
         key: untarred-geant4-data-files 
  
     - name: Download Geant4 data
+      if: steps.cache-geant4.outputs.cache-hit != 'true' || steps.cache-untarred-geant4-data-files.outputs.cache-hit != 'true'
       run: |
-        eval 'if [ ! -d $GITHUB_WORKSPACE/Geant4data ]; then chmod +x $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh; fi '
-        eval 'if [ ! -d $GITHUB_WORKSPACE/Geant4data ]; then $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh; fi '
+        chmod +x $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh
+        $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh
       shell: bash
 
     - name: build framework
