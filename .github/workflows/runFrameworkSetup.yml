@@ -78,6 +78,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Checkout dgcode_validation
+        uses: actions/checkout@v2
+        with:
+          repository: MilanKlausz/dgcode_validation
+          path: './dgcode_validation'
+
       - name: setup framework action
         uses: ./.github/actions/setup
         with:
