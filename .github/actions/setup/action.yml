@@ -46,7 +46,7 @@ runs:
      
     - name: Create dgdepfixer
       if: steps.cache-dgdepfixer.outputs.cache-hit != 'true'
-      run: python $GITHUB_WORKSPACE/dgcode_framework/.system/depfix/src/__main__.py --create -d $GITHUB_WORKSPACE/dgdepfixerInstall
+      run: python3 $GITHUB_WORKSPACE/dgcode_framework/.system/depfix/src/__main__.py --create -d $GITHUB_WORKSPACE/dgdepfixerInstall
       env:
         DGDEP_IGNOREBADSHEBANG: 1
       shell: bash
