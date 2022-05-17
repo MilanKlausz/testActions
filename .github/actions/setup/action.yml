@@ -5,6 +5,10 @@ inputs:
     description: build flag (e.g. 'debug' or 'release')
     type: string
     default: examine
+  PYTHON_VERSION:
+    description: Python version to set up
+    type: string
+    default: '3.8'
 runs:
   using: "composite"
   steps:
@@ -14,11 +18,11 @@ runs:
         repository: MilanKlausz/devDgcode
         path: './dgcode_framework'
     
-    #- name: Set up Python (on Linux)
-    #    if: runner.os == 'Linux'
-    #    uses: actions/setup-python@v3
-    #    with:
-    #      python-version: ${{ matrix.python }}
+    - name: Set up Python (on Linux)
+      #if: runner.os == 'Linux'
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ inputs.BUILD_FLAG }}
 
     - name: Get OS version for caches
       id: os-version
