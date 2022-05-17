@@ -19,7 +19,7 @@ runs:
         path: './dgcode_framework'
     
     - name: Set up Python (on Linux)
-      #if: runner.os == 'Linux'
+      if: runner.os == 'Linux'
       uses: actions/setup-python@v3
       with:
         python-version: ${{ inputs.PYTHON_VERSION }}
