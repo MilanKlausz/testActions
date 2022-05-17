@@ -22,7 +22,7 @@ runs:
       #if: runner.os == 'Linux'
       uses: actions/setup-python@v3
       with:
-        python-version: ${{ inputs.BUILD_FLAG }}
+        python-version: ${{ inputs.PYTHON_VERSION }}
 
     - name: Get OS version for caches
       id: os-version
