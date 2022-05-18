@@ -110,6 +110,7 @@ jobs:
 
   report:
     name: Test reporting
+    if: always()
     needs: validation-test
     runs-on: ubuntu-latest
     steps:
