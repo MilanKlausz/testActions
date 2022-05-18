@@ -74,7 +74,7 @@ jobs:
       SHELL: /bin/bash
       CC: ${{ matrix.CC }}
       CXX: ${{ matrix.CXX }}
-      PROJ_DIR: projects
+      PROJECTS_DIR: projects
 
     steps:
       - uses: actions/checkout@v2
@@ -89,6 +89,7 @@ jobs:
         uses: ./.github/actions/setup
         with:
           PYTHON_VERSION: ${{ matrix.python }}
+          PROJECTS_DIR: ${{ env.PROJECTS_DIR }}
           DGBUILD_FLAG: ${{ matrix.build-flag }}
          
   
@@ -99,7 +100,7 @@ jobs:
           . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
           . bootstrap.sh
           dgbuild -at
-        working-directory: ${{ env.PROJ_DIR }}
+        working-directory: ${{ env.PROJECTS_DIR }}
         env:
           DGDEP_IGNOREBADSHEBANG: 1
 
@@ -108,14 +109,14 @@ jobs:
         if: always() # run even if the previous step fails
         with:
             name: JUnit Test Report - ${{ matrix.os }}.${{ matrix.CC }}.python-${{ matrix.python }}.dgcode-${{ matrix.build-flag }} # Name of the check run which will be created
-            report_paths: ${{github.workspace}}/${{env.PROJ_DIR}}/.bld/testresults/dgtest_results_junitformat.xml
+            report_paths: ${{ github.workspace }}/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml
 
       - name: Test Report
         uses: dorny/test-reporter@v1
         if:  always() # run even if the previous step fails
         with:
           name: JEST Test Report - ${{ matrix.os }}.${{ matrix.CC }}.python-${{ matrix.python }}.dgcode-${{ matrix.build-flag }}  
-          path: ${{github.workspace}}/${{env.PROJ_DIR}}/.bld/testresults/dgtest_results_junitformat.xml
+          path: ${{ github.workspace }}/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml
           reporter: jest-junit # Format of test results
 
      # - name: Publish Unit Test Results
@@ -123,4 +124,4 @@ jobs:
      #   if: always()
      #   with:
      #      name: EnricoMi Test Report - ${{ matrix.os }}  #not tested yet
-     #      files: ${{github.workspace}}/${{ env.PROJ_DIR }}/.bld/testresults/dgtest_results_junitformat.xml
+     #      files: ${{ github.workspace }}/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml

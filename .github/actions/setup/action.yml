@@ -9,6 +9,10 @@ inputs:
     description: Option to turn off tailing dgbuild
     type: boolean
     default: true
+  PROJECTS_DIR:
+    description: Directory to build the framework in (must include a bootstrap script)
+    required: true
+    type: string
   DGBUILD_FLAG:
     description: build flag (e.g. 'debug' or 'release')
     type: string
@@ -94,7 +98,7 @@ runs:
         . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
         . bootstrap.sh
         dgbuild -a --${{ inputs.DGBUILD_FLAG }}
-      working-directory: projects
+      working-directory: ${{ inputs.PROJECTS_DIR }}
       env:
         DGDEP_IGNOREBADSHEBANG: 1
       shell: bash

@@ -74,6 +74,7 @@ jobs:
       SHELL: /bin/bash
       CC: ${{ matrix.CC }}
       CXX: ${{ matrix.CXX }}
+      PROJECTS_DIR: projects
 
     steps:
       - uses: actions/checkout@v2
@@ -88,5 +89,6 @@ jobs:
         uses: ./.github/actions/setup
         with:
           PYTHON_VERSION: ${{ matrix.python }}
+          PROJECTS_DIR: ${{ env.PROJECTS_DIR }}
           DGBUILD_FLAG: ${{ matrix.build-flag }}
 
