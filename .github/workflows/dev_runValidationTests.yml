@@ -1,0 +1,109 @@
+name: Dev Run Validation tests
+
+on:
+  workflow_dispatch:
+  
+  schedule:
+    - cron: '30 23 * * 0'  # 23:30 every Sunday
+    
+  #push:
+  #  branches: [ main ]
+  
+  # Allows external webhook trigger
+  repository_dispatch:
+    types: [framework-push]
+
+jobs:
+  validation-test:
+    name: ${{ matrix.os }}.${{ matrix.CC }}.python-${{ matrix.python }}.dgcode-${{ matrix.build-flag }}
+    strategy:
+      fail-fast: false
+      matrix: 
+        include:
+          # Ubuntu-20.04
+          - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: debug }
+          # - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: release }
+          # - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.8', build-flag: debug }
+          # - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.8', build-flag: release }
+          
+          # - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: '3.9', build-flag: debug }
+          # - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: '3.9', build-flag: release }
+          # - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: '3.8', build-flag: debug }
+          # - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: '3.8', build-flag: release }
+          
+          # - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: '3.9', build-flag: debug }
+          # - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: '3.9', build-flag: release }
+          # - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: '3.8', build-flag: debug }
+          # - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: '3.8', build-flag: release }
+           
+          # - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: '3.9', build-flag: debug }
+          # - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: '3.9', build-flag: release }
+          # - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: '3.8', build-flag: debug }
+          # - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: '3.8', build-flag: release }
+         
+          # # Ubuntu-18.04
+          # - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: '3.9', build-flag: debug }
+          # - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: '3.9', build-flag: release }
+          # - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: '3.6', build-flag: debug }
+          # - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: '3.6', build-flag: release }
+           
+          # - { os: ubuntu-18.04, CC: gcc-7,    CXX: g++-7,      python: '3.9', build-flag: debug }
+          # - { os: ubuntu-18.04, CC: gcc-7,    CXX: g++-7,      python: '3.9', build-flag: release }
+          # - { os: ubuntu-18.04, CC: gcc-7,    CXX: g++-7,      python: '3.6', build-flag: debug }
+          # - { os: ubuntu-18.04, CC: gcc-7,    CXX: g++-7,      python: '3.6', build-flag: release }
+          
+          # - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: debug }
+          # - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: release }
+          # - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: '3.6', build-flag: debug }
+          # - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: '3.6', build-flag: release }
+          
+          # # macOS 10.15
+          # - { os: macos-10.15,  CC: clang,    CXX: clang++,    python: default, build-flag: debug }
+          # - { os: macos-10.15,  CC: clang,    CXX: clang++,    python: default, build-flag: release }
+          
+          # # macOS 11
+          # - { os: macos-11,     CC: clang,    CXX: clang++,    python: default, build-flag: debug }
+          # - { os: macos-11,     CC: clang,    CXX: clang++,    python: default, build-flag: release }
+          
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    env:
+      SHELL: /bin/bash
+      CC: ${{ matrix.CC }}
+      CXX: ${{ matrix.CXX }}
+      PROJECTS_DIR: projects
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Checkout dgcode_validation
+        uses: actions/checkout@v2
+        with:
+          repository: MilanKlausz/dgcode_validation
+          path: './dgcode_validation'
+
+      - name: setup framework action
+        uses: ./.github/actions/setup
+        with:
+          PYTHON_VERSION: ${{ matrix.python }}
+          PROJECTS_DIR: ${{ env.PROJECTS_DIR }}
+          DGBUILD_FLAG: ${{ matrix.build-flag }}
+         
+      - name: test dgcode
+        run: |
+          . $GITHUB_WORKSPACE/dgdepfixerInstall/setup.sh
+          . $GITHUB_WORKSPACE/geant4-10.04.p03/setup.sh
+          . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
+          . bootstrap.sh
+          dgbuild -at
+        working-directory: ${{ env.PROJECTS_DIR }}
+        env:
+          DGDEP_IGNOREBADSHEBANG: 1
+
+      - uses: actions/upload-artifact@v2  # upload test results
+        if: always() 
+        with:
+          name: test-results
+          path: ${{ github.workspace }}/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml
