@@ -119,9 +119,18 @@ jobs:
           path: ${{ github.workspace }}/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml
           reporter: jest-junit # Format of test results
 
-     # - name: Publish Unit Test Results
-     #   uses: EnricoMi/publish-unit-test-result-action/composite@v1
-     #   if: always()
-     #   with:
-     #      name: EnricoMi Test Report - ${{ matrix.os }}  #not tested yet
-     #      files: ${{ github.workspace }}/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action/composite@v1
+        if: always()
+        with:
+           name: EnricoMi Test Report - ${{ matrix.os }}  #not tested yet
+           files: ${{ github.workspace }}/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml
+
+     - name: Test Report new
+        uses: phoenix-actions/test-reporting@v3
+        id: test-report               # Set ID reference for step
+        if: always()    # run this step even if previous step failed
+        with:
+          name: JEST Tests            # Name of the check run which will be created
+          path: ${{ github.workspace }}/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml
+          reporter: jest-junit        # Format of test results
