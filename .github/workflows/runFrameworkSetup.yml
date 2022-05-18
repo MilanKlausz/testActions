@@ -3,8 +3,8 @@ name: Run setup action to build the framework
 on:
   workflow_dispatch:
   
-  schedule:
-    - cron: '30 23 * * 0'  # 23:30 every Sunday
+  #schedule:
+  #  - cron: '30 23 * * 0'  # 23:30 every Sunday
     
   #push:
   #  branches: [ main ]
@@ -87,6 +87,6 @@ jobs:
       - name: setup framework action
         uses: ./.github/actions/setup
         with:
-          BUILD_FLAG: ${{ matrix.build-flag }}
           PYTHON_VERSION: ${{ matrix.python }}
+          DGBUILD_FLAG: ${{ matrix.build-flag }}
 

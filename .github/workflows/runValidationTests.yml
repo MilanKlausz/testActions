@@ -1,4 +1,4 @@
-name: Run tests
+name: Run Validation tests
 
 on:
   workflow_dispatch:
@@ -88,8 +88,9 @@ jobs:
       - name: setup framework action
         uses: ./.github/actions/setup
         with:
-          BUILD_FLAG: ${{ matrix.build-flag }}
           PYTHON_VERSION: ${{ matrix.python }}
+          DGBUILD_FLAG: ${{ matrix.build-flag }}
+         
   
       - name: test dgcode
         run: |
@@ -97,7 +98,29 @@ jobs:
           . $GITHUB_WORKSPACE/geant4-10.04.p03/setup.sh
           . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
           . bootstrap.sh
-          dgbuild -t
+          dgbuild -at
         working-directory: ${{ env.PROJ_DIR }}
         env:
           DGDEP_IGNOREBADSHEBANG: 1
+
+      - name: Publish Test Report
+        uses: mikepenz/action-junit-report@v3
+        if: always() # run even if the previous step fails
+        with:
+            name: JUnit Test Report - ${{ matrix.os }}.${{ matrix.CC }}.python-${{ matrix.python }}.dgcode-${{ matrix.build-flag }} # Name of the check run which will be created
+            report_paths: ${{github.workspace}}/${{env.PROJ_DIR}}/.bld/testresults/dgtest_results_junitformat.xml
+
+      - name: Test Report
+        uses: dorny/test-reporter@v1
+        if:  always() # run even if the previous step fails
+        with:
+          name: JEST Test Report - ${{ matrix.os }}.${{ matrix.CC }}.python-${{ matrix.python }}.dgcode-${{ matrix.build-flag }}  
+          path: ${{github.workspace}}/${{env.PROJ_DIR}}/.bld/testresults/dgtest_results_junitformat.xml
+          reporter: jest-junit # Format of test results
+
+     # - name: Publish Unit Test Results
+     #   uses: EnricoMi/publish-unit-test-result-action/composite@v1
+     #   if: always()
+     #   with:
+     #      name: EnricoMi Test Report - ${{ matrix.os }}  #not tested yet
+     #      files: ${{github.workspace}}/${{ env.PROJ_DIR }}/.bld/testresults/dgtest_results_junitformat.xml
