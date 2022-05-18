@@ -1,14 +1,19 @@
 name: 'setup'
 description: 'Setup environment for dgcode'
 inputs:
-  BUILD_FLAG:
-    description: build flag (e.g. 'debug' or 'release')
-    type: string
-    default: examine
   PYTHON_VERSION:
     description: Python version to set up
     type: string
     default: '3.8'
+  DO_DGBUILD:
+    description: Option to turn off tailing dgbuild
+    type: boolean
+    default: true
+  DGBUILD_FLAG:
+    description: build flag (e.g. 'debug' or 'release')
+    type: string
+    default: examine
+
 runs:
   using: "composite"
   steps:
@@ -82,12 +87,13 @@ runs:
       shell: bash
 
     - name: build framework
+      if: inputs.DO_DGBUILD == 'true'
       run: |
         . $GITHUB_WORKSPACE/dgdepfixerInstall/setup.sh
         . $GITHUB_WORKSPACE/geant4-10.04.p03/setup.sh
         . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
         . bootstrap.sh
-        dgbuild -a --${{ inputs.BUILD_FLAG }}
+        dgbuild -a --${{ inputs.DGBUILD_FLAG }}
       working-directory: projects
       env:
         DGDEP_IGNOREBADSHEBANG: 1
