@@ -109,6 +109,8 @@ jobs:
           path: ${{ github.workspace }}/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml
 
   report:
+    name: Test reporting
+    needs: validation-test
     runs-on: ubuntu-latest
     steps:
     # - uses: phoenix-actions/test-reporting@v3
