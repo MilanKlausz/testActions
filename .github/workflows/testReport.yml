@@ -23,7 +23,12 @@ jobs:
     - name: Download a single artifact
       uses: actions/download-artifact@v3
       with:
-        name: test-results
+        path: artifact_dir_all
+
+    - name: Download a single artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: 'test-results'
         path: artifact_dir
 
     - name: Display structure of downloaded files
