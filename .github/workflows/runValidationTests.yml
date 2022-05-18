@@ -108,8 +108,8 @@ jobs:
         uses: mikepenz/action-junit-report@v3
         if: always() # run even if the previous step fails
         with:
-            name: JUnit Test Report - ${{ matrix.os }}.${{ matrix.CC }}.python-${{ matrix.python }}.dgcode-${{ matrix.build-flag }} # Name of the check run which will be created
-            report_paths: ${{ github.workspace }}/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml
+          check_name: JUnit Test Report - ${{ matrix.os }}.${{ matrix.CC }}.python-${{ matrix.python }}.dgcode-${{ matrix.build-flag }} # Name of the check run which will be created
+          report_paths: ${{ github.workspace }}/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml
 
       - name: Test Report
         uses: dorny/test-reporter@v1
