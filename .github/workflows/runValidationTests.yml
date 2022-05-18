@@ -126,7 +126,7 @@ jobs:
            name: EnricoMi Test Report - ${{ matrix.os }}  #not tested yet
            files: ${{ github.workspace }}/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml
 
-     - name: Test Report new
+      - name: Test Report new
         uses: phoenix-actions/test-reporting@v3
         id: test-report               # Set ID reference for step
         if: always()    # run this step even if previous step failed
