@@ -1,4 +1,4 @@
-name: Dev Run Validation tests
+name: 'dev_runValidationTests'
 
 on:
   workflow_dispatch:
