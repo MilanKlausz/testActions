@@ -3,10 +3,10 @@ name: Report test results
 on:
   workflow_dispatch:
 
-  workflow_run:
-    workflows: ['dev_runValidationTests']  # runs after dev_runValidationTests.yml workflow
-    types:
-      - completed
+  #workflow_run:
+  #  workflows: ['dev_runValidationTests']  # runs after dev_runValidationTests.yml workflow
+  #  types:
+  #    - completed
 
 jobs:
   report:
