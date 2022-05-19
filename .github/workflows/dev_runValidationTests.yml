@@ -98,9 +98,12 @@ jobs:
           . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
           . bootstrap.sh
           dgbuild -at
+          ess_ncrystalreltests_testnamedmat
+          cat /home/runner/work/testActions/testActions/projects/.bld/testresults/ess_ncrystalreltests_testnamedmat/ec.txt 
         working-directory: ${{ env.PROJECTS_DIR }}
         env:
           DGDEP_IGNOREBADSHEBANG: 1
+
 
       - uses: actions/upload-artifact@v2  # upload test results
         if: always() 
