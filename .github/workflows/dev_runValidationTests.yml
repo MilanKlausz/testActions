@@ -97,7 +97,6 @@ jobs:
           . $GITHUB_WORKSPACE/geant4-10.04.p03/setup.sh
           . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
           . bootstrap.sh
-         # ess_ncrystalreltests_testnamedmat
           dgbuild -at
           cat /home/runner/work/testActions/testActions/projects/.bld/testresults/ess_ncrystalreltests_testnamedmat/ec.txt 
         working-directory: ${{ env.PROJECTS_DIR }}
