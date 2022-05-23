@@ -22,7 +22,7 @@ jobs:
         include:
           # Ubuntu-20.04
           - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: debug }
-          - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: release }
+          # - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: release }
           # - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.8', build-flag: debug }
           # - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.8', build-flag: release }
           
@@ -102,6 +102,18 @@ jobs:
         env:
           DGDEP_IGNOREBADSHEBANG: 1
 
+      - name: DEBUG ess_ncrystalreltests_testnamedmat
+        if: always() #previous step fails if tests fail
+        run: |
+          . $GITHUB_WORKSPACE/dgdepfixerInstall/setup.sh
+          . $GITHUB_WORKSPACE/geant4-10.04.p03/setup.sh
+          . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
+          . bootstrap.sh
+          ess_ncrystalreltests_testnamedmat
+        working-directory: ${{ env.PROJECTS_DIR }}
+        env:
+          DGDEP_IGNOREBADSHEBANG: 1
+
       - name: Rename test result
         if: always() #previous step fails if tests fail
         run: mv $GITHUB_WORKSPACE/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml $GITHUB_WORKSPACE/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat_${{ matrix.os }}.${{ matrix.CC }}.python-${{ matrix.python }}.dgcode-${{ matrix.build-flag }}.xml
@@ -151,10 +163,10 @@ jobs:
         files: artifact_dir/dgtest_results_junitformat*.xml
         report_individual_runs: true
 
-    - name: Test Report
-      uses: dorny/test-reporter@v1
-      if:  always() # run even if the previous step fails
-      with:
-        name: JEST Test Report 
-        path: artifact_dir/dgtest_results_junitformat*.xml
-        reporter: jest-junit # Format of test results
+    # - name: Test Report
+    #   uses: dorny/test-reporter@v1
+    #   if:  always() # run even if the previous step fails
+    #   with:
+    #     name: JEST Test Report 
+    #     path: artifact_dir/dgtest_results_junitformat*.xml
+    #     reporter: jest-junit # Format of test results
