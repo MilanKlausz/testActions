@@ -149,3 +149,11 @@ jobs:
       with:
         name: EnricoMi Test Report
         files: artifact_dir/dgtest_results_junitformat*.xml
+
+    - name: Test Report
+      uses: dorny/test-reporter@v1
+      if:  always() # run even if the previous step fails
+      with:
+        name: JEST Test Report 
+        path: artifact_dir/dgtest_results_junitformat*.xml
+        reporter: jest-junit # Format of test results
