@@ -98,12 +98,12 @@ jobs:
           . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
           . bootstrap.sh
           dgbuild -at
-          cat /home/runner/work/testActions/testActions/projects/.bld/testresults/ess_ncrystalreltests_testnamedmat/ec.txt 
-          mv $GITHUB_WORKSPACE/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml $GITHUB_WORKSPACE/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat_${{ matrix.os }}.${{ matrix.CC }}.python-${{ matrix.python }}.dgcode-${{ matrix.build-flag }}.xml
         working-directory: ${{ env.PROJECTS_DIR }}
         env:
           DGDEP_IGNOREBADSHEBANG: 1
 
+      - name: Rename test result
+        run: mv $GITHUB_WORKSPACE/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml $GITHUB_WORKSPACE/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat_${{ matrix.os }}.${{ matrix.CC }}.python-${{ matrix.python }}.dgcode-${{ matrix.build-flag }}.xml
 
       - uses: actions/upload-artifact@v2  # upload test results
         if: always() 
