@@ -143,3 +143,9 @@ jobs:
         check_name: JUnit Test Report
         report_paths: artifact_dir/dgtest_results_junitformat*.xml
   
+    - name: Publish Unit Test Results
+      uses: EnricoMi/publish-unit-test-result-action/composite@v1
+      if: always()
+      with:
+        name: EnricoMi Test Report
+        files: artifact_dir/dgtest_results_junitformat*.xml
