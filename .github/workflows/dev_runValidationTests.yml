@@ -147,8 +147,9 @@ jobs:
       uses: EnricoMi/publish-unit-test-result-action/composite@v1
       if: always()
       with:
-        name: EnricoMi Test Report
+        check_name: EnricoMi Test Report
         files: artifact_dir/dgtest_results_junitformat*.xml
+        report_individual_runs: true
 
     - name: Test Report
       uses: dorny/test-reporter@v1
