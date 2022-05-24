@@ -97,22 +97,22 @@ jobs:
           . $GITHUB_WORKSPACE/geant4-10.04.p03/setup.sh
           . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
           . bootstrap.sh
-          dgbuild -at
+          dgbuild -at --${{ matrix.build-flag }}
         working-directory: ${{ env.PROJECTS_DIR }}
         env:
           DGDEP_IGNOREBADSHEBANG: 1
 
-      - name: DEBUG ess_ncrystalreltests_testnamedmat
-        if: always() #previous step fails if tests fail
-        run: |
-          . $GITHUB_WORKSPACE/dgdepfixerInstall/setup.sh
-          . $GITHUB_WORKSPACE/geant4-10.04.p03/setup.sh
-          . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
-          . bootstrap.sh
-          ess_ncrystalreltests_testnamedmat
-        working-directory: ${{ env.PROJECTS_DIR }}
-        env:
-          DGDEP_IGNOREBADSHEBANG: 1
+      # - name: DEBUG ess_ncrystalreltests_testnamedmat
+      #   if: always() #previous step fails if tests fail
+      #   run: |
+      #     . $GITHUB_WORKSPACE/dgdepfixerInstall/setup.sh
+      #     . $GITHUB_WORKSPACE/geant4-10.04.p03/setup.sh
+      #     . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
+      #     . bootstrap.sh
+      #     ess_ncrystalreltests_testnamedmat
+      #   working-directory: ${{ env.PROJECTS_DIR }}
+      #   env:
+      #     DGDEP_IGNOREBADSHEBANG: 1
 
       - name: Rename test result
         if: always() #previous step fails if tests fail
