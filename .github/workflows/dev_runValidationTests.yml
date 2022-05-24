@@ -21,49 +21,49 @@ jobs:
       matrix: 
         include:
           # Ubuntu-20.04
-          # - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: examine }
-          # - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: release }
-          # - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.8', build-flag: examine }
-          # - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.8', build-flag: release }
+          - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: examine }
+          - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: release }
+          - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.8', build-flag: examine }
+          - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.8', build-flag: release }
           
-          # - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: '3.9', build-flag: examine }
-          # - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: '3.9', build-flag: release }
-          # - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: '3.8', build-flag: examine }
-          # - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: '3.8', build-flag: release }
+          - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: '3.9', build-flag: examine }
+          - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: '3.9', build-flag: release }
+          - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: '3.8', build-flag: examine }
+          - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: '3.8', build-flag: release }
           
-          # - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: '3.9', build-flag: examine }
-          # - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: '3.9', build-flag: release }
-          # - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: '3.8', build-flag: examine }
-          # - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: '3.8', build-flag: release }
+          - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: '3.9', build-flag: examine }
+          - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: '3.9', build-flag: release }
+          - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: '3.8', build-flag: examine }
+          - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: '3.8', build-flag: release }
            
-          # - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: '3.9', build-flag: examine }
-          # - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: '3.9', build-flag: release }
-          # - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: '3.8', build-flag: examine }
-          # - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: '3.8', build-flag: release }
+          - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: '3.9', build-flag: examine }
+          - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: '3.9', build-flag: release }
+          - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: '3.8', build-flag: examine }
+          - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: '3.8', build-flag: release }
          
-          # # Ubuntu-18.04
-          # - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: '3.9', build-flag: examine }
-          # - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: '3.9', build-flag: release }
-          # - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: '3.6', build-flag: examine }
-          # - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: '3.6', build-flag: release }
+          # Ubuntu-18.04
+          - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: '3.9', build-flag: examine }
+          - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: '3.9', build-flag: release }
+          - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: '3.6', build-flag: examine }
+          - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: '3.6', build-flag: release }
            
           - { os: ubuntu-18.04, CC: gcc-7,    CXX: g++-7,      python: '3.9', build-flag: examine }
-          - { os: ubuntu-18.04, CC: gcc-7,    CXX: g++-7,      python: '3.9', build-flag: release }
+          # - { os: ubuntu-18.04, CC: gcc-7,    CXX: g++-7,      python: '3.9', build-flag: release }
           - { os: ubuntu-18.04, CC: gcc-7,    CXX: g++-7,      python: '3.6', build-flag: examine }
-          - { os: ubuntu-18.04, CC: gcc-7,    CXX: g++-7,      python: '3.6', build-flag: release }
+          # - { os: ubuntu-18.04, CC: gcc-7,    CXX: g++-7,      python: '3.6', build-flag: release }
           
-          # - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: examine }
-          # - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: release }
-          # - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: '3.6', build-flag: examine }
-          # - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: '3.6', build-flag: release }
+          - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: examine }
+          - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: release }
+          - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: '3.6', build-flag: examine }
+          - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: '3.6', build-flag: release }
           
-          # # macOS 10.15
-          # - { os: macos-10.15,  CC: clang,    CXX: clang++,    python: default, build-flag: examine }
-          # - { os: macos-10.15,  CC: clang,    CXX: clang++,    python: default, build-flag: release }
+          # macOS 10.15
+          - { os: macos-10.15,  CC: clang,    CXX: clang++,    python: default, build-flag: examine }
+          - { os: macos-10.15,  CC: clang,    CXX: clang++,    python: default, build-flag: release }
           
-          # # macOS 11
-          # - { os: macos-11,     CC: clang,    CXX: clang++,    python: default, build-flag: examine }
-          # - { os: macos-11,     CC: clang,    CXX: clang++,    python: default, build-flag: release }
+          # macOS 11
+          - { os: macos-11,     CC: clang,    CXX: clang++,    python: default, build-flag: examine }
+          - { os: macos-11,     CC: clang,    CXX: clang++,    python: default, build-flag: release }
           
     runs-on: ${{ matrix.os }}
     defaults:
