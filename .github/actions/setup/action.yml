@@ -51,7 +51,7 @@ runs:
       uses: actions/cache@v2
       with:
         path: dgdepfixerInstall
-        key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-${{env.CC}}-${{steps.python-version.outputs.version}}-dgdepfixer-install
+        key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-${{env.CC}}-${{steps.python-version.outputs.version}}-dgdepfixer-install-new
      
     - name: Create dgdepfixer
       if: steps.cache-dgdepfixer.outputs.cache-hit != 'true'
