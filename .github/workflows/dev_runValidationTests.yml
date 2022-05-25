@@ -78,8 +78,13 @@ jobs:
       PROJECTS_DIR: projects
 
     steps:
-      - uses: actions/checkout@v2
-      
+      #- uses: actions/checkout@v2
+      - name: Checkout testActions
+        uses: actions/checkout@v2
+        with:
+          repository: MilanKlausz/testActions
+         # path: './dgcode_validation'
+
       - name: Checkout dgcode_validation
         uses: actions/checkout@v2
         with:
@@ -88,7 +93,7 @@ jobs:
 
       - name: setup framework action
         id: setup-framework
-        uses: MilanKlausz/setup
+        uses: ./.github/actions/setup
         with:
           PYTHON_VERSION: ${{ matrix.python }}
           PROJECTS_DIR: ${{ env.PROJECTS_DIR }}
