@@ -1,4 +1,4 @@
-name: Test commands
+name: testCommands
 
 on:
   workflow_call:
