@@ -25,4 +25,4 @@ jobs:
     #- name: env
     #  run: env
     - id: echo-step
-      run: echo "::set-output name=runid::${{ GITHUB_RUN_ID }}"
+      run: echo "::set-output name=runid::${{ env.GITHUB_RUN_ID }}"
