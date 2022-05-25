@@ -99,8 +99,8 @@ jobs:
           . $GITHUB_WORKSPACE/geant4-10.04.p03/setup.sh
           . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
           . bootstrap.sh
-          ls ~/.matplotlib 
-          ls ~/.cache
+          ls ~/.*
+          ls $GITHUB_WORKSPACE/.*
           rm -rf ~/.matplotlib/fontList.cache
           rm -rf ~/.cache/matplotlib
           rm -rf ~/.cache/fontconfig/
