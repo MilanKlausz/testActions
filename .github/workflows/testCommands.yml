@@ -24,5 +24,8 @@ jobs:
     #  run: sysctl -n hw.ncpu
     #- name: env
     #  run: env
+    - id: print-step
+      run: echo ${{ env.GITHUB_RUN_ID }}
+      
     - id: echo-step
       run: echo "::set-output name=runid::${{ env.GITHUB_RUN_ID }}"
