@@ -25,7 +25,7 @@ jobs:
     #- name: env
     #  run: env
     - id: print-step
-      run: echo ${{ env.GITHUB_RUN_ID }}
-      
+      run: echo ${{ github.run_id }}
+
     - id: echo-step
-      run: echo "::set-output name=runid::${{ env.GITHUB_RUN_ID }}"
+      run: echo "::set-output name=runid::${{ github.run_id }}"
