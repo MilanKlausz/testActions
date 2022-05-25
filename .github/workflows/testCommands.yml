@@ -5,9 +5,9 @@ on:
     outputs:
       run-id:
         description: "run-id"
-        type: string
        # value: ${{ jobs.echo-run-id.outputs.run-id }}
-        value: ${{ github.run_id }}
+       # value: ${{ github.run_id }}
+        value: 5
   workflow_dispatch:
 jobs:
   echo-run-id:
