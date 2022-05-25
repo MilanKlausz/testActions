@@ -9,10 +9,7 @@ on:
   workflow_call:  
   #push:
   #  branches: [ main ]
-  
-  # Allows external webhook trigger
-  #repository_dispatch:
-  #  types: [framework-push]
+
 
 jobs:
   validation-test:
@@ -22,49 +19,49 @@ jobs:
       matrix: 
         include:
           # Ubuntu-20.04
-          # - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: examine }
-          # - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: release }
-          # - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.8', build-flag: examine }
-          # - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.8', build-flag: release }
+          - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: examine }
+          - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: release }
+          - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.8', build-flag: examine }
+          - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.8', build-flag: release }
           
-          # - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: '3.9', build-flag: examine }
-          # - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: '3.9', build-flag: release }
-          # - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: '3.8', build-flag: examine }
-          # - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: '3.8', build-flag: release }
+          - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: '3.9', build-flag: examine }
+          - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: '3.9', build-flag: release }
+          - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: '3.8', build-flag: examine }
+          - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: '3.8', build-flag: release }
           
-          # - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: '3.9', build-flag: examine }
-          # - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: '3.9', build-flag: release }
-          # - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: '3.8', build-flag: examine }
-          # - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: '3.8', build-flag: release }
+          - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: '3.9', build-flag: examine }
+          - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: '3.9', build-flag: release }
+          - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: '3.8', build-flag: examine }
+          - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: '3.8', build-flag: release }
            
-          # - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: '3.9', build-flag: examine }
-          # - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: '3.9', build-flag: release }
-          # - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: '3.8', build-flag: examine }
-          # - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: '3.8', build-flag: release }
+          - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: '3.9', build-flag: examine }
+          - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: '3.9', build-flag: release }
+          - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: '3.8', build-flag: examine }
+          - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: '3.8', build-flag: release }
          
-          # # Ubuntu-18.04
-          # - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: '3.9', build-flag: examine }
-          # - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: '3.9', build-flag: release }
-          # - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: '3.6', build-flag: examine }
-          # - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: '3.6', build-flag: release }
+          # Ubuntu-18.04
+          - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: '3.9', build-flag: examine }
+          - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: '3.9', build-flag: release }
+          - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: '3.6', build-flag: examine }
+          - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: '3.6', build-flag: release }
            
           - { os: ubuntu-18.04, CC: gcc-7,    CXX: g++-7,      python: '3.9', build-flag: examine }
           - { os: ubuntu-18.04, CC: gcc-7,    CXX: g++-7,      python: '3.9', build-flag: release, allow-failure: true }
           - { os: ubuntu-18.04, CC: gcc-7,    CXX: g++-7,      python: '3.6', build-flag: examine }
           - { os: ubuntu-18.04, CC: gcc-7,    CXX: g++-7,      python: '3.6', build-flag: release, allow-failure: true }
           
-          # - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: examine }
-          # - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: release }
-          # - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: '3.6', build-flag: examine }
-          # - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: '3.6', build-flag: release }
+          - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: examine }
+          - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: release }
+          - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: '3.6', build-flag: examine }
+          - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: '3.6', build-flag: release }
           
-          # # macOS 10.15
-          # - { os: macos-10.15,  CC: clang,    CXX: clang++,    python: default, build-flag: examine }
-          # - { os: macos-10.15,  CC: clang,    CXX: clang++,    python: default, build-flag: release }
+          # macOS 10.15
+          - { os: macos-10.15,  CC: clang,    CXX: clang++,    python: default, build-flag: examine }
+          - { os: macos-10.15,  CC: clang,    CXX: clang++,    python: default, build-flag: release }
           
-          # # macOS 11
-          # - { os: macos-11,     CC: clang,    CXX: clang++,    python: default, build-flag: examine }
-          # - { os: macos-11,     CC: clang,    CXX: clang++,    python: default, build-flag: release }
+          # macOS 11
+          - { os: macos-11,     CC: clang,    CXX: clang++,    python: default, build-flag: examine }
+          - { os: macos-11,     CC: clang,    CXX: clang++,    python: default, build-flag: release }
           
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.allow-failure == 1 }} 
@@ -83,7 +80,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: MilanKlausz/testActions
-         # path: './dgcode_validation'
 
       - name: Checkout dgcode_validation
         uses: actions/checkout@v2
@@ -172,11 +168,3 @@ jobs:
         check_name: EnricoMi Test Report
         files: artifact_dir/dgtest_results_junitformat*.xml
         report_individual_runs: true
-
-    # - name: Test Report
-    #   uses: dorny/test-reporter@v1
-    #   if:  always() # run even if the previous step fails
-    #   with:
-    #     name: JEST Test Report 
-    #     path: artifact_dir/dgtest_results_junitformat*.xml
-    #     reporter: jest-junit # Format of test results
