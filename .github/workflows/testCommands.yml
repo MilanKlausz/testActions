@@ -3,15 +3,15 @@ name: testCommands
 on:
   workflow_call:
     outputs:
-      run_id:
-        description: "run_id"
-        value: ${{ jobs.echo-job-id.outputs.job-id }}
+      run-id:
+        description: "run-id"
+        value: ${{ jobs.echo-run-id.outputs.run-id }}
        # value: ${{ GITHUB_RUN_ID }}
   workflow_dispatch:
 jobs:
-  echo-job-id:
+  echo-run-id:
     outputs:
-      job-id : ${{ steps.echo-step.outputs.jobid }}
+      run-id : ${{ steps.echo-step.outputs.runid }}
     #runs-on: macos-10.15
     runs-on: ubuntu-latest
     defaults:
@@ -25,4 +25,4 @@ jobs:
     #- name: env
     #  run: env
     - id: echo-step
-      run: echo "::set-output name=jobid::hello"
+      run: echo "::set-output name=runid::${{ GITHUB_RUN_ID }}"
