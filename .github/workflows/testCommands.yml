@@ -5,13 +5,13 @@ on:
     outputs:
       run-id:
         description: "run-id"
-        value: ${{ jobs.echo-run-id.outputs.run-id }}
-       # value: ${{ GITHUB_RUN_ID }}
+       # value: ${{ jobs.echo-run-id.outputs.run-id }}
+        value: ${{ github.run_id }}
   workflow_dispatch:
 jobs:
   echo-run-id:
-    outputs:
-      run-id : ${{ steps.echo-step.outputs.runid }}
+    #outputs:
+    #  run-id : ${{ steps.echo-step.outputs.runid }}
     #runs-on: macos-10.15
     runs-on: ubuntu-latest
     defaults:
@@ -27,5 +27,5 @@ jobs:
     - id: print-step
       run: echo ${{ github.run_id }}
 
-    - id: echo-step
-      run: echo "::set-output name=runid::${{ github.run_id }}"
+    # - id: echo-step
+    #   run: echo "::set-output name=runid::${{ github.run_id }}"
