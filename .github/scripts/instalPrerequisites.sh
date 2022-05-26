@@ -16,12 +16,12 @@ fi
 
 #TEMP handling dgdepfixer issues - it should be handled in dgdepfixer later on
 
-#general
-git config --global user.name "Lorem Ipsum" 
-git config --global user.email "dolor.sit@ess.eu"
+# #general
+# git config --global user.name "Lorem Ipsum" 
+# git config --global user.email "dolor.sit@ess.eu"
 
-#Linux only part
-if [[ $@ == "Linux" ]]; then
-  mv $HOME/.profile $HOME/.profile_DISABLED  
-  echo 'if [ -f $HOME/.bashrc ]; then . $HOME/.bashrc; fi' >> $HOME/.bash_profile   
-fi
+# #Linux only part
+# if [[ $@ == "Linux" ]]; then
+#   mv $HOME/.profile $HOME/.profile_DISABLED  
+#   echo 'if [ -f $HOME/.bashrc ]; then . $HOME/.bashrc; fi' >> $HOME/.bash_profile   
+# fi
