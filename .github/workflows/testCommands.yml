@@ -1,32 +1,36 @@
 name: testCommands
 
 on:
-  workflow_call:
-    outputs:
-      run-id:
-        description: "run-id"
-       # value: ${{ jobs.echo-run-id.outputs.run-id }}
-       # value: ${{ github.run_id }}
-        value: 5
+  # workflow_call:
+  #   outputs:
+  #     run-id:
+  #       description: "run-id"
+  #      # value: ${{ jobs.echo-run-id.outputs.run-id }}
+  #      # value: ${{ github.run_id }}
+  #       value: 5
   workflow_dispatch:
 jobs:
-  echo-run-id:
-    #outputs:
-    #  run-id : ${{ steps.echo-step.outputs.runid }}
-    #runs-on: macos-10.15
-    runs-on: ubuntu-latest
+  macos-cpu:
+    runs-on: macos-10.15
+    #runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
     
     steps:
-    #- uses: actions/checkout@v2
-    #- name: get number of cpu-s
-    #  run: sysctl -n hw.ncpu
-    #- name: env
-    #  run: env
-    - id: print-step
-      run: echo ${{ github.run_id }}
+    - name: get number of cpu-s
+      run: | 
+        system_profiler SPHardwareDataType
+        sysctl -n hw.ncpu
 
-    # - id: echo-step
-    #   run: echo "::set-output name=runid::${{ github.run_id }}"
+  ubuntu-cpu:
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        shell: bash
+    
+    steps:
+    - name: get number of cpu-s
+      run: | 
+        lscpu
+        lscpu | egrep 'Model name|Socket|Thread|NUMA|CPU\(s\)'
