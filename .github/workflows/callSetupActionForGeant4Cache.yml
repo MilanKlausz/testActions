@@ -1,0 +1,53 @@
+name: 'callSetupActionForGeant4Cache'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  validation-test:
+    name: ${{ matrix.os }}.${{ matrix.CC }}.python-${{ matrix.python }}.dgcode-${{ matrix.build-flag }}
+    strategy:
+      fail-fast: false
+      matrix: 
+        include:
+          # Ubuntu-20.04
+          - { os: ubuntu-20.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: examine }
+          - { os: ubuntu-20.04, CC: gcc-9,    CXX: g++-9,      python: '3.9', build-flag: examine }
+          - { os: ubuntu-20.04, CC: clang-12, CXX: clang++-12, python: '3.9', build-flag: examine }
+          - { os: ubuntu-20.04, CC: clang-10, CXX: clang++-10, python: '3.9', build-flag: examine }     
+         
+          # Ubuntu-18.04
+          - { os: ubuntu-18.04, CC: clang-9,  CXX: clang++-9,  python: '3.9', build-flag: examine }
+          - { os: ubuntu-18.04, CC: gcc-7,    CXX: g++-7,      python: '3.9', build-flag: examine }
+          - { os: ubuntu-18.04, CC: gcc-10,   CXX: g++-10,     python: '3.9', build-flag: examine }
+          
+          # macOS 10.15
+          - { os: macos-10.15,  CC: clang,    CXX: clang++,    python: default, build-flag: examine }
+          
+          # macOS 11
+          - { os: macos-11,     CC: clang,    CXX: clang++,    python: default, build-flag: examine }
+          
+          
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    env:
+      SHELL: /bin/bash
+      CC: ${{ matrix.CC }}
+      CXX: ${{ matrix.CXX }}
+      PROJECTS_DIR: projects
+
+    steps:
+      - name: Checkout testActions
+        uses: actions/checkout@v2
+        with:
+          repository: MilanKlausz/testActions
+
+      - name: setup framework action
+        id: setup-framework
+        uses: ./.github/actions/setup
+        with:
+          PYTHON_VERSION: ${{ matrix.python }}
+          PROJECTS_DIR: ${{ env.PROJECTS_DIR }}
+          DGBUILD_FLAG: ${{ matrix.build-flag }}

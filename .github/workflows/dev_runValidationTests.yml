@@ -101,7 +101,6 @@ jobs:
           . $GITHUB_WORKSPACE/geant4-10.04.p03/setup.sh
           . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
           . bootstrap.sh
-          python3 -c "import matplotlib.pyplot"
           dgbuild -at --testexcerpts=20 --${{ matrix.build-flag }}
         working-directory: ${{ env.PROJECTS_DIR }}
         env:

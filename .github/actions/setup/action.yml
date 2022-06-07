@@ -51,7 +51,7 @@ runs:
       uses: actions/cache@v2
       with:
         path: dgdepfixerInstall
-        key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-${{env.CC}}-${{steps.python-version.outputs.version}}-dgdepfixer-install-new
+        key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-${{env.CC}}-${{steps.python-version.outputs.version}}-dgdepfixer-install-20220607
      
     - name: Create dgdepfixer
       if: steps.cache-dgdepfixer.outputs.cache-hit != 'true'
@@ -65,7 +65,7 @@ runs:
       uses: actions/cache@v2
       with:
         path: geant4-10.04.p03
-        key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-${{env.CC}}-Geant4--nodata
+        key: ${{ runner.os }}-${{ steps.os-version.outputs.version }}-${{env.CC}}-Geant4--nodata-20220607
         
     - name: Install Geant4
       if: steps.cache-geant4.outputs.cache-hit != 'true'
@@ -97,6 +97,7 @@ runs:
         . $GITHUB_WORKSPACE/geant4-10.04.p03/setup.sh
         . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
         . bootstrap.sh
+        python3 -c "import matplotlib.pyplot"
         dgbuild -a --${{ inputs.DGBUILD_FLAG }}
       working-directory: ${{ inputs.PROJECTS_DIR }}
       env:
