@@ -17,7 +17,7 @@ export DGCODE_BUILD_DIR="auto"
 #List paths to directories containing packages you want to be built along with
 #the Framework and Project packages. (This may be useful for e.g., dependencies
 #in large legacy repositories) 
-export DGCODE_PKG_PATH="$GITHUB_WORKSPACE/dgcode_validation"
+#export DGCODE_PKG_PATH="$GITHUB_WORKSPACE/dgcode_validation"
 
 #Finish up by sourcing the main bootstrap.sh file from the dgcode framework:
 . $DGCODE_FMWK_DIR/bootstrap.sh
