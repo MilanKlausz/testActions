@@ -19,6 +19,7 @@ jobs:
       matrix: 
         include:
           - { user_name: MilanKlausz, repo_name: dgcode_validation} 
+          - { user_name: MilanKlausz, repo_name: testBifrost} 
           
     runs-on: ubuntu-18.04
     continue-on-error: ${{ matrix.allow-failure == 1 }} 
