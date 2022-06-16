@@ -1,0 +1,109 @@
+name: 'dev_runMonsterTests'
+
+on:
+  workflow_dispatch:
+  
+  #schedule:
+  #  - cron: '30 23 * * 0'  # 23:30 every Sunday
+
+  #workflow_call:  
+  #push:
+  #  branches: [ main ]
+
+
+jobs:
+  validation-test:
+    name: Test access
+    strategy:
+      fail-fast: false
+    runs-on: ubuntu-18.04
+    defaults:
+      run:
+        shell: bash
+    env:
+      SHELL: /bin/bash
+      CC: clang-9
+      CXX: clang++-9
+      PROJECTS_DIR: projects
+      BUILD_FLAG: examine
+
+    steps:
+      #- uses: actions/checkout@v2
+      - name: Checkout testActions
+        uses: actions/checkout@v2
+        with:
+          repository: MilanKlausz/testActions
+
+      - name: Checkout test repo
+        run: | 
+          git clone https://oauth2:${{ secret.TEST_ACCESS_GL }}@git.esss.dk/milan.klausz/testbifrost.git ./packages
+
+      - name: setup framework action
+        id: setup-framework
+        uses: ./.github/actions/setup
+        with:
+          PYTHON_VERSION: '3.9'
+          PROJECTS_DIR: ${{ env.PROJECTS_DIR }}
+          DGBUILD_FLAG: ${{ env.BUILD_FLAG }}
+         
+      - name: test dgcode
+        run: |
+          . $GITHUB_WORKSPACE/dgdepfixerInstall/setup.sh
+          . $GITHUB_WORKSPACE/geant4-10.04.p03/setup.sh
+          . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
+          export DGCODE_PKG_PATH="$GITHUB_WORKSPACE/packages"
+          . bootstrap.sh
+          dgbuild -at --testexcerpts=20 --${{  env.BUILD_FLAG }}
+        working-directory: ${{ env.PROJECTS_DIR }}
+        env:
+          DGDEP_IGNOREBADSHEBANG: 1
+
+      - name: Rename test result
+        id: rename-test-result
+        if: always() && steps.setup-framework.outcome == 'success'
+        run: mv $GITHUB_WORKSPACE/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml $GITHUB_WORKSPACE/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml
+
+      - uses: actions/upload-artifact@v2  # upload test results
+        if: always() && steps.rename-test-result.outcome == 'success'
+        with:
+          name: test-results
+          path: ${{ github.workspace }}/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml
+
+  report:
+    name: Test reporting
+    if: always()
+    needs: validation-test
+    runs-on: ubuntu-latest
+    steps:
+    # - uses: phoenix-actions/test-reporting@v3
+    #   id: test-report                     # Set ID reference for step
+    #   with:
+    #     artifact: test-results           # artifact name
+    #     name: JEST Tests                  # Name of the check run which will be created
+    #     path: '*.xml'                     # Path to test results (inside artifact .zip)
+    #     reporter: jest-junit              # Format of test results
+
+    - name: Download a single artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: test-results
+        path: artifact_dir
+
+    - name: Display structure of downloaded files
+      run: ls -R
+      working-directory: artifact_dir
+
+    - name: Publish Test Report
+      uses: mikepenz/action-junit-report@v3
+      if: always() # run even if the previous step fails
+      with:
+        check_name: JUnit Test Report
+        report_paths: artifact_dir/dgtest_results_junitformat*.xml
+  
+    - name: Publish Unit Test Results
+      uses: EnricoMi/publish-unit-test-result-action/composite@v1
+      if: always()
+      with:
+        check_name: EnricoMi Test Report
+        files: artifact_dir/dgtest_results_junitformat*.xml
+        report_individual_runs: true
