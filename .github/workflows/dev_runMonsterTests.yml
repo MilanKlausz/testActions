@@ -36,7 +36,7 @@ jobs:
 
       - name: Checkout test repo
         run: | 
-          git clone https://oauth2:${{ secret.TEST_ACCESS_GL }}@git.esss.dk/milan.klausz/testbifrost.git ./packages
+          git clone https://oauth2:${{ secrets.TEST_ACCESS_GL }}@git.esss.dk/milan.klausz/testbifrost.git ./packages
 
       - name: setup framework action
         id: setup-framework
