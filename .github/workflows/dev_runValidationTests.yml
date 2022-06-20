@@ -7,9 +7,6 @@ on:
     - cron: '30 23 * * 0'  # 23:30 every Sunday
 
   workflow_call:  
-  #push:
-  #  branches: [ main ]
-
 
 jobs:
   validation-test:
@@ -124,23 +121,12 @@ jobs:
     needs: validation-test
     runs-on: ubuntu-latest
     steps:
-    # - uses: phoenix-actions/test-reporting@v3
-    #   id: test-report                     # Set ID reference for step
-    #   with:
-    #     artifact: test-results           # artifact name
-    #     name: JEST Tests                  # Name of the check run which will be created
-    #     path: '*.xml'                     # Path to test results (inside artifact .zip)
-    #     reporter: jest-junit              # Format of test results
 
     - name: Download a single artifact
       uses: actions/download-artifact@v3
       with:
         name: test-results-validations
         path: artifact_dir
-
-    - name: Display structure of downloaded files
-      run: ls -R
-      working-directory: artifact_dir
 
     - name: Publish Test Report
       uses: mikepenz/action-junit-report@v3
