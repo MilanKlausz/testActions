@@ -59,15 +59,15 @@ jobs:
         env:
           DGDEP_IGNOREBADSHEBANG: 1
 
-      - name: Rename test result
-        id: rename-test-result
-        if: always() && steps.setup-framework.outcome == 'success'
-        run: mv $GITHUB_WORKSPACE/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml $GITHUB_WORKSPACE/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml
+      # - name: Rename test result
+      #   id: rename-test-result
+      #   if: always() && steps.setup-framework.outcome == 'success'
+      #   run: mv $GITHUB_WORKSPACE/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml $GITHUB_WORKSPACE/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml
 
       - uses: actions/upload-artifact@v2  # upload test results
         if: always() && steps.rename-test-result.outcome == 'success'
         with:
-          name: test-results
+          name: test-results-legacy-projects
           path: ${{ github.workspace }}/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml
 
   report:
@@ -80,7 +80,7 @@ jobs:
     - name: Download a single artifact
       uses: actions/download-artifact@v3
       with:
-        name: test-results
+        name: test-results-legacy-projects
         path: artifact_dir
 
     - name: Display structure of downloaded files
@@ -91,13 +91,13 @@ jobs:
       uses: mikepenz/action-junit-report@v3
       if: always() # run even if the previous step fails
       with:
-        check_name: JUnit Test Report
+        check_name:  Legacy Projects Tests Report (mikepenz)
         report_paths: artifact_dir/dgtest_results_junitformat*.xml
   
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v1
       if: always()
       with:
-        check_name: EnricoMi Test Report
+        check_name: Legacy Projects Tests Report (EnricoMi)
         files: artifact_dir/dgtest_results_junitformat*.xml
         report_individual_runs: true
