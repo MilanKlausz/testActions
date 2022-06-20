@@ -65,7 +65,7 @@ jobs:
       #   run: mv $GITHUB_WORKSPACE/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml $GITHUB_WORKSPACE/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml
 
       - uses: actions/upload-artifact@v2  # upload test results
-        if: always() && steps.rename-test-result.outcome == 'success'
+        if: always() && steps.setup-framework.outcome == 'success'
         with:
           name: test-results-legacy-projects
           path: ${{ github.workspace }}/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat.xml
