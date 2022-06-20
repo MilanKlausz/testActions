@@ -128,12 +128,12 @@ jobs:
         name: test-results-validations
         path: artifact_dir
 
-    - name: Publish Test Report
-      uses: mikepenz/action-junit-report@v3
-      if: always() # run even if the previous step fails
-      with:
-        check_name: Validation Tests Report (mikepenz)
-        report_paths: artifact_dir/dgtest_results_junitformat*.xml
+    # - name: Publish Test Report
+    #   uses: mikepenz/action-junit-report@v3
+    #   if: always() # run even if the previous step fails
+    #   with:
+    #     check_name: Validation Tests Report (mikepenz)
+    #     report_paths: artifact_dir/dgtest_results_junitformat*.xml
   
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v1
