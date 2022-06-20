@@ -105,13 +105,13 @@ jobs:
       uses: mikepenz/action-junit-report@v3
       if: always() # run even if the previous step fails
       with:
-        check_name: JUnit Test Report
+        check_name: User Tests Report (mikepenz)
         report_paths: artifact_dir/dgtest_results_junitformat*.xml
   
     - name: Publish Unit Test Results
       uses: EnricoMi/publish-unit-test-result-action/composite@v1
       if: always()
       with:
-        check_name: EnricoMi Test Report
+        check_name: User Tests Report (EnricoMi)
         files: artifact_dir/dgtest_results_junitformat*.xml
         report_individual_runs: true
