@@ -115,7 +115,7 @@ jobs:
       - uses: actions/upload-artifact@v2  # upload test results
         if: always() && steps.rename-test-result.outcome == 'success'
         with:
-          name: test-results
+          name: test-results-validations
           path: ${{ github.workspace }}/${{ env.PROJECTS_DIR }}/.bld/testresults/dgtest_results_junitformat_${{ matrix.os }}.${{ matrix.CC }}.python-${{ matrix.python }}.dgcode-${{ matrix.build-flag }}.xml
 
   report:
@@ -135,7 +135,7 @@ jobs:
     - name: Download a single artifact
       uses: actions/download-artifact@v3
       with:
-        name: test-results
+        name: test-results-validations
         path: artifact_dir
 
     - name: Display structure of downloaded files
