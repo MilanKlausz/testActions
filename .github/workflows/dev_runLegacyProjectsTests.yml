@@ -96,4 +96,5 @@ jobs:
       with:
         check_name: Legacy Projects Tests Report (EnricoMi)
         files: artifact_dir/dgtest_results_junitformat*.xml
-        report_individual_runs: true
+        report_individual_runs: "true"
+        comment_mode: "off" #control pull request comments
