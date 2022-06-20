@@ -1,4 +1,4 @@
-name: 'dev_runMonsterTests'
+name: 'dev_runLegacyProjectsTests'
 
 on:
   workflow_dispatch:
@@ -6,10 +6,12 @@ on:
   #schedule:
   #  - cron: '30 23 * * 0'  # 23:30 every Sunday
 
-  #workflow_call:  
-  #push:
-  #  branches: [ main ]
-
+  workflow_call:  
+    secrets:
+      LEGACY_REPO_URL:
+        required: true
+      LEGACY_REPO_PAT:
+        required: true
 
 jobs:
   validation-test:
@@ -28,15 +30,14 @@ jobs:
       BUILD_FLAG: examine
 
     steps:
-      #- uses: actions/checkout@v2
       - name: Checkout testActions
         uses: actions/checkout@v2
         with:
           repository: MilanKlausz/testActions
 
-      - name: Checkout test repo
+      - name: Checkout Legacy repo
         run: | 
-          git clone https://oauth2:${{ secrets.TEST_ACCESS_GL }}@git.esss.dk/milan.klausz/testbifrost.git ./packages
+          git clone https://oauth2:${{ secrets.LEGACY_REPO_PAT }}@${{ secrets.LEGACY_REPO_URL }} ./packages
 
       - name: setup framework action
         id: setup-framework
@@ -75,13 +76,6 @@ jobs:
     needs: validation-test
     runs-on: ubuntu-latest
     steps:
-    # - uses: phoenix-actions/test-reporting@v3
-    #   id: test-report                     # Set ID reference for step
-    #   with:
-    #     artifact: test-results           # artifact name
-    #     name: JEST Tests                  # Name of the check run which will be created
-    #     path: '*.xml'                     # Path to test results (inside artifact .zip)
-    #     reporter: jest-junit              # Format of test results
 
     - name: Download a single artifact
       uses: actions/download-artifact@v3
