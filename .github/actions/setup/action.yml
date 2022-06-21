@@ -90,10 +90,10 @@ runs:
         $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh
       shell: bash
 
-    - name: Set Geant4 env vars
-      run: . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
+    - name: Set Geant4 environment variables
+      run: . $GITHUB_WORKSPACE/.github/scripts/geant4EnvSetup.sh
       shell: bash
-      
+
     - name: build framework
       if: inputs.DO_DGBUILD == 'true'
       run: |
