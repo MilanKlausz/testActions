@@ -90,11 +90,14 @@ runs:
         $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh
       shell: bash
 
+    - name: Set Geant4 env vars
+      run: . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
+      shell: bash
+      
     - name: build framework
       if: inputs.DO_DGBUILD == 'true'
       run: |
         . $GITHUB_WORKSPACE/dgdepfixerInstall/setup.sh
-        . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
         . bootstrap.sh
         python3 -c "import matplotlib.pyplot"
         dgbuild -a --${{ inputs.DGBUILD_FLAG }}
