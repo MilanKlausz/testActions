@@ -94,7 +94,6 @@ runs:
       if: inputs.DO_DGBUILD == 'true'
       run: |
         . $GITHUB_WORKSPACE/dgdepfixerInstall/setup.sh
-      # . $GITHUB_WORKSPACE/geant4-10.04.p03/setup.sh
         . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
         . bootstrap.sh
         python3 -c "import matplotlib.pyplot"
