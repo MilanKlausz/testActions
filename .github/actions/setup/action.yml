@@ -20,6 +20,8 @@ inputs:
 
 runs:
   using: "composite"
+  env: 
+    TRUE_DATA_DIR: Geant4data
   steps:
     - name: Checkout dgcode framework
       uses: actions/checkout@v2
