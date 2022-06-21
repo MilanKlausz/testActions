@@ -54,8 +54,6 @@ jobs:
       - name: test dgcode
         run: |
           . $GITHUB_WORKSPACE/dgdepfixerInstall/setup.sh
-          . $GITHUB_WORKSPACE/geant4-10.04.p03/setup.sh
-          . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
           export DGCODE_PKG_PATH="$GITHUB_WORKSPACE/packages"
           . bootstrap.sh
           dgbuild -at --testexcerpts=20 --${{  env.BUILD_FLAG }}
