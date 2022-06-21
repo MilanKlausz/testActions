@@ -28,6 +28,8 @@ jobs:
       CXX: clang++-9
       PROJECTS_DIR: projects
       BUILD_FLAG: examine
+      PKGS_REL_PATH: / #testing
+      #PKGS_REL_PATH: /packages/Projects
 
     steps:
       - name: Checkout testActions
@@ -37,7 +39,7 @@ jobs:
 
       - name: Checkout Legacy repo
         run: | 
-          git clone https://oauth2:${{ secrets.LEGACY_REPO_PAT }}@${{ secrets.LEGACY_REPO_URL }} ./packages
+          git clone https://oauth2:${{ secrets.LEGACY_REPO_PAT }}@${{ secrets.LEGACY_REPO_URL }} $GITHUB_WORKSPACE/dg_dgcode
 
       - name: setup framework action
         id: setup-framework
@@ -50,9 +52,7 @@ jobs:
       - name: test dgcode
         run: |
           . $GITHUB_WORKSPACE/dgdepfixerInstall/setup.sh
-          . $GITHUB_WORKSPACE/geant4-10.04.p03/setup.sh
-          . $GITHUB_WORKSPACE/.github/scripts/geant4DataSetup.sh
-          export DGCODE_PKG_PATH="$GITHUB_WORKSPACE/packages"
+          export DGCODE_PKG_PATH="$GITHUB_WORKSPACE/dg_dgcode${{ env.PKGS_REL_PATH }}"
           . bootstrap.sh
           dgbuild -at --testexcerpts=20 --${{  env.BUILD_FLAG }}
         working-directory: ${{ env.PROJECTS_DIR }}
