@@ -38,32 +38,24 @@ declare -a unTarName=("G4NDL4.5"
 
 BASE_URL="https://cern.ch/geant4-data/datasets/"
 
-#DATA_DIR="dgdepfixer_install/extras/geant4-10.04.p03/share/Geant4-10.4.3/data"
-TRUE_DATA_DIR=$@
+DATA_DIR=$@
 TAR_FILE_DIR="Geant4data_tar_files"
 
 if [[ ! -e "$GITHUB_WORKSPACE/$TAR_FILE_DIR" ]]; then 
    mkdir "$GITHUB_WORKSPACE/$TAR_FILE_DIR" 
 fi
 
-if [[ ! -e "$GITHUB_WORKSPACE/$TRUE_DATA_DIR" ]]; then 
-   mkdir "$GITHUB_WORKSPACE/$TRUE_DATA_DIR" 
+if [[ ! -e "$GITHUB_WORKSPACE/$DATA_DIR" ]]; then 
+   mkdir "$GITHUB_WORKSPACE/$DATA_DIR" 
 fi
-
-#if [[ ! -e "$GITHUB_WORKSPACE/$DATA_DIR" ]]; then 
-#   mkdir "$GITHUB_WORKSPACE/$DATA_DIR" 
-#fi
 
 for i in "${!arrName[@]}"
 do
-   if [[ ! -d "$GITHUB_WORKSPACE/$TRUE_DATA_DIR/${unTarName[i]}" ]]; then 
+   if [[ ! -d "$GITHUB_WORKSPACE/$DATA_DIR/${unTarName[i]}" ]]; then 
       echo "$BASE_URL${arrName[i]}.tar.gz"
       curl -L "$BASE_URL${arrName[i]}.tar.gz" > "$GITHUB_WORKSPACE/$TAR_FILE_DIR/${arrName[i]}.tar.gz"
-      tar -xf "$GITHUB_WORKSPACE/$TAR_FILE_DIR/${arrName[i]}.tar.gz" -C "$GITHUB_WORKSPACE/$TRUE_DATA_DIR"
+      tar -xf "$GITHUB_WORKSPACE/$TAR_FILE_DIR/${arrName[i]}.tar.gz" -C "$GITHUB_WORKSPACE/$DATA_DIR"
    else 
-      echo "$GITHUB_WORKSPACE/$TRUE_DATA_DIR/${unTarName[i]} exists"
+      echo "$GITHUB_WORKSPACE/$DATA_DIR/${unTarName[i]} exists"
    fi
 done
-
-#ln -s -f "$GITHUB_WORKSPACE/$TRUE_DATA_DIR/"* "$GITHUB_WORKSPACE/$DATA_DIR/"
-
