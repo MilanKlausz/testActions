@@ -17,7 +17,7 @@ runs:
       uses: actions/cache@v2
       with:
         path: geant4-10.04.p03
-        key: ${{ runner.os }}-${{ inputs.OS_VERSION }}-${{env.CC}}-Geant4--nodata-20220607
+        key: ${{ runner.os }}-${{ inputs.OS_VERSION }}-${{env.CC}}-Geant4--nodata-20220622
         
     - name: Install Geant4
       if: steps.cache-geant4.outputs.cache-hit != 'true'

@@ -48,7 +48,6 @@ jobs:
           PYTHON_VERSION: '3.9'
           PROJECTS_DIR: ${{ env.PROJECTS_DIR }}
           DGBUILD_FLAG: ${{ env.BUILD_FLAG }}
-          INSTALL_GEANT4: false
          
       - name: test dgcode
         run: |
