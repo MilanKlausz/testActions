@@ -1,0 +1,43 @@
+name: 'install Geant4'
+description: 'Install Geant4 - from cache if possible'
+inputs:
+  OS_VERSION:
+    description: Operating system version
+    type: string
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: cache Geant4
+      id: cache-geant4
+      uses: actions/cache@v2
+      with:
+        path: geant4-10.04.p03
+        key: ${{ runner.os }}-${{ inputs.OS_VERSION }}-${{env.CC}}-Geant4--nodata-20220607
+        
+    - name: Install Geant4
+      if: steps.cache-geant4.outputs.cache-hit != 'true'
+      run: |
+        . $GITHUB_WORKSPACE/dgdepfixerInstall/setup.sh
+        dgdepfixer --instsw=Geant4 --nodata -d $GITHUB_WORKSPACE/geant4-10.04.p03
+      env:
+        DGDEP_IGNOREBADSHEBANG: 1
+      shell: bash
+      
+    - name: cache untarred geant4 data files
+      id: cache-untarred-geant4-data-files
+      uses: actions/cache@v2
+      with:
+        path: Geant4data
+        key: untarred-geant4-data-files 
+ 
+    - name: Download Geant4 data
+      if: steps.cache-geant4.outputs.cache-hit != 'true' || steps.cache-untarred-geant4-data-files.outputs.cache-hit != 'true'
+      run: |
+        chmod +x $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh
+        $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh
+      shell: bash
+
+    - name: Set Geant4 environment variables
+      run: . $GITHUB_WORKSPACE/.github/scripts/geant4EnvSetup.sh
+      shell: bash
