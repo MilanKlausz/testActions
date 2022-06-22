@@ -39,7 +39,7 @@ declare -a unTarName=("G4NDL4.5"
 BASE_URL="https://cern.ch/geant4-data/datasets/"
 
 #DATA_DIR="dgdepfixer_install/extras/geant4-10.04.p03/share/Geant4-10.4.3/data"
-TRUE_DATA_DIR="Geant4data"
+TRUE_DATA_DIR=$@
 TAR_FILE_DIR="Geant4data_tar_files"
 
 if [[ ! -e "$GITHUB_WORKSPACE/$TAR_FILE_DIR" ]]; then 

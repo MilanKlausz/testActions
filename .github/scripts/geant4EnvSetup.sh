@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TRUE_DATA_DIR="Geant4data"
+TRUE_DATA_DIR=$@
 
 echo "G4NEUTRONHPDATA=`cd $GITHUB_WORKSPACE/$TRUE_DATA_DIR/G4NDL4.5 > /dev/null ; pwd`" >> $GITHUB_ENV
 echo "G4LEDATA=`cd $GITHUB_WORKSPACE/$TRUE_DATA_DIR/G4EMLOW7.3 > /dev/null ; pwd`" >> $GITHUB_ENV

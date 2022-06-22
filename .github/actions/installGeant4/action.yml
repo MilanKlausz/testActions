@@ -5,6 +5,10 @@ inputs:
     description: Operating system version
     type: string
     required: true
+  TRUE_DATA_DIR:
+    description: Geant4 data directory - no need to change it
+    type: string
+    default: Geant4data
 runs:
   using: "composite"
   steps:
@@ -28,16 +32,16 @@ runs:
       id: cache-untarred-geant4-data-files
       uses: actions/cache@v2
       with:
-        path: Geant4data
+        path: ${{ inputs.TRUE_DATA_DIR }}
         key: untarred-geant4-data-files 
  
     - name: Download Geant4 data
       if: steps.cache-geant4.outputs.cache-hit != 'true' || steps.cache-untarred-geant4-data-files.outputs.cache-hit != 'true'
       run: |
         chmod +x $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh
-        $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh
+        $GITHUB_WORKSPACE/.github/scripts/geant4DataProvider.sh ${{ inputs.TRUE_DATA_DIR }}
       shell: bash
 
     - name: Set Geant4 environment variables
-      run: . $GITHUB_WORKSPACE/.github/scripts/geant4EnvSetup.sh
+      run: . $GITHUB_WORKSPACE/.github/scripts/geant4EnvSetup.sh ${{ inputs.TRUE_DATA_DIR }}
       shell: bash
